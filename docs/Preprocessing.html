@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-04-15" />
+<meta name="date" content="2021-04-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -195,9 +195,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.1</span> Read Mapping</h2>
 <div id="star" class="section level3">
 <h3><span class="header-section-number">3.1.1</span> STAR</h3>
-<p><a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR">https://github.com/alexdobin/STAR </a>. A tutorial of runing <strong>STAR</strong> is available at <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">tutorial</a>.<br />
-Once you have installed <strong>STAR</strong>, the first step is to create genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.</p>
-<p>To run STAR of a paired-end sample:</p>
+<p><a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial of runing STAR is available at <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. Once you have installed STAR, the first step is to create genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.</p>
+<p>To run STAR of a sample:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Preprocessing.html#cb1-1"></a>      STAR <span class="op">--</span>runThreadN <span class="dv">4</span> <span class="op">--</span>genomeDir <span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>index</span>
 <span id="cb1-2"><a href="Preprocessing.html#cb1-2"></a>        <span class="op">--</span>outReadsUnmapped None </span>
 <span id="cb1-3"><a href="Preprocessing.html#cb1-3"></a>        <span class="op">--</span>chimSegmentMin <span class="dv">12</span>  <span class="co">#generate Chimeric and circulate alignment</span></span>
@@ -284,7 +283,7 @@ Once you have installed <strong>STAR</strong>, the first step is to create genom
 </div>
 <div id="gene-quantification" class="section level2">
 <h2><span class="header-section-number">3.3</span> Gene quantification</h2>
-<p>After the alignment of sequencing reads and quality check, we will quantify the gene or transcript expression from the BAM file.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performed both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. Both tools generate transcripts per million (TPM), reads per kilobase of exon model per million reads (RPKM) and fragments per kilobase of exon model per million mapped reads (FPKM) expression, which is the normalized gene quantification that removing the effect of different gene length. In addition to TPM, <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> quantifies gene expression according to mapped read counts. Both normalized gene expression and read counts can be used for differential expression analysis.<br />
+<p>After the alignment of sequencing reads and quality check, we will quantify the gene or transcript expression from the BAM file.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performed both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. Both tools generate transcripts per million (TPM), reads per kilobase of exon model per million reads (RPKM) and fragments per kilobase of exon model per million mapped reads (FPKM) expression, which is the normalized gene quantification that removing the effect of different gene length. In addition to TPM, <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> and STAR quantify gene expression according to mapped read counts. Both normalized gene expression and read counts can be used for differential expression analysis.<br />
 </p>
 </div>
 <div id="batch-effect-removal" class="section level2">
