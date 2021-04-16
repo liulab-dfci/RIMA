@@ -105,6 +105,6 @@ knitr::include_graphics('images/PCA_batch.png', dpi = NA)
 ```
 
 ## Video demo of RIMA
-<video autosize: true controls>
+<video width="820" height="800" controls>
  <source src="videos/preprocess.mp4" type="video/mp4">
 </video>
