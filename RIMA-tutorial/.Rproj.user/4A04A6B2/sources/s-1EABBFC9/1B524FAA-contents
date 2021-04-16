@@ -1,0 +1,11 @@
+# Immune Infiltration {#Infiltration}
+**Cell infiltration estimation in the tumor microenvironment**\
+Tumor microenvironemtn (TME) is a complicated system consisting of tumor cells, immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanism of tumor progression and immune evasion, which is essential for providing a guideline for immunotherapy selection. There are two major approaches for estimating cell infiltration in TME, deconvolution-based and marker-based approaches. The deconvolution-based method infers cell type fractions from the bulk gene expression of a given list of signature genes, such as TIMER, quanTIseq, EPIC, and CIBERSORT. The marker-based approaches to quantify the enrichment score utilizing a list of cell-specific marker genes, such as xCell and MCP-counter. ImmuneDeconv is an R package that integrated these six methods. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq make it available to assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter support only inter-comparison between sample groups for one cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. The best way is to focus on the observations consistently predicted by various algorithms, in which case the gold standard is not available. \
+
+## Cibersort
+## TIMER
+## Quantiseq
+## Xcell
+## Epic
+## MCP-counter
+## Video demo

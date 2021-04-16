@@ -1,0 +1,33 @@
+# Introduction {#intro}
+
+Tumor RNA-seq has become an important technique for molecular profiling and
+immune characterization of tumors. RNA-seq Immune Analysis performs
+integrative computational modeling of tumor microenvironment from bulk tumor
+RNA-seq data, which has the potential to offer essential insights to cancer
+immunology and immune-oncology studies.\
+
+```{r fig.align='center', echo=FALSE, fig.cap='Flowchat of RIMA pipeline'}
+knitr::include_graphics('images/RIMA.png', dpi = NA)
+```
+
+ The pre-processing module includes four main procedures:\
+ <ul>
+ <li>**Read mapping**</li>
+ <li>**Quality control**</li>
+ <li>**Gene quantification**</li>
+ <li>**Batch effect removal**</li>
+ </ul>
+ The downstream analysis includes seven modules:
+ <ul>
+ <li>**Differential expression analysis**</li>
+ <li>**Immune infiltration estimation**</li>
+ <li>**Immune repertoire inference**</li>
+ <li>**Neoantigen detection**</li>
+ <li>**Microbiome characterization**</li>
+ <li>**Immunotherapy response prediction**</li>
+ <li>**Gene fusion**</li>
+ <li>**Microbiome**</li>
+ </ul>
+
+
+

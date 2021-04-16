@@ -1,0 +1,812 @@
+#library(ggplot2)
+#library(gridExtra)
+library(reshape)
+library(forcats)
+library(tidyverse) 
+library(corrplot)
+library(survcomp)
+library(survival)
+library(survminer)
+library(geometry)
+library(metap)
+library(PlackettLuce)
+library(RankAggreg)
+#library(RobustRankAggreg)
+
+combinep <- function(p,w){
+  test <- sumz(as.numeric(p),w,na.action = na.fail)
+  return(test$p)
+}
+
+iter = 20
+rankdata <- function(mat){
+   out <- list()
+  for (i in colnames(mat)){
+    rank <- rank(mat[,i])
+    names(rank) <- rownames(mat)
+    new <- rep(NA, nrow(mat))
+    for (j in 1:length(rank)){ new[rank[j]] <- names(rank[j])}
+    out[[i]] <- new
+  }
+   
+   out <- na.omit(t(as.data.frame(out)))
+   result <- RankAggreg(out,nrow(mat),maxIter=iter)$top.list
+   #print(dim(mat))
+   newrank <- vector()
+   names<- rownames(mat)
+   #print(mat)
+   for(x in 1:length(names)) { 
+     newrank <- append(newrank,which(result == names[x]))
+   }
+   return(newrank)
+}
+
+weight <-1-mat[,1]
+aggrrank <- function(matrix){
+R<- as.rankings(t(matrix))
+A <- aggregate(R)
+mod <- PlackettLuce(A)
+qv <- qvcalc(mod)
+return (qv)
+}
+
+
+setwd("/Users/yangliu/Documents/DREAM/")
+icb_o = "icb_observations.csv"
+icb_o<- read.csv(icb_o,sep= ',',header=T,row.names = 1)
+colnames(icb_o)[43] <- 'age'
+colnames(icb_o)[44] <- 'gender'
+#icb_t = "icb.tpm.txt"
+#icb_t<- read.csv(icb_t,sep= '\t',header=T,row.names = 1)
+file <- 'icb.features.txt'
+icb_f<- read.csv(file,sep= '\t',header=T,stringsAsFactors=F,row.names = 1)
+#icb <- cbind(icb_t[rownames(icb_f),],icb_o[rownames(icb_f),],icb_f)
+icb <- cbind(icb_o[rownames(icb_f),],icb_f)
+
+
+LUSC_o = "TCGA-LUSC.obs.txt"
+LUSC_o<- read.csv(LUSC_o,sep= '\t',header=T,row.names = 1)
+LUSC_o <- subset(LUSC_o ,LUSC_o$stage >= 3 & LUSC_o$Treatment == "Chemotherapy") 
+LUSC_t = "TCGA-LUSC.tpm.txt"
+LUSC_t<- read.csv(LUSC_t,sep= '\t',header=T,row.names = 1)
+LUSC_t <- LUSC_t[rownames(LUSC_o),]
+lusc_ff = "TCGA-LUSC.features.txt"
+LUSC_f<- read.csv(lusc_ff,sep= '\t',header=T,stringsAsFactors=F,row.names = 1)
+LUSC_f <- LUSC_f[rownames(LUSC_t),]
+LUSC <- cbind(LUSC_o,LUSC_f)
+
+LUAD_o = "TCGA-LUAD.obs.txt"
+LUAD_o<- read.csv(LUAD_o,sep= '\t',header=T,row.names = 1)
+LUAD_o <- subset(LUAD_o ,LUAD_o$stage >=3 & LUAD_o$Treatment == "Chemotherapy") 
+LUAD_t = "TCGA-LUAD.tpm.txt"
+LUAD_t<- read.csv(LUAD_t,sep= '\t',header=T,row.names = 1)
+LUAD_t <- LUAD_t[rownames(LUAD_o),]
+luad_ff = "TCGA-LUAD.features.txt"
+LUAD_f<- read.csv(luad_ff,sep= '\t',header=T,stringsAsFactors=F,row.names = 1)
+LUAD_f <- LUAD_f[rownames(LUAD_t),]
+LUAD <- cbind(LUAD_o,LUAD_f)
+
+SKCM_o = "TCGA-SKCM.obs.txt"
+SKCM_o<- read.csv(SKCM_o,sep= '\t',header=T,row.names = 1)
+SKCM_o <- subset(SKCM_o ,SKCM_o$stage >= 3 & SKCM_o$Treatment == "Chemotherapy") 
+SKCM_t = "TCGA-SKCM.tpm.txt"
+SKCM_t<- read.csv(SKCM_t,sep= '\t',header=T,row.names = 1)
+SKCM_t <- SKCM_t[rownames(SKCM_o),]
+skcm_ff = "TCGA-SKCM.features.txt"
+SKCM_f<- read.csv(skcm_ff,sep= '\t',header=T,stringsAsFactors=F,row.names = 1)
+SKCM_f <- SKCM_f[rownames(SKCM_t),]
+SKCM <- cbind(SKCM_o,SKCM_f)
+
+#mat <- read.table('/Users/yangliu/Documents/ICBpred/output/weights.txt',sep= '\t',header=T,stringsAsFactors=F,row.names = 1)
+features_names <- rownames(mat)
+col <- c(colnames(icb_f),'Cohort','PFS','PFS.Event','Timepoint','OS','OS.Event','Cancer','Response') 
+dat <- rbind(icb[,col],LUAD[,col],LUSC[,col],SKCM[,col])
+#dat$gd.Tcell <- rowMeans(data[,c('gd.Tcell.GSM349848.479','gd.Tcell.GSM349849.480')])
+dat <- subset(dat, dat$Timepoint == 'Pre'& dat$PFS != 'NA'& dat$PFS <= 1825 ) 
+dat <- subset(dat,dat$Cohort != 'Prat2017_PD1_HNSC_Nanostring' &
+                dat$Cohort != 'Prat2017_PD1_SCLC_Nanostring' &
+                dat$Cohort != 'Prat2017_PD1_NSCLC_Nanostring' &
+                dat$Cohort != 'Prat2017_PD1_Melanoma_Nanostring' &
+                #dat$Cohort != 'Braun2020_PD1_Kidney_RNASeq_Clear' &
+                #dat$Cohort != 'Mariathasan2018_PDL1_Bladder_RNASeq_mUC'
+                )
+#days <- dat[dat$Cohort == "Braun2020_PD1_Kidney_RNASeq_Clear",'PFS'] *30
+#dat[dat$Cohort == "Braun2020_PD1_Kidney_RNASeq_Clear",'PFS'] <- day
+M <- cor(dat[,features_names])
+corrplot(M, method = "circle")
+data<-dat
+features_names <- features_names[-2]
+mat <- mat[features_names,]
+mat$rank <- rank(mat$ICB_z)
+mat.m<-melt(as.matrix(mat[,3:4]))
+mat.m$rank <- rep(mat$rank,2)
+colnames(mat.m) <- c('Features','Cohort','value','rank')
+zplot<- ggplot(mat.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+all_feature <- colnames(icb_f)
+data <- dat
+
+####cindex of raw value######
+data_response <- subset(dat,dat$Response != 'NA'& dat$Timepoint == 'Pre')
+auc <- list()
+for ( c in unique(data_response$Cohort)){
+  test <- subset(data_response,data_response$Cohort==c)
+  test[is.na(test)] <- 0 
+  idx <- vector()
+  for (f in all_feature){
+    tmp <- AUC(test[,f],test$Response)
+    idx<- append(idx, tmp)
+  }
+  names(idx) <- all_feature
+  auc[[c]] <- idx
+}
+auc_mat_all <- na.omit(as.data.frame(auc))
+auc_mat_all[is.na(auc_mat_all)] <- 0.5
+auc_mat_all <- (auc_mat_all-0.5)**2
+colnames(auc_mat_all)
+#cindex_mat_all$score <- rowMeans(cindex_mat_all[,c(1:2,4,6:8)]) - rowMeans(cindex_mat_all[,9:11])
+#auc_mat_all$score <- rowMeans(auc_mat_all[,c(1,2,4,5,9:14,16,17)]) - rowMeans(auc_mat_all[,18:20])
+auc_mat_all$score2 <- rowMeans(auc_mat_all[,c(3,6:8,15)]) - rowMeans(auc_mat_all[,18:19])
+
+####cindex of raw value######
+cindex <- list()
+for ( c in unique(data$Cohort)){
+  test <- subset(data,data$Cohort==c)
+  #test$Exclusion <- rev(test$Exclusion)
+  #test$TAM.M2 <- rev(test$TAM.M2)
+  test[test$PFS==0,'PFS'] <- 1
+  test[is.na(test)] <- 0 
+  idx <- vector()
+  for (f in all_feature){
+  tmp <- concordance.index(test[,f],1/test[,'PFS'],test[,'PFS.Event'] )$c.index
+  idx<- append(idx, tmp)
+  }
+  names(idx) <- all_feature
+  cindex[[c]] <- idx
+}
+
+#idx <- which(str_detect(colnames(icb_f), "CIBERSORT$"))
+#sub_features <- colnames(icb_f)[-idx]
+#sub_features <- select_features
+
+test_feature <- unique(c(rownames(subset(mat_zp,mat_zp$ICB_p < 0.1 )),
+                  rownames(subset(mat_zp,mat_zp$TCGA_p <  0.1))))
+
+
+test_feature <- intersect(rownames(subset(mat_zp,mat_zp$ICB_z< mat_zp$TCGA_z)),
+                          rownames(subset(mat_zp,mat_zp$ICB_p<0.1)))
+
+cindex_mat_all <- na.omit(as.data.frame(cindex))
+cindex_mat_all[is.na(cindex_mat_all)] <- 0.5
+cindex_mat_all <- (cindex_mat_all-0.5)**2
+#cindex_mat_all<- cindex_mat_all[test_feature,]
+colnames(cindex_mat_all)
+#cindex_mat_all$score <- rowMeans(cindex_mat_all[,c(1:2,4,6:8)]) - rowMeans(cindex_mat_all[,9:11])
+cindex_mat_all$score <- rowMeans(cindex_mat_all[,c(1:8)]) - rowMeans(cindex_mat_all[,9:11])
+#cindex_mat_all$score <- rowMeans(c_index[test_feature,c(2,4,6:8)]) - rowMeans(c_index[test_feature,9:11])
+#cindex_mat <- subset(cindex_mat_all,cindex_mat_all$score >0)
+cindex_mat <- cindex_mat_all
+index.m<-melt(as.matrix(cindex_mat))
+#tmp_rank <- rank(mat_zp[test_feature,]$ICB_z,ties.method='random')
+tmp_rank <- rank(-cindex_mat_all$score,ties.method='random')
+index.m$rank <- rep(tmp_rank,length(colnames(cindex_mat)))
+index.m$xrank <-  c(rep(5,nrow(cindex_mat)),
+                    rep(7,nrow(cindex_mat)),
+                    rep(1,nrow(cindex_mat)),
+                    rep(3,nrow(cindex_mat)),
+                    rep(8,nrow(cindex_mat)),
+                    rep(6,nrow(cindex_mat)),
+                    rep(4,nrow(cindex_mat)),
+                    rep(2,nrow(cindex_mat)),
+                    rep(9,nrow(cindex_mat)),
+                    rep(10,nrow(cindex_mat)),
+                    rep(11,nrow(cindex_mat)),
+                    rep(12,nrow(cindex_mat))
+                    )
+colnames(index.m) <- c('Features','Cohort','value','rank','xrank')
+Crawplot<- ggplot(na.omit(index.m), aes(y=reorder(Features,-rank,order=TRUE),x=reorder(Cohort,xrank,order=TRUE),fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90,size=8))+
+  #scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=8))
+Crawplot
+
+
+
+
+##### fitted cindex####
+cindex_fit <- list()
+for ( c in unique(data$Cohort)[-5]){
+  tmp_data <- subset(data,data$Cohort==c)
+  #test$Exclusion <- rev(test$Exclusion)
+  #test$TAM.M2 <- rev(test$TAM.M2)
+  dt = sort(sample(nrow(test), nrow(test)*.5))
+  train<-tmp_data [dt,]
+  test<-tmp_data [-dt,]
+  idx <- vector()
+  for (f in select_features[-8]){
+    formula= as.formula(paste('Surv(PFS, PFS.Event)~',f))
+    fit <- coxph(formula,data = train)
+    #tmp<- fit$concordance[6]
+    pred<- predict(fit,test)
+    if (f  == 'Exclusion' | f == 'TAM.M2') {tmp_idx <- concordance.index(1/pred,1/test[,'PFS'],test[,'PFS.Event'])$c.index}
+    else {tmp_idx <- concordance.index(pred,1/test[,'PFS'],test[,'PFS.Event'])$c.index}
+    idx<- append(idx, tmp_idx)
+  }
+  names(idx) <- select_features[-8]
+  cindex_fit[[c]] <- idx
+}
+cindex_fit_mat <- as.data.frame(cindex_fit)
+index.m<-melt(as.matrix(cindex_fit_mat))
+rank <- rank(mat_zp[select_features[-8],]$ICB_z,ties.method='random')
+index.m$rank <- rep(rank,dim(cindex_fit_mat)[2])
+index.m$xrank <- c(rep(7,30),rep(9,30),
+                   rep(3,30),rep(6,30),rep(9,30),
+                   rep(6,30),rep(4,30),rep(11,30),rep(12,30),
+                   rep(13,30))
+
+colnames(index.m) <- c('Features','Cohort','value','rank','xrank')
+Cfitplot<- ggplot(index.m, aes(y=reorder(Features,-rank,order=TRUE),x=reorder(Cohort,xrank,order=TRUE),fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+######c aggre index ####
+cindex_aggr <- list()
+for ( c in unique(data$Cohort)[-5]){
+  test <- subset(data,data$Cohort==c)
+  #test$Exclusion <- rev(test$Exclusion)
+  #test$TAM.M2 <- rev(test$TAM.M2)
+  idx <-vector()
+  ##mean Aggr###
+  tmp_rank <- apply(test[,test_feature], 2, rank, ties.method='random')
+  #tmp_rank <- as.data.frame(tmp_rank)
+  
+  tmp_rank[,'Exclusion'] <- rank(1/test$Exclusion,ties.method='random')
+  tmp_rank[,'TAM.M2'] <- rank(1/test$TAM.M2,ties.method='random')
+  
+  tmp<- concordance.index(rowMeans(tmp_rank),1/test[,'PFS'],test[,'PFS.Event'])$c.index
+  idx<- append(idx, tmp)
+
+  ###rankAggr###
+  out <- list()
+  for (i in test_feature){
+    tmp <- tmp_rank[,i]
+    names(tmp) <- rownames(test)
+    new <- rep(NA, nrow(mat))
+    for (j in 1:length(tmp)){ new[tmp[j]] <- names(tmp[j])}
+    out[[i]] <- new
+  }
+  aggr <- aggregateRanks(out)
+  aggr.mean <- aggregateRanks(out,method='geom.mean')
+  aggr.stuart <- aggregateRanks(out,method='stuart')
+  newrank <- vector()
+  newrank_mean <- vector()
+  newrank_stuart <- vector()
+  
+  names<- rownames(test)
+  #print(mat)
+  for(x in 1:length(names)) { 
+    newrank <- append(newrank,which(aggr$Name == names[x]))
+    newrank_mean <- append(newrank_mean ,which(aggr.mean$Name == names[x]))
+    newrank_stuart <- append( newrank_stuart,which(aggr.stuart$Name == names[x]))
+  }
+  
+  idx<-append(idx,concordance.index(newrank,1/test[,'PFS'],test[,'PFS.Event'])$c.index)
+  idx<-append(idx,concordance.index(newrank_mean,1/test[,'PFS'],test[,'PFS.Event'])$c.index)
+  idx<-append(idx,concordance.index(newrank_stuart,1/test[,'PFS'],test[,'PFS.Event'])$c.index)
+  
+  names(idx) <- c('Naive_Mean','Aggr_RRA','Aggr_Mean','Aggr_stuart')
+  cindex_aggr[[c]] <- idx
+}
+
+cindex_aggr_mat <- as.data.frame(cindex_aggr)
+index.m<-melt(as.matrix(cindex_aggr_mat))
+index.m$xrank <- c(rep(7,4),rep(9,4),
+                   rep(3,4),rep(6,4),rep(9,4),
+                   rep(6,4),rep(4,4),rep(11,4),rep(12,4),
+                   rep(13,4))
+colnames(index.m) <- c('Features','Cohort','value','xrank')
+Caggrplot<- ggplot(index.m, aes(y=Features,x=reorder(Cohort,xrank,order=TRUE),fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+
+Combind_cindex <- rbind(cindex_mat,cindex_fit_mat,cindex_aggr_mat)
+Combind_cindex.m <- melt(as.matrix(Combind_cindex))
+Combind_cindex.m$rank <- c(mat$rank,(mat$rank+16),rep(33,292))
+colnames(Combind_cindex.m) <- c('Features','Cohort','value','rank')
+Cplot<- ggplot(Combind_cindex.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+cindex <- list()
+for ( c in unique(data$Cohort)[-4]){
+  test <- subset(data,data$Cohort==c)
+  test$Exclusion <- rev(test$Exclusion)
+  test$TAM.M2 <- rev(test$TAM.M2)
+  rank_tmp <- apply(test[,features_names], 2, rank, ties.method='min')
+  idx <- features_names
+  cindex[[c]] <- idx
+}
+
+
+
+
+
+
+
+  
+for(f in features){
+  data[is.na(data[,f]),f] <- 0
+  formula = as.formula(paste('Surv(PFS, PFS.Event)~',f))
+  fit <- coxph(formula, data = data)
+  name <- paste(f,'.rds',sep ='')
+  saveRDS(fit,name)
+}
+
+
+pred_cox_all <- list()
+pred_idx_all <- list()
+for ( c in unique(data$Cohort)[-3]){
+  test <- subset(data,data$Cohort==c)
+  train <- subset(data,data$Cohort!=c)
+  pred_f <- vector()
+  c_pred <- vector()
+  formula= as.formula(paste('Surv(PFS, PFS.Event)~',paste(features_names,collapse = '+')))
+  fit <- coxph(formula,data = train)
+  print (fit$concordance[6])
+  pred <- predict(fit,test)
+  #if (mat[f,'ICB_z'] > 0) {pred <- rev(pred)}
+  idx <- concordance.index(pred,test[,'PFS'],test[,'PFS.Event'] )$c.index
+  c_pred <- append(c_pred,idx)
+  pred_cox_all[[c]] <- pred
+  pred_idx_all[[c]] <- c_pred
+}
+
+
+pred_cox <- list()
+pred_idx <- list()
+for ( c in unique(data$Cohort)[-3]){
+  test <- subset(data,data$Cohort==c)
+  train <- subset(data,data$Cohort!=c)
+  pred_f <- vector()
+  c_pred <- vector()
+    for (f in features_names){
+  formula= as.formula(paste('Surv(PFS, PFS.Event)~',f))
+  fit <- coxph(formula,data = train)
+  #print (fit$concordance[6])
+  pred <- predict(fit,test)
+  if (mat[f,'ICB_z'] > 0) {pred <- rev(pred)}
+  pred_f <-cbind(pred,pred_f)
+    }
+  colnames(pred_f) <- features_names
+  #R<- as.rankings(t(pred_f))
+  #A <- na.omit(aggregate(R))
+  #mod <- PlackettLuce(A)
+  #qv <- qvcalc(mod)$qvframe$estimate
+  rank <- rankdata(pred_f)
+  idx <- concordance.index(rank,test[,'PFS'],test[,'PFS.Event'] )$c.index
+  c_pred <- append(c_pred,idx)
+  pred_cox[[c]] <- pred_f
+  pred_idx[[c]] <- c_pred
+}
+
+
+
+
+
+index2 <-  rbind(as.data.frame(pred_idx),as.data.frame(pred_idx_all))
+#rownames(index2)<- features_names
+rownames(index2)<- c('Aggre','Non-Aggre')
+
+index2.m<-melt(as.matrix(index2))
+colnames(index2.m) <- c('Features','Cohorts','value')
+ggplot(index2.m, aes(y=Features,x=Cohorts,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+
+
+for (f in features_all[5:length(features_all)]){
+  #p_box <- ggplot(data, aes_string(y=f,x='Cohort',color='Cohort')) +
+  #geom_boxplot()+ ylab(f)+
+  #theme(axis.title.x=element_blank(),
+  #      axis.text.x = element_text(angle = 90))+
+  #geom_jitter(shape=16, position=position_jitter(0.2))+
+  #theme(legend.position = "none")
+  
+  splots <- list()
+  for ( c in unique(data$Cohort)){
+       tmp <- subset(data,data$Cohort==c)
+       tmp[is.na(tmp[,f]),f] <- 0
+  
+        if(tmp$Cancer == 'KIRC' ){
+           tmp[tmp[,f]< median(tmp[,f]),'group'] <- 1
+            tmp[tmp[,f] >= median(tmp[,f]),'group'] <- 2
+           } else {
+           tmp[tmp[,f]> median(tmp[,f]),'group'] <- 1
+           tmp[tmp[,f] <= median(tmp[,f]),'group'] <- 2
+          }
+
+  fit <- survfit(Surv(PFS, PFS.Event) ~ group, data = tmp)
+  
+  #splots[[c]] <- ggsurvplot(fit, data = tmp,pval=TRUE,title=c,
+  #                          risk.table=FALSE, pval.size=5, risk.table.title = '')
+  }
+
+  
+   #p2 <- arrange_ggsurvplots(splots[9:11], print = FALSE,
+  #                  ncol = 3, nrow =1, risk.table.height = 0.2)
+   #p3 <- arrange_ggsurvplots(splots[1:8], print = FALSE,
+    #                      ncol = 4, nrow =2, risk.table.height = 0.2)
+   #gp2 <- grid.arrange(grobs=p2)
+   #gp3 <- grid.arrange(grobs=p3)
+   #p<- grid.arrange(p_box,grid.arrange(grobs=p2),grid.arrange(grobs=p3),nrow=3)
+   #ggsave(paste(f,'.pdf',sep=''),p, width = 15,height = 20)
+}
+
+pvals <- list()
+for ( c in unique(data$Cohort)){
+  tmp <- subset(data,data$Cohort==c)
+  p <- vector()
+ 
+    for(f in features_all){
+      tmp[is.na(tmp[,f]),f] <- 0
+    if(unique(tmp$Cancer) == 'KIRC' ){
+      tmp[tmp[,f]< median(tmp[,f]),'group'] <- 1
+      tmp[tmp[,f] >= median(tmp[,f]),'group'] <- 2
+    } else {
+      tmp[tmp[,f]> median(tmp[,f]),'group'] <- 1
+      tmp[tmp[,f] <= median(tmp[,f]),'group'] <- 2
+    }
+    fit <- survfit(Surv(PFS, PFS.Event) ~ group, data = tmp)
+    pval <- surv_pvalue(fit)$pval
+    p<- append(p,pval)
+  }
+  pvals[[c]] <- p
+}
+pvalue <- as.data.frame(pvals)
+rownames(pvalue) <- features_all
+
+
+idx <- which(str_detect(features_all, "CIBERSORT$"))
+sub_features <- features_all[-idx]
+tmp_f = paste(sub_features ,collapse = '+')
+formula = as.formula(paste('Surv(PFS, PFS.Event)~',tmp_f))
+
+
+data <- subset(dat,dat$Cohort != 'Prat2017_PD1_HNSC_Nanostring' &
+                 dat$Cohort != 'Prat2017_PD1_SCLC_Nanostring' &
+                 dat$Cohort != 'Prat2017_PD1_NSCLC_Nanostring' &
+                 dat$Cohort != 'Prat2017_PD1_Melanoma_Nanostring' &
+                 #dat$Cohort != 'Braun2020_PD1_Kidney_RNASeq_Clear' &
+                 dat$Cohort != 'Mariathasan2018_PDL1_Bladder_RNASeq_mUC'
+)
+
+data$gd.Tcell <- rowMeans(data[,c('gd.Tcell.GSM349848.479','gd.Tcell.GSM349849.480')])
+
+zscore<- list()
+pvals_cox <- list()
+c_index <- list()
+for ( c in unique(data$Cohort)){
+#for( c in c('Prat2017_PD1_HNSC_Nanostring','Prat2017_PD1_SCLC_Nanostring','Prat2017_PD1_NSCLC_Nanostring' ,'Prat2017_PD1_Melanoma_Nanostring' ,'Braun2020_PD1_Kidney_RNASeq_Clear')){
+  tmp <- subset(data,data$Cohort==c)
+  tmp[is.na(tmp)] <- 0
+  p <- vector()
+  z <- vector()
+  ci <- vector()
+  for(f in colnames(icb_f)){
+    tmp[is.na(tmp[,f]),f] <- 0
+    #ind <- sample(c(TRUE, FALSE), nrow(tmp), replace=TRUE, prob=c(0.5, 0.5))
+    #train <- tmp[ind, ]
+    #test <- tmp[!ind, ]
+    formula = as.formula(paste('Surv(PFS, PFS.Event)~',f))
+    fit <- coxph(formula, data = tmp)
+    coeff <- as.data.frame(summary(fit)$coefficients)
+    #pval <- coeff$`Pr(>|z|)`
+    pval <- fit$wald.test[1]
+    zs <- coeff$z
+    p<- append(p,pval)
+    z<- append(z,zs)
+    ci <- append(ci,fit$concordance[6])
+  }
+  pvals_cox[[c]] <- p
+  zscore[[c]] <- z
+  c_index[[c]] <- ci
+}
+
+zscore <- as.data.frame(zscore)
+rownames(zscore) <- colnames(icb_f)
+zscore <- zscore[colnames(icb_f),]
+zscore <- zscore[sub_features,]
+
+pvals_cox<- as.data.frame(pvals_cox)
+rownames(pvals_cox) <- colnames(icb_f)
+pvals_cox <- pvals_cox[colnames(icb_f),]
+pvals_cox <- pvals_cox[sub_features,]
+
+c_index<- as.data.frame(c_index)
+rownames(c_index) <- colnames(icb_f)
+c_index <- c_index[colnames(icb_f),]
+c_index <- c_index[sub_features,]
+
+
+
+tcga_cohort <- c('TCGA.LUAD','TCGA.LUSC','TCGA.SKCM')
+tcga_pvalue <- pvalue[sub_features,tcga_cohort]
+tcga_zscore <- zscore[sub_features,tcga_cohort]
+tcga_pvalue[is.na(tcga_pvalue)] <- 1
+tcga_zscore[is.na(tcga_zscore)] <- 0
+tcga_p <- c()
+tcga_z <- c()
+weight <- c(62,31,29)
+for(f in sub_features){
+  #testp <- sumz(as.numeric(tcga_pvalue[f,]), weights = weight, na.action = na.fail)$p
+  testp <- sumlog(as.numeric(tcga_pvalue[f,]))$p
+  testz <- sum(as.numeric(tcga_zscore[f,]) * weight) / sqrt(sum(weight**2))
+  tcga_p<- append(tcga_p,testp)
+  tcga_z<- append(tcga_z,testz)
+}
+tcga_pvalue$combinedp <-  tcga_p
+tcga_zscore$combinedz <-  tcga_z
+
+
+icb_cohort <- setdiff(colnames(zscore),tcga_cohort)
+icb_cohort <- icb_cohort[c(-3)]
+icb_pvalue <- pvalue[sub_features,icb_cohort]
+icb_zscore <- zscore[sub_features,icb_cohort]
+icb_pvalue[is.na(icb_pvalue)] <- 1
+icb_zscore[is.na(icb_zscore)] <- 0
+icb_p <- c()
+icb_z <- c()
+#weight <- c(33,25,295,42,15,32,41,74)
+weight <- c(33,25,42,15,32,41,74) #PFS
+#weight <- c(25,42,15,32,41,74) #PFS without Miao
+#weight <- c(33,25,27,42,15,32,41,74)
+for(f in sub_features){
+  testp <- sumlog(as.numeric(icb_pvalue[f,]))$p
+  #testp <- sumz(as.numeric(icb_pvalue[f,]), weights = weight, na.action = na.fail)$p
+  testz <- sum(icb_zscore[f,] * weight) / sqrt(sum(weight**2))
+  icb_p<- append(icb_p,testp)
+  icb_z<- append(icb_z,testz)
+}
+icb_pvalue$combinedp <-  icb_p
+icb_zscore$combinedz <-  icb_z
+
+tmp_p <- as.data.frame(cbind(icb_pvalue$combinedp,tcga_pvalue$combinedp))
+tmp_z <- as.data.frame(cbind(icb_zscore$combinedz,tcga_zscore$combinedz))
+tmp <- cbind(tmp_p,tmp_z)
+#mat_zp <- tmp
+rownames(mat_zp) <- sub_features
+colnames(mat_zp) <-  c('ICB_p','TCGA_p','ICB_z','TCGA_z')
+
+#tmp[is.na(tmp)] <- 0.999
+feature_icb <- rownames(subset(tmp, tmp$ICB_p <= 0.05 ))
+feature_tcga <- rownames(subset(tmp, tmp$TCGA_p <= 0.05 ))
+#feature_tcga_sub <- feature_tcga[c(-1,-4,-7,-8,-9,-10,-11)]
+#feature_tcga_sub <- feature_tcga[c(-4,-11)]
+
+feature <- c(unique(c(feature_icb,feature_tcga)),'CD274.expression')
+#feature <- unique(c(feature_icb,feature_tcga_sub))
+
+feature_f = paste(c(feature,'TMB_Group'),collapse = '+')
+formula_all = as.formula(paste('Surv(PFS, PFS.Event)~',feature_f))
+
+feature_f = paste(feature_icb,collapse = '+')
+formula_icb = as.formula(paste('Surv(PFS, PFS.Event)~',feature_f))
+
+feature_f = paste(feature_icb,collapse = '+')
+formula_rank= as.formula(paste('Surv(PFS, PFS.Event)~',feature_f))
+
+
+
+#combined_c <- list()
+#combined_c_qv <- list()
+pred_age <-list()
+#pred_icb <-list()
+#pred_tcga <-list()
+#train_rank <- list()
+
+data$gd.Tcell <- rowMeans(data[,c('gd.Tcell.GSM349848.479','gd.Tcell.GSM349849.480')])
+feature <- unique(c(feature_icb,feature_tcga))
+exclude<-c("Surface.gene..receptor.",
+           "CTNNB1_TCGA.LUAD_RP_selected_sig",
+           "NK.cell_XCELL",
+           "NBR1_TCGA.LUAD_sig_100",
+           "MSI.Score","MSIsensor",
+           "Macrophage.M1_QUANTISEQ",
+           "T.Entropy_MiXCR",
+           "T.cell.CD4...non.regulatory._QUANTISEQ",
+           "NBR1_TCGA.LUSC_sig_100",
+           "EMT_Mak2017",
+           "CTNNB1_TCGA.LUSC_RP_selected_sig",
+           "NK.cell_QUANTISEQ",
+           "gd.Tcell.GSM349848.479",
+           "gd.Tcell.GSM349849.480",
+           'uncharacterized.cell_QUANTISEQ'
+           )
+
+select_features <-c(exclude,features_names)
+select_features <- select_features[-length(select_features)]
+pvmatrix <- tmp[select_features,]
+matrix <- na.omit(cbind(tmp[,3:4],zscore))
+
+#zscore_sub <- zscore[select_features,]
+#zscore_other <- zscore[select_features,] ###
+
+#icb_col <-  matrix[,c(icb_cohort,'Prat2017_PD1_HNSC_Nanostring','Prat2017_PD1_SCLC_Nanostring','Prat2017_PD1_NSCLC_Nanostring' ,'Prat2017_PD1_Melanoma_Nanostring' ,'Braun2020_PD1_Kidney_RNASeq_Clear')]
+icb_col <-  matrix[,c(icb_cohort,'Braun2020_PD1_Kidney_RNASeq_Clear')]
+tcga_col <- matrix[,tcga_cohort]
+all_z <- matrix[,c('ICB_z','TCGA_z')]
+
+matrix <-(cbind(mat_zp[,3:4],zscore))
+mat_1 <- na.omit(subset(matrix,matrix$ICB_z <= 0))
+mat_2 <- na.omit(subset(matrix,matrix$ICB_z > 0))
+rank_1 <- rank(tmp[rownames(mat_1),]$ICB_z,ties.method='random')
+rank_2 <- rank(tmp[rownames(mat_2),]$ICB_z,ties.method='random')
+
+mat_2 <- na.omit(matrix[test_feature,])
+matrix.m <-melt(as.matrix(mat_2))
+rank_2 <- rank(mat_zp[rownames(mat_2),]$ICB_z,ties.method='random')
+matrix.m$rank <- rep(rank_2,length(unique(matrix.m$X2)))
+#matrix.m$xrank <- c(rep(1,31),rep(2,31),rep(3,31),rep(4,31),
+#                    rep(5,31),rep(10,31),rep(12,31),rep(8,31),
+#                    rep(15,31),rep(11,31),rep(9,31),rep(7,31),
+#                    rep(17,31),rep(16,31),rep(14,31),rep(13,31),rep(6,31))
+
+#matrix.m$xrank <- c(rep(1,58),rep(2,58),rep(7,58),rep(9,58),
+#                    rep(3,58),rep(6,58),rep(10,58),rep(9,58),
+#                    rep(6,58),rep(4,58),rep(11,58),rep(12,58),
+#                   rep(13,58))
+
+matrix.m$xrank <- c(rep(1,nrow(mat_2)),rep(2,nrow(mat_2)),rep(7,nrow(mat_2)),rep(9,nrow(mat_2)),
+                    rep(3,nrow(mat_2)),rep(6,nrow(mat_2)),rep(10,nrow(mat_2)),rep(9,nrow(mat_2)),
+                    rep(6,nrow(mat_2)),rep(4,nrow(mat_2)),rep(11,nrow(mat_2)),rep(12,nrow(mat_2)),
+                   rep(13,nrow(mat_2)))
+
+
+colnames(matrix.m) <- c('Features','Cohort','value','rank','xrank')
+ggplot(na.omit(matrix.m), aes(y=reorder(Features,-rank,order=TRUE),x=reorder(Cohort,xrank,order=TRUE),fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90,size=8))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=8))
+
+
+
+colnames(icb_col)
+z.m <- melt(as.matrix(all_z))
+z.m$rank <- rep(rank,2)
+colnames(z.m) <- c('Features','Cohort','value','rank')
+p3 <- ggplot(z.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+icb.m <- melt(as.matrix(icb_col))
+icb.m$rank <- rep(rank,12)
+colnames(icb.m) <- c('Features','Cohort','value','rank')
+p1 <- ggplot(icb.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+tcga.m <- melt(as.matrix(tcga_col))
+tcga.m$rank <- rep(rank,3)
+colnames(tcga.m) <- c('Features','Cohort','value','rank')
+p2 <- ggplot(tcga.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+x_rank
+
+
+
+
+
+
+
+
+
+tmp_f <- tmp[feature,]
+idx <- which(str_detect(feature, "CIBERSORT$"))
+tmp_f <- tmp_f [-idx,]
+tmp_f <- tmp_f[order(tmp_f$ICB_z),]
+dat.m<-melt(as.matrix(tmp_f[,3:4]))
+rank <- c(seq(1:nrow(tmp_f)),rep(nrow(tmp_f),nrow(tmp_f)))
+dat.m$rank <- rank
+colnames(dat.m) <- c('Features','Cohort','value','rank')
+ggplot(dat.m, aes(y=reorder(Features,-rank,order=TRUE),x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+index <- c_index[feature,-3]
+index.m<-melt(as.matrix(index))
+colnames(index.m) <- c('Features','Cohort','value')
+ggplot(index.m, aes(y=Features,x=Cohort,fill=value)) + 
+  geom_tile()+theme(axis.text.x = element_text(angle = 90))+
+  scale_fill_gradient2(mid = "white",high = "red",low='blue' ,midpoint = 0.5,na.value = "grey50") +
+  theme( axis.title.y=element_blank(), axis.text.y = element_text(size=10))
+
+#index2<- t(rbind(as.data.frame(all_train),as.data.frame(icb_train),as.data.frame(pred_all),as.data.frame(pred_icb),as.data.frame(train_rank)))
+#colnames(index2) <- c('all_train','icb_train','all_pred','icb_pred','rank_train')
+
+#index2<- t(rbind(as.data.frame(pred_age),as.data.frame(pred_all),as.data.frame(pred_icb)))
+
+
+
+#TCF7<- TCF7[order(-TCF7$TCF7),]
+#top_genes = intersect((intersect(TCF7[,3],colnames(icb))),colnames(SKCM))
+#cols <- c(top_genes, "B.Entropy_MiXCR" , "T.Entropy_MiXCR" ,'Cohort','PFS','PFS.Event','Timepoint','OS','OS.Event')
+dat <- rbind(icb[,cols],LUAD[,cols],LUSC[,cols],SKCM[,cols])
+dat <- subset(dat,dat$Cohort != 'Braun2020_PD1_Kidney_RNASeq_Clear' & dat$Timepoint == 'Pre' & dat$PFS != 'NA')
+#dat[is.na(dat)] <- 0
+dat_norm <- dat %>% group_by(Cohort) %>% mutate_at(top_genes, scale)
+dat_norm[is.na(dat_norm)] <- 0
+dat_norm$TCF7_sum_scale <- rowSums(dat_norm[,top_genes[1:20]] * TCF7$TCF7[1:20])
+dat_norm$TCF7_average_scale <- rowMeans(dat_norm[,top_genes[1:20]])
+
+ggplot(dat_norm, aes(y=TCF7_sum_scale,x=Cohort,color=Cohort)) +
+  geom_boxplot()+ ylab('TCF7_sum_scale')+
+  theme(axis.title.x=element_blank(),
+        axis.text.x = element_text(angle = 90))+
+  geom_jitter(shape=16, position=position_jitter(0.2))+
+  theme(legend.position = "none")
+
+splots_norm <- list()
+for ( c in unique(dat_norm$Cohort)[-1]){
+  tmp <- subset(dat_norm,dat_norm$Cohort==c)
+  tmp[tmp$TCF7_sum_scale > median(tmp$TCF7_sum_scale),'group'] <- 1
+  tmp[tmp$TCF7_sum_scale<= median(tmp$TCF7_sum_scale),'group'] <- 2
+  fit <- survfit(Surv(PFS, PFS.Event) ~ group, data = tmp)
+  splots_norm[[c]] <- ggsurvplot(fit, data = tmp,pval=TRUE,title=c,
+                            risk.table=FALSE, pval.size=6, risk.table.title = '',font.main=10)
+}
+
+tmpp <- arrange_ggsurvplots(splots_norm[11:13], print = FALSE,
+                          ncol = 3, nrow =1, risk.table.height = 0.2)
+
+tmppp <- arrange_ggsurvplots(splots_norm[1:10], print = FALSE,
+                            ncol = 5, nrow =2, risk.table.height = 0.2)
+
+
+
+tmp = paste(colnames(icb_f),collapse = '+')
+formula = as.formula(paste('Surv(PFS, PFS.Event)~',tmp))
+res.cox <- coxph(formula,data = subset(dat,dat$Cohort=='Gide2019_PD1_Melanoma_RNASeq'))
+summary(res.cox)
+
+
+
+
+col_all <- intersect(TCF7$gene,colnames(LUAD))
+TCGA <- rbind(LUAD,LUSC,SKCM)
+TCGA[is.na(TCGA)] <- 0
+tmp1 <- cbind(rowMeans(TCGA[,col_all]),TCGA$Cohort)
+
+col_all <-  intersect(TCF7$gene,colnames(icb))
+tmp2 <- icb[,col_all]
+tmp2[is.na(tmp2)] <- 0
+tmp2 <- cbind(rowSums(tmp2)/length(col_all),icb$Cohort)
+dat_average <- as.data.frame(rbind(tmp1,tmp2))
+colnames(dat_average) <- c('Average','Cohort')
+dat_average$Average <- as.numeric(dat_average$Average)
+dat_average$Cohort <- as.factor(dat_average$Cohort)
+dat_average <- subset(dat_average,dat_average$Cohort != 'Braun2020_PD1_Kidney_RNASeq_Clear')
+dat_average_norm <- dat_average %>% group_by(as.factor(Cohort)) %>% mutate_at('Average', scale)
+
+
+
+
+
+
+
+
