@@ -26,6 +26,7 @@ comparison-across-sample
 video-demo
 Response
 tide
+cold-and-hot-tumors
 t-cell-dysfunction
 t-cell-exclusion
 microsatelite-instability-msi

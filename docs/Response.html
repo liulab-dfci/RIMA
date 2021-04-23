@@ -164,9 +164,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="Response.html"><a href="Response.html"><i class="fa fa-check"></i><b>7</b> Immune Response</a><ul>
 <li class="chapter" data-level="7.1" data-path="Response.html"><a href="Response.html#tide"><i class="fa fa-check"></i><b>7.1</b> TIDE</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>7.1.1</b> T cell dysfunction</a></li>
-<li class="chapter" data-level="7.1.2" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>7.1.2</b> T cell exclusion</a></li>
-<li class="chapter" data-level="7.1.3" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.1.3</b> Microsatelite instability (MSI)</a></li>
+<li class="chapter" data-level="7.1.1" data-path="Response.html"><a href="Response.html#cold-and-hot-tumors"><i class="fa fa-check"></i><b>7.1.1</b> Cold and hot tumors</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>7.1.2</b> T cell dysfunction</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>7.1.3</b> T cell exclusion</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.1.4</b> Microsatelite instability (MSI)</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="Response.html"><a href="Response.html#comparison-between-responders-and-non-reponders"><i class="fa fa-check"></i><b>7.2</b> Comparison between responders and non-reponders</a></li>
 <li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#video-demo-1"><i class="fa fa-check"></i><b>7.3</b> Video demo</a></li>
@@ -206,18 +207,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Cancer immunotherapy utilizing immune checkpoint blockade (ICB) has gained excellent progression in treating advanced-stage patients. However, only a small fraction of patients achieved a response to the immunotherapy due to the complexity and heterogeneity of the TME. An increasing number of biomarkers have widely been used to estimate the clinical effectiveness of immunotherapy, such as ICB-related gene signatures (PD1, PDL1, CTLA4), tumor-infiltrating lymphocytes, tumor mutation burden, neoantigens, microsatellite instability (MSI), and serum markers. Nevertheless, there is an urgent need to build a method integrating the multiple dynamic factors to characterize TME and predict immunotherapy response. Currently, two major approaches have been effectively utilized in immunotherapy response prediction. One is models constructed using transcriptome expression profiles of immune checkpoint or T-cell activity, and the other one is artificial intelligence-based algorithms using imaging characteristics of lesions. For tumor RNA-seq data, <a href="http://tide.dfci.harvard.edu/">TIDE</a> models tumor immune evasion by combining gene signatures estimating T cell dysfunction and exclusion to predict ICB response, which may provide critical insights to guide clinical treatment. This computational framework computes the TIDE score for tumors and separates them into responders and non-responders. In detail, TIDE provides T cell dysfunction score, T cell exclusion score, cytotoxic T lymphocyte score, and scores of cell types restricting T cell infiltration in TME, including cancer-associated fibroblasts (CAF), myeloid-derived suppressor cells (MDSC), and M2 macrophages. These metrics scores help the biologists understand the TME status or T cell functions of interest. In this case, tumor RNA-seq profiling leverages the power of gene signature expression for quantifying the dynamic TME status, providing guidance of immunotherapy response prediction for clinicians.</p>
 <div id="tide" class="section level2">
 <h2><span class="header-section-number">7.1</span> TIDE</h2>
-<p>TIDE (<a href="https://github.com/liulab-dfci/TIDEpy" class="uri">https://github.com/liulab-dfci/TIDEpy</a>) is a transcriptome biomarker of ICB response by modeling tumor immune
+<p>TIDE (<a href="https://github.com/liulab-dfci/TIDEpy" class="uri">https://github.com/liulab-dfci/TIDEpy</a>) is a transcriptome biomarker database of ICB response by modeling tumor immune
 dysfunction and exclusion. The statistical model of TIDE was trained on clinical tumor profiles without ICB treatments since the immune evasion mechanisms in treatment naïve tumors are also likely to influence patient response to immunotherapies. The TIDE model has been applied to evaluate T cell dysfunction and exclusion signatures across over 33K samples in 188 tumor cohorts from well-curated databases, including TCGA, METABRIC, and PRECOG, as well as our in-house collections.<br />
 </p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WsBSi_sH-_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p><br />
-s
-### Cold and hot tumors
-TIDE estimate the cytotoxic T Lymphocyte (CTL) level in tumor from the average expression of CD8A, CD8B, GZM, GZMB and PRF1 from treatment naïve tumors. ‘Hot tumors’ have above-average CTL values among all samples, while ‘Cold tumors’ have CTL values below average. TIDE score is the combination of T cell dysfunction estimated from hot tumors and T cell exclusion estimated from cold tumors.<br />
 </p>
+<div id="cold-and-hot-tumors" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Cold and hot tumors</h3>
+<p>TIDE estimate the cytotoxic T Lymphocyte (CTL) level in tumor from the average expression of CD8A, CD8B, GZM, GZMB and PRF1 from treatment naïve tumors. ‘Hot tumors’ have above-average CTL values among all samples, while ‘Cold tumors’ have CTL values below average. TIDE score is the combination of T cell dysfunction estimated from hot tumors and T cell exclusion estimated from cold tumors.<br />
+</p>
+</div>
 <div id="t-cell-dysfunction" class="section level3">
-<h3><span class="header-section-number">7.1.1</span> T cell dysfunction</h3>
+<h3><span class="header-section-number">7.1.2</span> T cell dysfunction</h3>
 <p>For hot tumors with high CTL values, the T cell dysfunction is modeled from Cox-PH repression in TIDE:<br />
 <span class="math display">\[
 Harzard = a*CTL+b*P+d*CTL*P
@@ -228,12 +231,12 @@ Dysfunction = \frac{d}{StdErr(d)}
 \]</span></p>
 </div>
 <div id="t-cell-exclusion" class="section level3">
-<h3><span class="header-section-number">7.1.2</span> T cell exclusion</h3>
+<h3><span class="header-section-number">7.1.3</span> T cell exclusion</h3>
 <p>For hot tumors with high CTL values, TIDE calculates T cell exclusion score to estimate the immune escape. The T cell exlclusion score is the average expression profile from cancer-associated fibroblasts (CAFs), myeloid-derived suppressor cells (MDSCs) and tumor-associated macrophages (TAMs), which are reported to restrict T cell infiltration in tumor.<br />
 </p>
 </div>
 <div id="microsatelite-instability-msi" class="section level3">
-<h3><span class="header-section-number">7.1.3</span> Microsatelite instability (MSI)</h3>
+<h3><span class="header-section-number">7.1.4</span> Microsatelite instability (MSI)</h3>
 <p>Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="Response.html#cb15-1"></a><span class="co">#Run MSIsensor2 </span></span>
 <span id="cb15-2"><a href="Response.html#cb15-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
