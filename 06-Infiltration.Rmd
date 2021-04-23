@@ -32,7 +32,15 @@ res_ciber <- CIBERSORT(sig_matrix, input, perm = cibersort_perm, QN = cibersort_
 head(res_ciber,3)
 ```
 ## TIMER
-<a href="http://cistrome.org/TIMER/">TIMER</a> uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, one of key steps is that TIMER selected the specific genes as immune signatures based on the correlation between gene expression and tumor purity. Note that the TIMER score can only be compared within samples, and the current version of TIMER supports 23 different TCGA cancer types.
+<a href="http://cistrome.org/TIMER/">TIMER</a> uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, one of key steps is that TIMER selected the specific genes as immune signatures based on the correlation between gene expression and tumor purity. \
+Tutorial of TIMER:\
+<iframe width="560" height="315" src="https://www.youtube.com/embed/94v8XboCrXU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+
+Tutorial of TIMER2:\
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2hmxioq1pJo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+
+Note that the TIMER score can only be compared within samples, and the current version of TIMER supports 23 different TCGA cancer types.
 ```{r,eval=FALSE}
 
 #load gene expression matrix 
@@ -75,6 +83,30 @@ res_epic = as.data.frame(deconvolute(df, "epic"))
 ```{r, eval=FALSE}
 #Run EPIC
 res_mcp = as.data.frame(deconvolute(df, "mcp_counter"))
+```
+
+
+## Comparison across cell type
+Using results from CIBERSORT abs mode as an example, we provide another two functions to do inter- or intra comparison.
+
+```{R}
+
+#extract the immune cell score from results of CIBERSORT
+res_ciber <- res_ciber[,1:22]
+
+#load plotfunction 
+source("plotfunction.R")
+
+#load metasheet for RIMA pipeline
+meta <- read.csv("metasheet.csv")
+
+#methods: CIBERSORT, quanTIseq, EPIC, MCP, xCell, TIMER
+hmap(ta = res_ciber, meta = meta, methods = "CIBERSORT", phenotype = "Responder")
+```
+
+## Comparison across sample
+```{R}
+boxfig(ta = res_ciber, meta = meta, methods = "CIBERSORT", phenotype = "Responder")
 ```
 
 ## Video demo
