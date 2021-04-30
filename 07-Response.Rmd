@@ -33,6 +33,8 @@ The input for TIDE is a normalized TPM matrix, the steps for normalization is:\
 2) Subtract the average across your samples.\
 
 ### Running TIDE
+TIDE supports cancer type specific analysis of melanoma and non-small cell lung cancer (NSCLC), our data is from glioblastoma multiforme (GBM), so we set -c as other cancer type and force TIDE to normalized the TPM matrix.\
+
 To run TIDE:
 ```
 tidepy -o TIDE_score.txt -c Other --force_cormalization tpm_convertID.txt

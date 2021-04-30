@@ -258,6 +258,8 @@ Dysfunction = \frac{d}{StdErr(d)}
 </div>
 <div id="running-tide" class="section level3">
 <h3><span class="header-section-number">7.1.5</span> Running TIDE</h3>
+<p>TIDE supports cancer type specific analysis of melanoma and non-small cell lung cancer (NSCLC), our data is from glioblastoma multiforme (GBM), so we set -c as other cancer type and force TIDE to normalized the TPM matrix.<br />
+</p>
 <p>To run TIDE:</p>
 <pre><code>tidepy -o TIDE_score.txt -c Other --force_cormalization tpm_convertID.txt
 </code></pre>
