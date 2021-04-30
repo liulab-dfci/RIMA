@@ -3,10 +3,13 @@
 Cancer immunotherapy utilizing immune checkpoint blockade (ICB) has gained excellent progression in treating advanced-stage patients. However, only a small fraction of patients achieved a response to the immunotherapy due to the complexity and heterogeneity of the TME. An increasing number of biomarkers have widely been used to estimate the clinical effectiveness of immunotherapy, such as ICB-related gene signatures (PD1, PDL1, CTLA4), tumor-infiltrating lymphocytes, tumor mutation burden, neoantigens, microsatellite instability (MSI), and serum markers. Nevertheless, there is an urgent need to build a method integrating the multiple dynamic factors to characterize TME and predict immunotherapy response. Currently, two major approaches have been effectively utilized in immunotherapy response prediction. One is models constructed using transcriptome expression profiles of immune checkpoint or T-cell activity, and the other one is artificial intelligence-based algorithms using imaging characteristics of lesions. For tumor RNA-seq data, <a href="http://tide.dfci.harvard.edu/">TIDE</a> models tumor immune evasion by combining gene signatures estimating T cell dysfunction and exclusion to predict ICB response, which may provide critical insights to guide clinical treatment. This computational framework computes the TIDE score for tumors and separates them into responders and non-responders. In detail, TIDE provides T cell dysfunction score, T cell exclusion score, cytotoxic T lymphocyte score, and scores of cell types restricting T cell infiltration in TME, including cancer-associated fibroblasts (CAF), myeloid-derived suppressor cells (MDSC), and M2 macrophages. These metrics scores help the biologists understand the TME status or T cell functions of interest. In this case, tumor RNA-seq profiling leverages the power of gene signature expression for quantifying the dynamic TME status, providing guidance of immunotherapy response prediction for clinicians.
 
 ## TIDE
-TIDE (https://github.com/liulab-dfci/TIDEpy) is a transcriptome biomarker database of ICB response by modeling tumor immune
+TIDE is a transcriptome biomarker database of ICB response by modeling tumor immune
 dysfunction and exclusion. The statistical model of TIDE was trained on clinical tumor profiles without ICB treatments since the immune evasion mechanisms in treatment naïve tumors are also likely to influence patient response to immunotherapies. The TIDE model has been applied to evaluate T cell dysfunction and exclusion signatures across over 33K samples in 188 tumor cohorts from well-curated databases, including TCGA, METABRIC, and PRECOG, as well as our in-house collections. \
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WsBSi_sH-_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+
+A command line TIDE is available at https://github.com/liulab-dfci/TIDEpy, to run TIDE
+
 
 ### Cold and hot tumors
 TIDE estimate the cytotoxic T Lymphocyte (CTL) level in tumor from the average expression of CD8A, CD8B, GZM, GZMB and PRF1 from treatment naïve tumors. ‘Hot tumors’ have above-average CTL values among all samples, while ‘Cold tumors’ have CTL values below average. TIDE score is the combination of T cell dysfunction estimated from hot tumors and T cell exclusion estimated from cold tumors. \
@@ -24,9 +27,26 @@ $$
 ### T cell exclusion
 For hot tumors with high CTL values, TIDE calculates T cell exclusion score to estimate the immune escape. The T cell exlclusion score is the average expression profile from cancer-associated fibroblasts (CAFs), myeloid-derived suppressor cells (MDSCs) and tumor-associated macrophages (TAMs), which are reported to restrict T cell infiltration in tumor. \
 
-### Microsatelite instability (MSI)
-Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input. 
+### Normaliztion
+The input for TIDE is a normalized TPM matrix, the steps for normalization is:\ 
+1) Do the log2(x+1) transformation.\
+2) Subtract the average across your samples.\
 
+### Running TIDE
+To run TIDE:
+```
+tidepy -o TIDE_score.txt -c Other --force_cormalization tpm_convertID.txt
+
+```
+Example outputs of TIDE:\
+
+``` {R}
+tide_res <- read.table("TIDE_score.txt",header=TRUE,sep='\t')
+print(tide_res)
+
+```
+## Microsatelite instability (MSI)
+Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input. 
 ```{r,eval=FALSE}
 #Run MSIsensor2 
 msisensor2 msi -M models_hg38 -t tumor.bam -o tumor
@@ -35,7 +55,29 @@ msisensor2 msi -M models_hg38 -t tumor.bam -o tumor
 Total_Number_of_Sites	Number_of_Somatic_Sites	%
 156	                    26	                   16.67
 ```
+
+
+Example outputs of combined MSI:
+``` {R}
+msi_res <- read.table("msi_score.txt",header=FALSE,sep='\t')
+print(msi_res)
+```
+
 ## Comparison between responders and non-reponders
+```{r,eval=FALSE, fig.height = 4}
+#read the metasheet
+metafile <- "metasheet.csv"
+
+#load ploting function
+source("Tideploting.R")
+
+cmpr_biomk(msi_path = msi_res, tide_path = tide_res, meta_path = metafile, phenotype = "Responder")
+
+```
+```{r fig.align='center', echo=FALSE, fig.cap='Comparision of biomarkers between R and NR'}
+knitr::include_graphics('images/response.png', dpi = NA)
+```
+
 
 ## Video demo
 

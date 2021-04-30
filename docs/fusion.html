@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Fusion | Tutorial of RNA-seq tumor immunity analysis</title>
+  <title>Chapter 10 Fusion | Tutorial of RNA-seq tumor immunity analysis</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Fusion | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:title" content="Chapter 10 Fusion | Tutorial of RNA-seq tumor immunity analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,14 +16,14 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Fusion | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta name="twitter:title" content="Chapter 10 Fusion | Tutorial of RNA-seq tumor immunity analysis" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
 
 
 
-<meta name="date" content="2021-04-23" />
+<meta name="date" content="2021-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="Neoantigen.html"/>
-
+<link rel="next" href="microbiome.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -150,7 +150,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>3.5</b> Video demo of RIMA</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>4</b> Differential gene analysis</a></li>
-<li class="chapter" data-level="5" data-path="Repertoire.html"><a href="Repertoire.html"><i class="fa fa-check"></i><b>5</b> Immune repertoire</a></li>
+<li class="chapter" data-level="5" data-path="Repertoire.html"><a href="Repertoire.html"><i class="fa fa-check"></i><b>5</b> Immune repertoire</a><ul>
+<li class="chapter" data-level="5.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4"><i class="fa fa-check"></i><b>5.1</b> TRUST4</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="Repertoire.html"><a href="Repertoire.html#clonotypes-per-kilo-reads-cpk"><i class="fa fa-check"></i><b>5.1.1</b> Clonotypes per kilo-reads (CPK)</a></li>
+<li class="chapter" data-level="5.1.2" data-path="Repertoire.html"><a href="Repertoire.html#tcr-and-bcr-entropy"><i class="fa fa-check"></i><b>5.1.2</b> TCR and BCR entropy</a></li>
+<li class="chapter" data-level="5.1.3" data-path="Repertoire.html"><a href="Repertoire.html#tcr-and-bcr-clonality"><i class="fa fa-check"></i><b>5.1.3</b> TCR and BCR clonality</a></li>
+<li class="chapter" data-level="5.1.4" data-path="Repertoire.html"><a href="Repertoire.html#fraction-of-reads-mapped-to-tcr-and-bcr"><i class="fa fa-check"></i><b>5.1.4</b> Fraction of reads mapped to TCR and BCR</a></li>
+<li class="chapter" data-level="5.1.5" data-path="Repertoire.html"><a href="Repertoire.html#somatic-hypermutation-rate-of-bcr"><i class="fa fa-check"></i><b>5.1.5</b> Somatic hypermutation rate of BCR</a></li>
+<li class="chapter" data-level="5.1.6" data-path="Repertoire.html"><a href="Repertoire.html#ig-frequency"><i class="fa fa-check"></i><b>5.1.6</b> Ig frequency</a></li>
+<li class="chapter" data-level="5.1.7" data-path="Repertoire.html"><a href="Repertoire.html#video-demo"><i class="fa fa-check"></i><b>5.1.7</b> Video demo</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>6</b> Immune Infiltration</a><ul>
 <li class="chapter" data-level="6.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>6.1</b> Cibersort</a></li>
 <li class="chapter" data-level="6.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>6.2</b> TIMER</a></li>
@@ -160,28 +170,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>6.6</b> MCP-counter</a></li>
 <li class="chapter" data-level="6.7" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-cell-type"><i class="fa fa-check"></i><b>6.7</b> Comparison across cell type</a></li>
 <li class="chapter" data-level="6.8" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-sample"><i class="fa fa-check"></i><b>6.8</b> Comparison across sample</a></li>
-<li class="chapter" data-level="6.9" data-path="Infiltration.html"><a href="Infiltration.html#video-demo"><i class="fa fa-check"></i><b>6.9</b> Video demo</a></li>
+<li class="chapter" data-level="6.9" data-path="Infiltration.html"><a href="Infiltration.html#video-demo-1"><i class="fa fa-check"></i><b>6.9</b> Video demo</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="Response.html"><a href="Response.html"><i class="fa fa-check"></i><b>7</b> Immune Response</a><ul>
 <li class="chapter" data-level="7.1" data-path="Response.html"><a href="Response.html#tide"><i class="fa fa-check"></i><b>7.1</b> TIDE</a><ul>
 <li class="chapter" data-level="7.1.1" data-path="Response.html"><a href="Response.html#cold-and-hot-tumors"><i class="fa fa-check"></i><b>7.1.1</b> Cold and hot tumors</a></li>
 <li class="chapter" data-level="7.1.2" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>7.1.2</b> T cell dysfunction</a></li>
 <li class="chapter" data-level="7.1.3" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>7.1.3</b> T cell exclusion</a></li>
-<li class="chapter" data-level="7.1.4" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.1.4</b> Microsatelite instability (MSI)</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Response.html"><a href="Response.html#normaliztion"><i class="fa fa-check"></i><b>7.1.4</b> Normaliztion</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Response.html"><a href="Response.html#running-tide"><i class="fa fa-check"></i><b>7.1.5</b> Running TIDE</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="Response.html"><a href="Response.html#comparison-between-responders-and-non-reponders"><i class="fa fa-check"></i><b>7.2</b> Comparison between responders and non-reponders</a></li>
-<li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#video-demo-1"><i class="fa fa-check"></i><b>7.3</b> Video demo</a></li>
+<li class="chapter" data-level="7.2" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.2</b> Microsatelite instability (MSI)</a></li>
+<li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#comparison-between-responders-and-non-reponders"><i class="fa fa-check"></i><b>7.3</b> Comparison between responders and non-reponders</a></li>
+<li class="chapter" data-level="7.4" data-path="Response.html"><a href="Response.html#video-demo-2"><i class="fa fa-check"></i><b>7.4</b> Video demo</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="Neoantigen.html"><a href="Neoantigen.html"><i class="fa fa-check"></i><b>8</b> Neoantigen Analysis</a><ul>
-<li class="chapter" data-level="8.1" data-path="Neoantigen.html"><a href="Neoantigen.html#hla-calling"><i class="fa fa-check"></i><b>8.1</b> HLA calling</a></li>
-<li class="chapter" data-level="8.2" data-path="Neoantigen.html"><a href="Neoantigen.html#somatic-mutation"><i class="fa fa-check"></i><b>8.2</b> Somatic mutation</a></li>
-<li class="chapter" data-level="8.3" data-path="Neoantigen.html"><a href="Neoantigen.html#neoantigen-identification"><i class="fa fa-check"></i><b>8.3</b> Neoantigen identification</a></li>
+<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Calling</a></li>
+<li class="chapter" data-level="9" data-path="Neoantigen.html"><a href="Neoantigen.html"><i class="fa fa-check"></i><b>9</b> Neoantigen Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="Neoantigen.html"><a href="Neoantigen.html#somatic-mutation"><i class="fa fa-check"></i><b>9.1</b> Somatic mutation</a></li>
+<li class="chapter" data-level="9.2" data-path="Neoantigen.html"><a href="Neoantigen.html#neoantigen-identification"><i class="fa fa-check"></i><b>9.2</b> Neoantigen identification</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>9</b> Fusion</a><ul>
-<li class="chapter" data-level="9.1" data-path="fusion.html"><a href="fusion.html#fusion-calling-from-chimeric"><i class="fa fa-check"></i><b>9.1</b> Fusion calling from CHIMERIC</a></li>
-<li class="chapter" data-level="9.2" data-path="fusion.html"><a href="fusion.html#remove-homolog"><i class="fa fa-check"></i><b>9.2</b> Remove homolog</a></li>
-<li class="chapter" data-level="9.3" data-path="fusion.html"><a href="fusion.html#comparison"><i class="fa fa-check"></i><b>9.3</b> Comparison</a></li>
+<li class="chapter" data-level="10" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>10</b> Fusion</a><ul>
+<li class="chapter" data-level="10.1" data-path="fusion.html"><a href="fusion.html#fusion-calling-from-chimeric"><i class="fa fa-check"></i><b>10.1</b> Fusion calling from CHIMERIC</a></li>
+<li class="chapter" data-level="10.2" data-path="fusion.html"><a href="fusion.html#remove-homolog"><i class="fa fa-check"></i><b>10.2</b> Remove homolog</a></li>
+<li class="chapter" data-level="10.3" data-path="fusion.html"><a href="fusion.html#comparison"><i class="fa fa-check"></i><b>10.3</b> Comparison</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>11</b> Microbiome</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -203,17 +216,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="fusion" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> Fusion</h1>
+<h1><span class="header-section-number">Chapter 10</span> Fusion</h1>
 <div id="fusion-calling-from-chimeric" class="section level2">
-<h2><span class="header-section-number">9.1</span> Fusion calling from CHIMERIC</h2>
+<h2><span class="header-section-number">10.1</span> Fusion calling from CHIMERIC</h2>
 </div>
 <div id="remove-homolog" class="section level2">
-<h2><span class="header-section-number">9.2</span> Remove homolog</h2>
+<h2><span class="header-section-number">10.2</span> Remove homolog</h2>
 </div>
 <div id="comparison" class="section level2">
-<h2><span class="header-section-number">9.3</span> Comparison</h2>
-
-<p>#Microbiome {#microbiome}</p>
+<h2><span class="header-section-number">10.3</span> Comparison</h2>
 
 </div>
 </div>
@@ -222,8 +233,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="Neoantigen.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="Neoantigen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="microbiome.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

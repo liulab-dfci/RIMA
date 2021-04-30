@@ -85,7 +85,7 @@ samtools index sample_downsampling_housekeeping.bam > sample_downsampling_housek
 ```
 ### Quality metrics
 
-1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure RNA integrity, which is the percentage of transcripts that has uniform read coverage across the genome. RseQC calculated the TIN of each transcripts and the <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts has is commonly used to indicate the RNA integrity and of each sample. \
+1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure RNA integrity, which is the percentage of transcripts that has uniform read coverage across the genome. RseQC calculated the TIN each transcripts and the <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts has is commonly used to indicate the RNA integrity and of each sample. \
 2. <a href="http://rseqc.sourceforge.net/#read-distribution-py">Read distribution </a> summarizes the fraction of reads aligned into different genomic regions, such as exon and intron regions. \
 3. <a href="http://rseqc.sourceforge.net/#genebody-coverage-py">Gene body coverage</a> shows the RNA-seq read coverage over the gene body. \
 4. <a href="http://rseqc.sourceforge.net/#junction-saturation-py">Junction saturation</a> detects the splicing junctions with different resampling percentages of reads to determine if the sequencing depth is sufficient to perform alternative splicing analysis. \
@@ -99,12 +99,10 @@ After the alignment of sequencing reads and quality check, we will quantify the 
 Batch effects across samples is easily ignored but worth considering problems for immunotherapy cohort study. It is usually caused by unbalanced experimental design where estimation of group difference, and they are interdependent. To avoid the actual biology variation confounded by batch effect, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> Limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct the batch effects. Limma uses a two-way ANOVA approach, while Combat uses the empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
 To check whether the batch effect has been removed,  principal components analysis (PCA) or unsupervised clustering before and after batch effect removal will be an excellent way to validate. To ensure a solid downstream RNA-seq analysis, it is essential to generate a gene expression profile mitigating the batch effect and group difference from a well-designed study.
 
-Example of PCA before and after batch effect between FT and FFPE samples:
+Example of PCA before and after batch effect of tumor location:
 ```{r fig.align='center', echo=FALSE, fig.cap='Before(left) and after(right) batch correction with Limma'}
 knitr::include_graphics('images/PCA_batch.png', dpi = NA)
 ```
 
 ## Video demo of RIMA
-<video width="820" height="800" controls>
- <source src="videos/preprocess.mp4" type="video/mp4">
-</video>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NEbi-pYNhak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \

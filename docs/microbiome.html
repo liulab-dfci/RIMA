@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Neoantigen Analysis | Tutorial of RNA-seq tumor immunity analysis</title>
+  <title>Chapter 11 Microbiome | Tutorial of RNA-seq tumor immunity analysis</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Neoantigen Analysis | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:title" content="Chapter 11 Microbiome | Tutorial of RNA-seq tumor immunity analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Neoantigen Analysis | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta name="twitter:title" content="Chapter 11 Microbiome | Tutorial of RNA-seq tumor immunity analysis" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="HLA.html"/>
-<link rel="next" href="fusion.html"/>
+<link rel="prev" href="fusion.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -215,23 +215,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="Neoantigen" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> Neoantigen Analysis</h1>
-<div id="somatic-mutation" class="section level2">
-<h2><span class="header-section-number">9.1</span> Somatic mutation</h2>
-</div>
-<div id="neoantigen-identification" class="section level2">
-<h2><span class="header-section-number">9.2</span> Neoantigen identification</h2>
+<div id="microbiome" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Microbiome</h1>
+<p>With the advantage of high-throughput sequencing, we have the capabilities to explore the genomes of the tumor-bearing host and the various microbes that have the risk of infecting the host. It has been reported that the complicated dynamics of microbiota and hosts could influence the susceptibility to the infectious disease and affect the treatment approaches. Notably, gastrointestinal microbiota has been widely recognized for its role in cancer development and its association with the response and toxicity to cancer therapy89. Previous studies have investigated multiple ways in which gut microbiota influence anti-tumor immunity. For example, the modulation of microbial components helps to enhance T cell response and improve anti-PDL1 efficacy in melanoma patients91. The effect of microbial metabolites provides the energy source for neoplastic progression in colon cancer. Thus, it is essential to decipher microbiota components from the following perspectives: 1) the interactions between disease phenotypes and microbiota; the relationship between treatment efficacy and microbiota enrichment; 2) the involvement of microbiota in condition-specific metabolism pathways; 3) the application value of microbiota as a diagnostic biomarker.</p>
+<p>For decades, microbial phylogeny and taxonomy have relied on 16S rRNA sequencing and shot gun sequencing, which contains hypervariable regions as species-specific signatures for microbial identification. To perform computationally robust and effective ways for microbiota classification, researchers have developed reference-genome-based methods from high-throughput DNA or RNA sequencing, such as PathSeq and Centrifuge. PathSeq aligns non-host reads to pre-defined microbial organisms using BWA-MEM alignment, while Centrifuge builds a compressed index merged with unique genome sequences in advance. Although both methods achieve microbiota classification and abundance estimation based on users’ reference, Centrifuge outperforms in terms of the low memory and fast speed. Taken together, microbiota classification analysis is aimed to help understand the mechanisms of disease development, potentially providing new insights into therapeutic target discovery.
+## Centrifuge
+## Microial classfication from RNA-seq data.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="HLA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="fusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="fusion.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

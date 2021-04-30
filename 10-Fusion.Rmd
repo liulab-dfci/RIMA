@@ -1,1 +1,6 @@
 # Fusion {#fusion}
+
+## Fusion calling from CHIMERIC
+## Remove homolog
+## Comparison
+

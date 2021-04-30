@@ -1,4 +1,34 @@
 # Immune repertoire {#Repertoire}
 
-Some _significant_ applications are demonstrated in this chapter.
+Once tumors are infiltrated with B cells and T cells, B cells and T cells are potentially activated by BCR and TCR respectively recognizing and binding to tumor-associated antigens. BCR and TCR undergo V(D)J recombination, encoding complementarity-determining region 3 (CDR3) with highly variable peptide sequence binding to the peptide-MHC complex. The V(D)J junctional sequence assembly is a major source of TCR/BCR diversity for recognizing the diverse antigens. Thus, immune repertoire profiling is essential for quantifying B/T cell diversity and clonality, which are essential tumor immune characteristics and key indicators of immunotherapy response. Currently, newly-emerging immune sequencing techniques, such as TCR-seq and BCR-seq, have been designed to sequence B and T cell receptors through quantitative PCR (qPCR). However, the experimental technology is cost-consuming to achieve. 
+
+To overcome this difficulty, Tcr Receptor Utilities for Solid Tissue (TRUST) has been developed to infer the immune repertoire from bulk RNA-seq reads, via de novo assembled CDR3 sequences that are not aligned to the host genome. It enables users to overview the immune repertoire of tumors, including CDR3 sequence length, the frequency of various V genes, J genes, and VJ pairs for different chains in the TCR and BCR. For cohort analysis, some basic metrics for TCRs and BCRs across samples could be computed to relate immune repertoire characteristics to specific phenotypes, including the fraction of reads mapped to TCR/BCR, the number of TCR/BCR unique clonotypes of CDR3 sequences, TCR/BCR diversity, and the clonality. Since the activated B cells will undergo somatic hyper-mutation, antibody production, and Immunoglobulin (Ig) class switches during B cell maturation, it is necessary to measure the somatic hypermutation (SHM) rate for BCRs. In addition, TRUST predicts Ig isotypes for BCRs, which allows for quantifying the Ig compositions representing different maturation statuses (IGHM, IGHD, IGHG3, IGHG1, IGHA1, IGHG2, IGHG4, IGHA2, IGHE) and generating an Ig class switches network. Taken together, the immune repertoire analysis quantifies the T/B cell population in both individual and cohort levels, enabling to characterize the dynamic evolution in the TME via the diversity and clonal expansion of tumor-infiltrating T cells or B cells.\
+
+## TRUST4
+Example Command:
+```
+./run-trust4 -b example.bam -f hg38_bcrtcr.fa --ref human_IMGT+C.fa
+```
+
+The above command utilizes hg3_bcrtcr.fa (fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This produced report contains a list of assembled clonotypes from example.bam with the following fields: "read_count,frequency(proportion of read_count),CDR3_dna,CDR3_amino_acids,V,D,J,C,consensus_id,consensus_id_full_length". These fields tell us the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage, and identifier for each clonotype.\
+
+### Clonotypes per kilo-reads (CPK) 
+CPK can be calculated by taking the number of unique CDR3 calls for a chain divided by the total number of reads for that chain, with this result being multiplied by 1000. This is used as a measure of clonotype diversity.\
+
+### TCR and BCR entropy
+The Shannon entropy index is a measure used for repertoire diversity using clonotype frequencies, which reflects both richness and evenness of the repertoire. This measure informs us of the probability that two random selections from the same repertoire would represent the same clonotype.\
+
+### TCR and BCR clonality
+Clonality can be measured using normalized entropy over the number of unique clones. It is equivalent to 1 - Pielou’s Evenness, making it inversely proportional to diversity. A higher clonality index indicates an uneven repertoire due to expansion of clones.\
+
+### Fraction of reads mapped to TCR and BCR
+The fraction of reads mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of clonotypes. The fraction is composed of the proportion of reads with genes prefixed by "TR" (TCR) and genes prefixed by "IG" (BCR).\
+
+### Somatic hypermutation rate of BCR
+A somatic hypermutation (SHM) is a cellular mechanism of the immune system when adapting to new foreign elements and occurs with a point mutation in the variable regions of Ig genes. TRUST4 collapses reads with SHMs into the same contig by representing a contig as the consensus of the assembled reads. The consensus indicates that a specific nucleotide sequence has the highest weight among the assembled reads.\
+
+### Ig frequency 
+The immunoglobulin heavy (IGH) locus includes the constant heavy (IGHC) gene segment. This gene segment includes different isotypes (IGHA1, IGHA2, IGHD, IGHE, IGHG1, IGHG2, IGHG3, IGHG4, IGHM) and the proportion of the abundance of these different segments indicates the isotype frequency. The proportion of an isotype frequency can be found by isolating reads with genes prefixed "IGH" and comparing the occurrence of different isotypes in the C_gene column.\
+
+### Video demo
 
