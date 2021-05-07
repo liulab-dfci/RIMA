@@ -2,33 +2,182 @@
 
 Once tumors are infiltrated with B cells and T cells, B cells and T cells are potentially activated by BCR and TCR respectively recognizing and binding to tumor-associated antigens. BCR and TCR undergo V(D)J recombination, encoding complementarity-determining region 3 (CDR3) with highly variable peptide sequence binding to the peptide-MHC complex. The V(D)J junctional sequence assembly is a major source of TCR/BCR diversity for recognizing the diverse antigens. Thus, immune repertoire profiling is essential for quantifying B/T cell diversity and clonality, which are essential tumor immune characteristics and key indicators of immunotherapy response. Currently, newly-emerging immune sequencing techniques, such as TCR-seq and BCR-seq, have been designed to sequence B and T cell receptors through quantitative PCR (qPCR). However, the experimental technology is cost-consuming to achieve. 
 
-To overcome this difficulty, Tcr Receptor Utilities for Solid Tissue (TRUST) has been developed to infer the immune repertoire from bulk RNA-seq reads, via de novo assembled CDR3 sequences that are not aligned to the host genome. It enables users to overview the immune repertoire of tumors, including CDR3 sequence length, the frequency of various V genes, J genes, and VJ pairs for different chains in the TCR and BCR. For cohort analysis, some basic metrics for TCRs and BCRs across samples could be computed to relate immune repertoire characteristics to specific phenotypes, including the fraction of reads mapped to TCR/BCR, the number of TCR/BCR unique clonotypes of CDR3 sequences, TCR/BCR diversity, and the clonality. Since the activated B cells will undergo somatic hyper-mutation, antibody production, and Immunoglobulin (Ig) class switches during B cell maturation, it is necessary to measure the somatic hypermutation (SHM) rate for BCRs. In addition, TRUST predicts Ig isotypes for BCRs, which allows for quantifying the Ig compositions representing different maturation statuses (IGHM, IGHD, IGHG3, IGHG1, IGHA1, IGHG2, IGHG4, IGHA2, IGHE) and generating an Ig class switches network. Taken together, the immune repertoire analysis quantifies the T/B cell population in both individual and cohort levels, enabling to characterize the dynamic evolution in the TME via the diversity and clonal expansion of tumor-infiltrating T cells or B cells.\
+To overcome this difficulty, Tcr Receptor Utilities for Solid Tissue (TRUST) has been developed to infer the immune repertoire from bulk RNA-seq reads, via de novo assembled CDR3 sequences that are not aligned to the host genome. It enables users to overview the immune repertoire of tumors, including CDR3 sequence length, the frequency of various V genes, J genes, and VJ pairs for different chains in the TCR and BCR. For cohort analysis, some basic metrics for TCRs and BCRs across samples could be computed to relate immune repertoire characteristics to specific phenotypes, including the fraction of reads mapped to TCR/BCR, the number of TCR/BCR unique clonotypes of CDR3 sequences, TCR/BCR diversity, and the clonality. Since the activated B cells will undergo somatic hyper-mutation, antibody production, and Immunoglobulin (Ig) class switches during B cell maturation, it is necessary to measure the somatic hypermutation (SHM) rate for BCRs. In addition, TRUST predicts Ig isotypes for BCRs, which allows for quantifying the Ig compositions representing different maturation statuses (IGHM, IGHD, IGHG3, IGHG1, IGHA1, IGHG2, IGHG4, IGHA2, IGHE) and generating an Ig class switches network. Taken together, the immune repertoire analysis quantifies the T/B cell population in both individual and cohort levels, enabling to characterize the dynamic evolution in the TME via the diversity and clonal expansion of tumor-infiltrating T cells or B cells.
 
 ## TRUST4
 Example Command:
 ```
 ./run-trust4 -b example.bam -f hg38_bcrtcr.fa --ref human_IMGT+C.fa
 ```
+The above command utilizes hg3_bcrtcr.fa (fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This produced report contains a list of assembled clonotypes from example.bam with the following fields: "read_count,frequency(proportion of read_count),CDR3_dna,CDR3_amino_acids,V,D,J,C,consensus_id,consensus_id_full_length". These fields tell us the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage, and identifier for each clonotype.
 
-The above command utilizes hg3_bcrtcr.fa (fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This produced report contains a list of assembled clonotypes from example.bam with the following fields: "read_count,frequency(proportion of read_count),CDR3_dna,CDR3_amino_acids,V,D,J,C,consensus_id,consensus_id_full_length". These fields tell us the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage, and identifier for each clonotype.\
+### TRUST4 output
 
-### Clonotypes per kilo-reads (CPK) 
-CPK can be calculated by taking the number of unique CDR3 calls for a chain divided by the total number of reads for that chain, with this result being multiplied by 1000. This is used as a measure of clonotype diversity.\
 
-### TCR and BCR entropy
-The Shannon entropy index is a measure used for repertoire diversity using clonotype frequencies, which reflects both richness and evenness of the repertoire. This measure informs us of the probability that two random selections from the same repertoire would represent the same clonotype.\
+## BCR cluster calculation
+We use one sample for a instance to show how RIMA process the results from TRUST4. We start from a proccessed file that RIMA directly add the sample ID to TRUST4_report.tsv. This step makes it more easier to combine all of individual sample results in following analysis.
 
-### TCR and BCR clonality
-Clonality can be measured using normalized entropy over the number of unique clones. It is equivalent to 1 - Pielou’s Evenness, making it inversely proportional to diversity. A higher clonality index indicates an uneven repertoire due to expansion of clones.\
+``` {R, message = FALSE}
+library(dplyr)
 
-### Fraction of reads mapped to TCR and BCR
-The fraction of reads mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of clonotypes. The fraction is composed of the proportion of reads with genes prefixed by "TR" (TCR) and genes prefixed by "IG" (BCR).\
+#load processed function 
+source("TRUST4/trust4_metric_functions.R")
 
-### Somatic hypermutation rate of BCR
-A somatic hypermutation (SHM) is a cellular mechanism of the immune system when adapting to new foreign elements and occurs with a point mutation in the variable regions of Ig genes. TRUST4 collapses reads with SHMs into the same contig by representing a contig as the consensus of the assembled reads. The consensus indicates that a specific nucleotide sequence has the highest weight among the assembled reads.\
+# read the individual sample result from RIMA
+cdr3 <- read.table(file = "TRUST4/SRR8281233_cdr3.out.processed.txt", sep = "\t", header = TRUE, stringsAsFactors = FALSE)
 
-### Ig frequency 
-The immunoglobulin heavy (IGH) locus includes the constant heavy (IGHC) gene segment. This gene segment includes different isotypes (IGHA1, IGHA2, IGHD, IGHE, IGHG1, IGHG2, IGHG3, IGHG4, IGHM) and the proportion of the abundance of these different segments indicates the isotype frequency. The proportion of an isotype frequency can be found by isolating reads with genes prefixed "IGH" and comparing the occurrence of different isotypes in the C_gene column.\
+#filter out count of cdr ==0 and add the phenotype info for downstream comparison
+#This SRR8281233 smaple is Non-responder
+phenotype <- "NR"
+cdr3 <- subset(cdr3, count > 0) %>% 
+  mutate(V = as.character(V), J = as.character(J), C = as.character(C), CDR3aa = as.character(CDR3aa)) %>% 
+  mutate(clinic = as.character(phenotype))
 
-### Video demo
+head(cdr3)
+
+#determine whether the cdr animo acid is complete or partial
+cdr3$is_complete <- sapply(cdr3$CDR3aa, function(x) ifelse(x != "partial" && x != "out_of_frame" && !grepl("^_",x) && !grepl("^\\?", x),"Y","N"))
+
+#exact the TCR and BCR
+cdr3.bcr <- subset(cdr3, grepl("^IG",V) | grepl("^IG",J) | grepl("^IG",C))
+cdr3.tcr <- subset(cdr3, grepl("^TR",V) | grepl("^TR",J) | grepl("^TR",C))
+
+#add lib size and clinic traits
+cdr3.bcr <- cdr3.bcr %>% mutate(lib.size = sum(count)) 
+cdr3.tcr <- cdr3.tcr %>% mutate(lib.size = sum(count)) 
+
+#split BCR into heavy chain and light chain
+cdr3.bcr.heavy <- subset(cdr3.bcr, grepl("^IGH",V) | grepl("^IGH",J) | grepl("^IGH",C))
+cdr3.bcr.light <- subset(cdr3.bcr, grepl("^IG[K|L]",V) | grepl("^IG[K|L]",J) | grepl("^IG[K|L]",C))
+
+#save BCR and TCR info for downsteam use
+outdir <- "TRUST4/individual/"
+sample <- "SRR8281233"
+save(cdr3.bcr.light, file = paste(outdir, "TRUST4_BCR_light.Rdata",sep = ""))
+save(cdr3.bcr.heavy, file = paste(outdir, "TRUST4_BCR_heavy.Rdata",sep = ""))
+save(cdr3.tcr, file = paste(outdir, "TRUST4_TCR.Rdata",sep = ""))
+
+#BCR clustering 
+#Note that not every sample have BCR cluster
+sample_bcr_cluster <- BuildBCRlineage(sampleID = sample, Bdata = cdr3.bcr.heavy, start=3, end=10)
+save(sample_bcr_cluster,file = paste(outdir, sample,"_TRUST4_BCR_heavy_cluster.Rdata", sep = ""))
+
+attributes(sample_bcr_cluster)
+
+head(sample_bcr_cluster$RGSPRFID)
+```
+
+## Clonotypes per kilo-reads (CPK) 
+CPK can be calculated by taking the number of unique CDR3 calls for a chain divided by the total number of reads for that chain, with this result being multiplied by 1000. This is used as a measure of clonotype diversity.
+``` {R}
+#TCR CPK
+cpk <- aggregate(CDR3aa ~ sample+clinic+lib.size, cdr3.tcr, function(x) length(unique(x))) %>%
+  mutate(CPK = signif(CDR3aa/(lib.size/1000),4))
+cpk
+``` 
+
+## TCR and BCR entropy and Colonality
+The Shannon entropy index is a measure used for repertoire diversity using clonotype frequencies, which reflects both richness and evenness of the repertoire. This measure informs us of the probability that two random selections from the same repertoire would represent the same clonotype.
+
+Clonality can be measured using normalized entropy over the number of unique clones. It is equivalent to 1 - Pielou’s Evenness, making it inversely proportional to diversity. A higher clonality index indicates an uneven repertoire due to expansion of clones.
+``` {R}
+#BCR clonality and entropy
+sample <- "SRR8281233"
+
+single_sample_bcr_clonality <- getClonality(sample, cdr3.bcr.heavy, start=3, end=10)
+single_sample_bcr_clonality[1:3]
+``` 
+``` {R}
+#TCR clonality and entropy
+sample <- "SRR8281233"
+
+single_sample_tcr_clonality <- getClonalityTCR(sample,cdr3.tcr)
+single_sample_tcr_clonality
+``` 
+
+## Fraction of reads mapped to TCR and BCR
+The fraction of reads mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of clonotypes. The fraction is composed of the proportion of reads with genes prefixed by "TR" (TCR) and genes prefixed by "IG" (BCR).
+``` {R}
+#exact the mapped reads info from alignment index file 
+sample <- "SRR8281233"
+
+file <- read.table("TRUST4/SRR8281233.sorted.bam.stat.txt",sep = "\t",row.names = 1)
+mapped.reads <- file["reads mapped:","V2"]
+individual.stats <- cbind.data.frame(sample = sample, map.reads = mapped.reads)
+
+#---------fraction of BCR reads------------------
+##extract library size
+lib.size <- cdr3.bcr.heavy %>% group_by(sample) %>%
+  dplyr::summarise(lib = mean(lib.size))
+
+##combine stats and library size
+bcr.lib.reads <- merge(individual.stats,lib.size,by = "sample") %>% 
+  mutate(Infil = signif(as.numeric(lib)/as.numeric(map.reads),4))
+
+#------------fraction of TCR reads-----------------
+##extract library size
+lib.size <- cdr3.tcr %>% group_by(sample) %>%
+  dplyr::summarise(lib = mean(lib.size)) 
+##combine stats and library size
+tcr.lib.reads <- merge(individual.stats,lib.size,by = "sample") %>% 
+  mutate(Infil = signif(as.numeric(lib)/as.numeric(map.reads),4))
+
+combined <- rbind(bcr.lib.reads, tcr.lib.reads) %>% mutate(Type = c("BCR", "TCR"))
+combined
+``` 
+
+## Somatic hypermutation rate of BCR
+A somatic hypermutation (SHM) is a cellular mechanism of the immune system when adapting to new foreign elements and occurs with a point mutation in the variable regions of Ig genes. TRUST4 collapses reads with SHMs into the same contig by representing a contig as the consensus of the assembled reads. The consensus indicates that a specific nucleotide sequence has the highest weight among the assembled reads.
+
+``` {R}
+SHM.ratio <- getSHMratio(sample_bcr_cluster)
+``` 
+
+## Ig isotype frequency 
+The immunoglobulin heavy (IGH) locus includes the constant heavy (IGHC) gene segment. This gene segment includes different isotypes (IGHA1, IGHA2, IGHD, IGHE, IGHG1, IGHG2, IGHG3, IGHG4, IGHM) and the proportion of the abundance of these different segments indicates the isotype frequency. The isotype frequency can be found by isolating reads with genes prefixed "IGH" and comparing the occurrence of different isotypes in the C_gene column.
+
+``` {R}
+#This SRR8281233 smaple is Non-responder
+phenotype <- "NR"
+
+st.Ig <- cdr3.bcr.heavy %>% 
+  group_by(clinic,sample) %>%
+  mutate(est_clonal_exp_norm = frequency/sum(frequency)) %>%   #as.numeric(sample.clones[filename,2])
+  dplyr::filter(C != "*" & C !=".") %>%
+  group_by(sample, C) %>% 
+  dplyr::summarise(Num.Ig = sum(est_clonal_exp_norm)) %>% mutate(clinic = phenotype)
+
+st.Ig
+``` 
+
+## Cohort analysis 
+We show the basic immune repertoire-related metrics above using a single sample. Now we combine all of samples in the demo dataset to do some comparison.
+``` {R warning = FALSE, fig.height = 3, fig.width = 6}
+#load the pre-processed results that contain all samples 
+#These results would be automatically generated after running RIMA immune repertoire module
+
+inputdir <- "TRUST4/Cohort/"
+load(paste(inputdir,"TRUST4_BCR_heavy_cluster.Rdata", sep = ""))
+load(paste(inputdir,"TRUST4_BCR_heavy_clonality.Rdata", sep = ""))
+load(paste(inputdir,"TRUST4_BCR_heavy_SHMRatio.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_BCR_heavy_lib_reads_Infil.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_BCR_Ig_CS.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_BCR_heavy_lib_reads_Infil.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_BCR_heavy.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_TCR_lib_reads_Infil.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_TCR.Rdata",sep = ""))
+load(paste(inputdir,"TRUST4_TCR_clonality.Rdata",sep = ""))
+
+
+#call the ploting function
+source("TRUST4/trust4_plot.R")
+meta <- read.csv("metasheet.csv")
+p <- Trust4_plot(phenotype = "Responder", metasheet = meta)
+
+p
+
+``` 
+
+
+## Video demo
 

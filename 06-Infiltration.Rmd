@@ -93,15 +93,16 @@ Using results from CIBERSORT abs mode as an example, we provide another two func
 
 #extract the immune cell score from results of CIBERSORT
 res_ciber <- res_ciber[,1:22]
+res_ciber
 
 #load plotfunction 
 source("plotfunction.R")
 
 #load metasheet for RIMA pipeline
-meta <- read.csv("metasheet.csv")
+metasheet <- read.csv("metasheet.csv")
 
 #methods: CIBERSORT, quanTIseq, EPIC, MCP, xCell, TIMER
-hmap(ta = res_ciber, meta = meta, methods = "CIBERSORT", phenotype = "Responder")
+hmap(ta = res_ciber, meta = metasheet, methods = "CIBERSORT", phenotype = "Responder")
 ```
 
 ## Comparison across sample

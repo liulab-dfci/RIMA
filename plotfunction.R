@@ -18,13 +18,13 @@ preprocess <- function(ta, meta, methods, phenotype) {
   ta <- merge(ta, meta[c("SampleName", phenotype)], by = 1, all = FALSE)
   
   #remove the no expression of immune cell types 
-  tmp <- ta %>% group_by(Var2) %>% mutate(mean = mean(value))
+  tmp <- ta %>% group_by(X2) %>% mutate(mean = mean(value))
   tmp <- tmp[tmp$mean > 0,]
   ta <- tmp[-ncol(tmp)]
   
   ta <- ta[order(ta$Responder, decreasing = FALSE),]
-  ta$Var1 <- paste0(ta$Var1, "_",ta[[phenotype]], sep = "")
-  ta$Var1 <- factor(ta$Var1, levels = unique(ta$Var1))
+  ta$X1 <- paste0(ta$X1, "_",ta[[phenotype]], sep = "")
+  ta$X1 <- factor(ta$X1, levels = unique(ta$X1))
   
   return(ta)
 }
@@ -38,8 +38,8 @@ hmap <- function(ta, meta, methods, phenotype) {
   max_value <- round(max(ta$value), digit = 3)
   bar_anno <- c(min_value,max_value)
   
-  p <- ggplot(ta, aes_string(ta$Var1, ta$Var2)) +
-    geom_point(aes_string(ta$Var1,  ta$Var2, color = ta$value), shape = 15, size = 5) +
+  p <- ggplot(ta, aes_string(ta$X1, ta$X2)) +
+    geom_point(aes_string(ta$X1,  ta$X2, color = ta$value), shape = 15, size = 5) +
     scale_color_gradientn(name = "Score", colours = c("white","firebrick3"))+
     
     theme_light()+theme(axis.text = element_text(colour = 'black', size=10, face = "bold"),
@@ -56,7 +56,7 @@ boxfig <- function(ta, meta, methods, phenotype) {
   
   ta <- preprocess(ta, meta, methods, phenotype)
   
-  p1 <-  ggplot(ta, aes(x=Var2, y=value, fill = Responder)) +
+  p1 <-  ggplot(ta, aes(x=X2, y=value, fill = Responder)) +
     geom_boxplot(alpha=0.3, size=0.25,outlier.size= -1, width = 0.5) + theme_bw() +
     stat_compare_means(label = "p.signif", 
                        symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 

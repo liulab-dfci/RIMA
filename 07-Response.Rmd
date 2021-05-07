@@ -8,7 +8,7 @@ dysfunction and exclusion. The statistical model of TIDE was trained on clinical
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WsBSi_sH-_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
 
-A command line TIDE is available at https://github.com/liulab-dfci/TIDEpy, to run TIDE
+A command line TIDE is available at https://github.com/liulab-dfci/TIDEpy.
 
 
 ### Cold and hot tumors
@@ -28,8 +28,9 @@ $$
 For hot tumors with high CTL values, TIDE calculates T cell exclusion score to estimate the immune escape. The T cell exlclusion score is the average expression profile from cancer-associated fibroblasts (CAFs), myeloid-derived suppressor cells (MDSCs) and tumor-associated macrophages (TAMs), which are reported to restrict T cell infiltration in tumor. \
 
 ### Normaliztion
-The input for TIDE is a normalized TPM matrix, the steps for normalization is:\ 
-1) Do the log2(x+1) transformation.\
+The input for TIDE is a normalized TPM matrix, the steps for normalization is:\
+
+1) Do the log2(TPM+1) transformation.\
 2) Subtract the average across your samples.\
 
 ### Running TIDE
@@ -65,11 +66,12 @@ msi_res <- read.table("msi_score.txt",header=FALSE,sep='\t')
 print(msi_res)
 ```
 
-## Comparison between responders and non-reponders
+## Response comparison analysis of biomarkers
 ```{r,eval=FALSE, fig.height = 4}
 #read the metasheet
 metafile <- "metasheet.csv"
-
+tide_res <- "TIDE_score.txt"
+msi_res <- "msi_score.txt"
 #load ploting function
 source("Tideploting.R")
 
