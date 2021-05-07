@@ -154,10 +154,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.2</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.3</b> Volcano Plot(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
 <li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
@@ -361,7 +360,7 @@ ENST00000607096.1   138 16.202  0.000000    0.000</code></pre>
 <p>Batch effects across samples is easily ignored but worth considering problems for immunotherapy cohort study. It is usually caused by unbalanced experimental design where estimation of group difference, and they are interdependent. To avoid the actual biology variation confounded by batch effect, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> Limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct the batch effects. Limma uses a two-way ANOVA approach, while Combat uses the empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
 To check whether the batch effect has been removed, principal components analysis (PCA) or unsupervised clustering before and after batch effect removal will be an excellent way to validate. To ensure a solid downstream RNA-seq analysis, it is essential to generate a gene expression profile mitigating the batch effect and group difference from a well-designed study.</p>
 Example of PCA before and after batch effect of tumor location:
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
 <img src="images/PCA_batch.png" alt="Before(left) and after(right) batch correction with Limma"  />
 <p class="caption">
 Figure 3.1: Before(left) and after(right) batch correction with Limma
@@ -433,6 +432,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

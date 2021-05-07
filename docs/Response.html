@@ -282,8 +282,8 @@ Dysfunction = \frac{d}{StdErr(d)}
 </code></pre>
 <p>Example outputs of TIDE:<br />
 </p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="Response.html#cb49-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb49-2"><a href="Response.html#cb49-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="Response.html#cb51-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb51-2"><a href="Response.html#cb51-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
 <pre><code>##             X No.benefits Responder       TIDE        IFNG    MSI.Score
 ## 1  SRR8281219       False     False  1.6807050  0.05776435 0.9171423549
 ## 2  SRR8281236       False     False  1.4737267 -0.44182240 0.0891168795
@@ -328,15 +328,15 @@ Dysfunction = \frac{d}{StdErr(d)}
 <div id="microsatelite-instability-msi" class="section level2">
 <h2><span class="header-section-number">7.2</span> Microsatelite instability (MSI)</h2>
 <p>Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="Response.html#cb51-1"></a><span class="co">#Run MSIsensor2 </span></span>
-<span id="cb51-2"><a href="Response.html#cb51-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
-<span id="cb51-3"><a href="Response.html#cb51-3"></a></span>
-<span id="cb51-4"><a href="Response.html#cb51-4"></a><span class="co">## Output of MSIsensor2</span></span>
-<span id="cb51-5"><a href="Response.html#cb51-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
-<span id="cb51-6"><a href="Response.html#cb51-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="Response.html#cb53-1"></a><span class="co">#Run MSIsensor2 </span></span>
+<span id="cb53-2"><a href="Response.html#cb53-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
+<span id="cb53-3"><a href="Response.html#cb53-3"></a></span>
+<span id="cb53-4"><a href="Response.html#cb53-4"></a><span class="co">## Output of MSIsensor2</span></span>
+<span id="cb53-5"><a href="Response.html#cb53-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
+<span id="cb53-6"><a href="Response.html#cb53-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
 <p>Example outputs of combined MSI:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="Response.html#cb52-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb52-2"><a href="Response.html#cb52-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="Response.html#cb54-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb54-2"><a href="Response.html#cb54-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
 <pre><code>##            V1    V2
 ## 1  SRR8281218 20.34
 ## 2  SRR8281219 13.39
@@ -353,14 +353,14 @@ Dysfunction = \frac{d}{StdErr(d)}
 </div>
 <div id="response-comparison-analysis-of-biomarkers" class="section level2">
 <h2><span class="header-section-number">7.3</span> Response comparison analysis of biomarkers</h2>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="Response.html#cb54-1"></a><span class="co">#read the metasheet</span></span>
-<span id="cb54-2"><a href="Response.html#cb54-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
-<span id="cb54-3"><a href="Response.html#cb54-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
-<span id="cb54-4"><a href="Response.html#cb54-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
-<span id="cb54-5"><a href="Response.html#cb54-5"></a><span class="co">#load ploting function</span></span>
-<span id="cb54-6"><a href="Response.html#cb54-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
-<span id="cb54-7"><a href="Response.html#cb54-7"></a></span>
-<span id="cb54-8"><a href="Response.html#cb54-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="Response.html#cb56-1"></a><span class="co">#read the metasheet</span></span>
+<span id="cb56-2"><a href="Response.html#cb56-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
+<span id="cb56-3"><a href="Response.html#cb56-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
+<span id="cb56-4"><a href="Response.html#cb56-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
+<span id="cb56-5"><a href="Response.html#cb56-5"></a><span class="co">#load ploting function</span></span>
+<span id="cb56-6"><a href="Response.html#cb56-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
+<span id="cb56-7"><a href="Response.html#cb56-7"></a></span>
+<span id="cb56-8"><a href="Response.html#cb56-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/response.png" alt="Comparision of biomarkers between R and NR"  />
 <p class="caption">

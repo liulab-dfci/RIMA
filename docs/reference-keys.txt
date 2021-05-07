@@ -63,5 +63,3 @@ fusion-calling-from-chimeric
 remove-homolog
 comparison
 microbiome
-fig:unnamed-chunk-6
-running-deseq2-without-batch-effect
