@@ -5,7 +5,7 @@ Once you obtain gene counts from the preprocessing modules of RIMA, you can comp
 The differential gene analysis module of RIMA allows you to perform these comparisons.
 
 
-## 1. Differential gene expression using DESeq2
+## Differential gene expression using DESeq2
 
 The <a href='https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8'>DESeq2</a> is the most commonly used package that provides methods for comparison of gene expression levels.  The package is described in:
 
