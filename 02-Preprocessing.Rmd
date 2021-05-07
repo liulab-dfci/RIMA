@@ -136,8 +136,8 @@ To check whether the batch effect has been removed,  principal components analys
 
 Example of PCA before and after batch effect of tumor location:
 ```{r fig.align='center', echo=FALSE, fig.cap='Before(left) and after(right) batch correction with Limma'}
-knitr::include_graphics('images/PCA_batch.png', dpi = NA)
+knitr::include_graphics('images/PCA_synbatch.png', dpi = NA)
 ```
 
 ## Video demo of RIMA
-<iframe width="560" height="315" src="https://www.youtube.com/embed/NEbi-pYNhak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+<iframe width="560" height="315" src="https://www.ynutube.com/embed/NEbi-pYNhak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
