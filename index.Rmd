@@ -15,6 +15,37 @@ description: "This is a minimal example of using the bookdown package to write a
 This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-seq data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
 We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA/.
 
+# Introduction {#intro}
+
+Tumor RNA-seq has become an important technique for molecular profiling and
+immune characterization of tumors. RNA-seq Immune Analysis performs
+integrative computational modeling of tumor microenvironment from bulk tumor
+RNA-seq data, which has the potential to offer essential insights to cancer
+immunology and immune-oncology studies.\
+
+```{r fig.align='center', echo=FALSE, fig.cap='Flowchat of RIMA pipeline'}
+knitr::include_graphics('images/RIMA.png', dpi = NA)
+```
+
+ The pre-processing module includes four main procedures:\
+ <ul>
+ <li>**Read mapping**</li>
+ <li>**Quality control**</li>
+ <li>**Gene quantification**</li>
+ <li>**Batch effect removal**</li>
+ </ul>
+ The downstream analysis includes seven modules:
+ <ul>
+ <li>**Differential expression analysis**</li>
+ <li>**Immune infiltration estimation**</li>
+ <li>**Immune repertoire inference**</li>
+ <li>**Neoantigen detection**</li>
+ <li>**Microbiome characterization**</li>
+ <li>**Immunotherapy response prediction**</li>
+ <li>**Gene fusion**</li>
+ <li>**Microbiome**</li>
+ </ul>
+
 ## Installation ##
 
 To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.
