@@ -48,7 +48,8 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 
 
 | **Methods** | **Description** | 
-
+| :---: | :---: | :---: |
+|  | **---ENVIRONMENT---**| |
 | rnaseq | basic tools wihout dependency |  
 | rseqc | dependent packages for quality control | 
 | stat_perl_r | dependent packages for plotting | 
@@ -60,7 +61,7 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 | RSeQC | High Throughput Sequence Data Evaluation | 
 | batch_removal| Remove Batch Effects Using Limma | 
 |  | **---DIFFERENTIAL EXPRESSION---** |  
-| DESeq2 | Dene Differential Expression Analysis | 
+| DESeq2 | Gene Differential Expression Analysis | 
 | GSEA | Gene Set Enrichment Analysis | 
 | ssGSEA | Single-sample GSEA | 
 |  | **---IMMNUE REPERTOIRE---** |  

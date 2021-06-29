@@ -66,4 +66,3 @@ fusion-calling-from-chimeric
 remove-homolog
 comparison
 microbiome
-running-deseq2-without-batch-effect

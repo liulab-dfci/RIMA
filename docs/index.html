@@ -52,6 +52,70 @@
 <script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -93,10 +157,9 @@
 <li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.2</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.3</b> Volcano Plot(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
 <li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
@@ -232,34 +295,157 @@ The downstream analysis includes seven modules:
 </li>
 </ul>
 <p><strong>Available Tools Checklist</strong></p>
-<div class="line-block"><strong>Methods</strong> | <strong>Description</strong> |</div>
-<div class="line-block">rnaseq | basic tools wihout dependency |<br />
-rseqc | dependent packages for quality control |<br />
-stat_perl_r | dependent packages for plotting |<br />
-fusion | dependent package for fusion |<br />
-centrifuge | dependent package for microbiome |<br />
- | <strong>—PREPROCESSING—</strong>|<br />
-STAR | Spliced Transcripts Alignment to a Reference |<br />
-Salmon | Gene Quantification |<br />
-RSeQC | High Throughput Sequence Data Evaluation |<br />
-batch_removal| Remove Batch Effects Using Limma |<br />
- | <strong>—DIFFERENTIAL EXPRESSION—</strong> |<br />
-DESeq2 | Dene Differential Expression Analysis |<br />
-GSEA | Gene Set Enrichment Analysis |<br />
-ssGSEA | Single-sample GSEA |<br />
- | <strong>—IMMNUE REPERTOIRE—</strong> |<br />
-TRUST4 | TCR and BCR Sequences Analysis |<br />
- | <strong>—IMMNUE INFILTRATION—</strong> |<br />
-ImmuneDeconv | Cell Components Estimation |<br />
- | <strong>—IMMNUE RESPONSE—</strong> |<br />
-MSIsensor2 | Microsatellite Instability (MSI) Detection |<br />
-TIDEpy | T cell dysfunction and exclusion prediction |<br />
- | <strong>—MICROBIOME—</strong> |<br />
-Centrifuge | Bacterial Abundance Detection |<br />
- | <strong>—Mutation—</strong> |<br />
-STAR-Fusion | Identify the fusion gene pairs |<br />
- | <strong>—NEO-ANTIGEN—</strong> | |<br />
-arcasHLA | HLA Class I and Class II Genes Typing |</div>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Methods</strong></th>
+<th align="center"><strong>Description</strong></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—ENVIRONMENT—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">rnaseq</td>
+<td align="center">basic tools wihout dependency</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">rseqc</td>
+<td align="center">dependent packages for quality control</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">stat_perl_r</td>
+<td align="center">dependent packages for plotting</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">fusion</td>
+<td align="center">dependent package for fusion</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">centrifuge</td>
+<td align="center">dependent package for microbiome</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—PREPROCESSING—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">STAR</td>
+<td align="center">Spliced Transcripts Alignment to a Reference</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">Salmon</td>
+<td align="center">Gene Quantification</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">RSeQC</td>
+<td align="center">High Throughput Sequence Data Evaluation</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">batch_removal</td>
+<td align="center">Remove Batch Effects Using Limma</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—DIFFERENTIAL EXPRESSION—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">DESeq2</td>
+<td align="center">Dene Differential Expression Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">GSEA</td>
+<td align="center">Gene Set Enrichment Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">ssGSEA</td>
+<td align="center">Single-sample GSEA</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE REPERTOIRE—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">TRUST4</td>
+<td align="center">TCR and BCR Sequences Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE INFILTRATION—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">ImmuneDeconv</td>
+<td align="center">Cell Components Estimation</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE RESPONSE—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">MSIsensor2</td>
+<td align="center">Microsatellite Instability (MSI) Detection</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">TIDEpy</td>
+<td align="center">T cell dysfunction and exclusion prediction</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—MICROBIOME—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">Centrifuge</td>
+<td align="center">Bacterial Abundance Detection</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—Mutation—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">STAR-Fusion</td>
+<td align="center">Identify the fusion gene pairs</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—NEO-ANTIGEN—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">arcasHLA</td>
+<td align="center">HLA Class I and Class II Genes Typing</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
 </div>
             </section>
 
@@ -317,6 +503,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
