@@ -12,14 +12,97 @@ description: "This is a minimal example of using the bookdown package to write a
 
 # About this tutorial
 
-This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-seq data. We will focus on the inferring the immune infiltration, immune repertoire, immune response and neoantigen prediction from gene expression profile.\
+This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-seq data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
 We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA/.
 
 ## Installation ##
+
+To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.
+
+**Software requirements**
+
+Processing power:  We usually run RIMA on a machine with 64 cores.
+
+Memory --   You will need to reserve enough memory for the following:
+
+  - Reference files and pipeline code -- 65 GB
+  - Raw data -- we recommend reserving five times the size of your data files.  For example, if your fastq files are 50GB each, then you should allot 250GB for each fastq file. Zipped fastq files are recommended. 
+  - Required software -- reserve ~20GB for installation of miniconda, mamba and snakemake.  
+
+**Prepare a working directory**
+
+```
+mkdir RIMA
+```
+
+**Get the pipeline code**
+
+Download the RIMA_pipeline folder to your working directory. 
+
+```
+git clone  https://github.com/kateyliu/RIMA_pipeline.git
+```
+
+
+### Other required software and packages
+
+**Conda**
+
+If conda was installed on your system (HCP or cloud instance) previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens, if you are unsure about any setting, accept the defaults.
+#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on root disk (>= 20G)
+```
+bash Miniconda3-latest-Linux-x86_64.sh
+conda list  #to see whether you have successfully installed conda
+```
+
+**mamba** 
+
+Install mamba in your conda environment. mamba will be used to install the rest of the environments necessary to run the pipeline.
+
+```
+conda install -c conda-forge mamba
+```
+**Snakemake** 
+
+Install snakemake in your conda environment. Check the version of your snakemake. Make sure the version if > 5.0. 
+
+```
+mamba install -c conda-forge -c bioconda snakemake=5.5.4
+snakemake --version #to see whether you have successfully installed snakemake
+```
+
 ## Pre-built reference data ##
 
+A pre-prepared RIMA reference folder can be downloaded using the code below.
+ 
+```
+cd RIMA
+wget http://cistrome.org/~lyang/ref.tar.gz  
 
+# unzip the reference  
+tar -zxvf ref.tar.gz
 
+# remove the reference zip file to save some space
+rm ref.tar.gz 
+```
+If you want to prepare a customized reference, you can follow [this tutorial](https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/) to build your own reference.
+
+Currently, RIMA supports **hg38**.   ###is this true for all platforms?  (AWS, GDP and HCS?)
+
+**Optional step** \
+
+If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
+For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link
+
+```
+cd RIMA
+
+# remove the current link of ref_files
+rm ref_files
+
+# create a new symoblic link to your reference folder
+ln -s /mnt/tutorial/ref_files
+```
 
 ```{r, include=FALSE}
 # automatically create a bib database for R packages
