@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-05-07" />
+<meta name="date" content="2021-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -133,11 +133,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this tutorial</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#pre-built-reference-data"><i class="fa fa-check"></i><b>1.2</b> Pre-built reference data</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
+<li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
+<li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
 <li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-mapping"><i class="fa fa-check"></i><b>3.1</b> Read Mapping</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="Preprocessing.html"><a href="Preprocessing.html#star"><i class="fa fa-check"></i><b>3.1.1</b> STAR</a></li>
@@ -242,19 +245,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">4.1.1</span> Inputs of DESeq2</h3>
 <p>The DESeq2 accepts four kinds of inputs: 1) Transcript abundance; 2) Read count matrix: 3) htseq-count files and 4) A SummarizedExpreriment object. We processed our gene quantification using Salmon in our preprocess module, so we will run DESeq2 using the output in the quant.sf files provided from salmon. The quant.sf files were generated during the preprocessing module. <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">vignette</a>.</p>
 <p>We first created a tx2gene.csv files that contains transcripts id and gene names as below:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Differential.html#cb8-1"></a>ID,GENENAME</span>
-<span id="cb8-2"><a href="Differential.html#cb8-2"></a>ENST00000000233<span class="fl">.8</span>,ARF5</span>
-<span id="cb8-3"><a href="Differential.html#cb8-3"></a>ENST00000000412<span class="fl">.6</span>,M6PR</span>
-<span id="cb8-4"><a href="Differential.html#cb8-4"></a>ENST00000000442<span class="fl">.9</span>,ESRRA</span>
-<span id="cb8-5"><a href="Differential.html#cb8-5"></a>ENST00000001008<span class="fl">.5</span>,FKBP4</span>
-<span id="cb8-6"><a href="Differential.html#cb8-6"></a>ENST00000001146<span class="fl">.5</span>,CYP26B1</span>
-<span id="cb8-7"><a href="Differential.html#cb8-7"></a>ENST00000002125<span class="fl">.7</span>,NDUFAF7</span>
-<span id="cb8-8"><a href="Differential.html#cb8-8"></a>ENST00000002165<span class="fl">.9</span>,FUCA2</span>
-<span id="cb8-9"><a href="Differential.html#cb8-9"></a>ENST00000002501<span class="fl">.9</span>,DBNDD1</span>
-<span id="cb8-10"><a href="Differential.html#cb8-10"></a>ENST00000002596<span class="fl">.5</span>,HS3ST1</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="Differential.html#cb21-1"></a>ID,GENENAME</span>
+<span id="cb21-2"><a href="Differential.html#cb21-2"></a>ENST00000000233<span class="fl">.8</span>,ARF5</span>
+<span id="cb21-3"><a href="Differential.html#cb21-3"></a>ENST00000000412<span class="fl">.6</span>,M6PR</span>
+<span id="cb21-4"><a href="Differential.html#cb21-4"></a>ENST00000000442<span class="fl">.9</span>,ESRRA</span>
+<span id="cb21-5"><a href="Differential.html#cb21-5"></a>ENST00000001008<span class="fl">.5</span>,FKBP4</span>
+<span id="cb21-6"><a href="Differential.html#cb21-6"></a>ENST00000001146<span class="fl">.5</span>,CYP26B1</span>
+<span id="cb21-7"><a href="Differential.html#cb21-7"></a>ENST00000002125<span class="fl">.7</span>,NDUFAF7</span>
+<span id="cb21-8"><a href="Differential.html#cb21-8"></a>ENST00000002165<span class="fl">.9</span>,FUCA2</span>
+<span id="cb21-9"><a href="Differential.html#cb21-9"></a>ENST00000002501<span class="fl">.9</span>,DBNDD1</span>
+<span id="cb21-10"><a href="Differential.html#cb21-10"></a>ENST00000002596<span class="fl">.5</span>,HS3ST1</span></code></pre></div>
 <p>Then we uses tximport to import transcripts abundance data from the quant.sf files from salmon as described in the DESeq2:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="Differential.html#cb9-1"></a><span class="co">### filelist are a list of quant.sf files generated by Salmon gene quantification.</span></span>
-<span id="cb9-2"><a href="Differential.html#cb9-2"></a>txi &lt;-<span class="st"> </span><span class="kw">tximport</span>(filelist, <span class="dt">type=</span>Salmon, <span class="dt">tx2gene=</span>tx2gene)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Differential.html#cb22-1"></a><span class="co">### filelist are a list of quant.sf files generated by Salmon gene quantification.</span></span>
+<span id="cb22-2"><a href="Differential.html#cb22-2"></a>txi &lt;-<span class="st"> </span><span class="kw">tximport</span>(filelist, <span class="dt">type=</span>Salmon, <span class="dt">tx2gene=</span>tx2gene)</span></code></pre></div>
 </div>
 </div>
 <div id="different-gene-expression-analysis" class="section level2">

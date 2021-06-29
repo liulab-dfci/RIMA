@@ -23,14 +23,14 @@
 
 
 
-<meta name="date" content="2021-05-07" />
+<meta name="date" content="2021-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="intro.html"/>
+<link rel="prev" href="how-to-run-rima.html"/>
 <link rel="next" href="Differential.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -133,11 +133,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this tutorial</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#pre-built-reference-data"><i class="fa fa-check"></i><b>1.2</b> Pre-built reference data</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
+<li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
+<li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
 <li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-mapping"><i class="fa fa-check"></i><b>3.1</b> Read Mapping</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="Preprocessing.html"><a href="Preprocessing.html#star"><i class="fa fa-check"></i><b>3.1.1</b> STAR</a></li>
@@ -237,61 +240,61 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.1.1</span> STAR</h3>
 <p><a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial of runing STAR is available at <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. Once you have installed STAR, the first step is to create genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.</p>
 <p>To run STAR of a sample:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="Preprocessing.html#cb1-1"></a>      STAR <span class="op">--</span>runThreadN <span class="dv">4</span> <span class="op">--</span>genomeDir <span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>index</span>
-<span id="cb1-2"><a href="Preprocessing.html#cb1-2"></a>        <span class="op">--</span>outReadsUnmapped None </span>
-<span id="cb1-3"><a href="Preprocessing.html#cb1-3"></a>        <span class="op">--</span>chimSegmentMin <span class="dv">12</span>  <span class="co">#generate Chimeric and circulate alignment</span></span>
-<span id="cb1-4"><a href="Preprocessing.html#cb1-4"></a>        <span class="op">--</span>outSAMunmapped Within </span>
-<span id="cb1-5"><a href="Preprocessing.html#cb1-5"></a>        <span class="op">--</span>outSAMtype BAM SortedByCoordinate</span>
-<span id="cb1-6"><a href="Preprocessing.html#cb1-6"></a>        <span class="op">--</span>readFilesIn sample_<span class="fl">1.</span>fastq.gz sample_<span class="fl">2.</span>fastq.gz</span>
-<span id="cb1-7"><a href="Preprocessing.html#cb1-7"></a>        <span class="op">--</span>readFilesCommand zcat</span>
-<span id="cb1-8"><a href="Preprocessing.html#cb1-8"></a>        <span class="op">--</span>outFileNamePrefix sample</span>
-<span id="cb1-9"><a href="Preprocessing.html#cb1-9"></a>        <span class="op">--</span>quantMode TranscriptomeSAM GeneCounts <span class="co"># generate outputs in transcript coordinates and mapped read counts per gene</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Preprocessing.html#cb14-1"></a>      STAR <span class="op">--</span>runThreadN <span class="dv">4</span> <span class="op">--</span>genomeDir <span class="op">/</span>path<span class="op">/</span>to<span class="op">/</span>index</span>
+<span id="cb14-2"><a href="Preprocessing.html#cb14-2"></a>        <span class="op">--</span>outReadsUnmapped None </span>
+<span id="cb14-3"><a href="Preprocessing.html#cb14-3"></a>        <span class="op">--</span>chimSegmentMin <span class="dv">12</span>  <span class="co">#generate Chimeric and circulate alignment</span></span>
+<span id="cb14-4"><a href="Preprocessing.html#cb14-4"></a>        <span class="op">--</span>outSAMunmapped Within </span>
+<span id="cb14-5"><a href="Preprocessing.html#cb14-5"></a>        <span class="op">--</span>outSAMtype BAM SortedByCoordinate</span>
+<span id="cb14-6"><a href="Preprocessing.html#cb14-6"></a>        <span class="op">--</span>readFilesIn sample_<span class="fl">1.</span>fastq.gz sample_<span class="fl">2.</span>fastq.gz</span>
+<span id="cb14-7"><a href="Preprocessing.html#cb14-7"></a>        <span class="op">--</span>readFilesCommand zcat</span>
+<span id="cb14-8"><a href="Preprocessing.html#cb14-8"></a>        <span class="op">--</span>outFileNamePrefix sample</span>
+<span id="cb14-9"><a href="Preprocessing.html#cb14-9"></a>        <span class="op">--</span>quantMode TranscriptomeSAM GeneCounts <span class="co"># generate outputs in transcript coordinates and mapped read counts per gene</span></span></code></pre></div>
 <p>Example outputs:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Preprocessing.html#cb2-1"></a>sampleAligned.sortedByCoord.out.bam</span>
-<span id="cb2-2"><a href="Preprocessing.html#cb2-2"></a>sampleAligned.toTranscriptome.out.bam </span>
-<span id="cb2-3"><a href="Preprocessing.html#cb2-3"></a>sampleReadsPerGene.out.tab</span>
-<span id="cb2-4"><a href="Preprocessing.html#cb2-4"></a>sampleChimeric.out.junction </span>
-<span id="cb2-5"><a href="Preprocessing.html#cb2-5"></a>sampleLog.final.out</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="Preprocessing.html#cb15-1"></a>sampleAligned.sortedByCoord.out.bam</span>
+<span id="cb15-2"><a href="Preprocessing.html#cb15-2"></a>sampleAligned.toTranscriptome.out.bam </span>
+<span id="cb15-3"><a href="Preprocessing.html#cb15-3"></a>sampleReadsPerGene.out.tab</span>
+<span id="cb15-4"><a href="Preprocessing.html#cb15-4"></a>sampleChimeric.out.junction </span>
+<span id="cb15-5"><a href="Preprocessing.html#cb15-5"></a>sampleLog.final.out</span></code></pre></div>
 <p>Then we use samtools to generate statistics of alignment BAM file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="Preprocessing.html#cb3-1"></a>samtools stats sampleAligned.sortedByCoord.out.bam <span class="op">|</span><span class="st"> </span>grep <span class="op">^</span>SN <span class="op">|</span><span class="st"> </span>cut <span class="op">-</span>f <span class="dv">2</span><span class="op">-</span><span class="st"> </span><span class="er">&gt;</span><span class="st"> </span>sample.sorted.bam.stat.txt</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Preprocessing.html#cb16-1"></a>samtools stats sampleAligned.sortedByCoord.out.bam <span class="op">|</span><span class="st"> </span>grep <span class="op">^</span>SN <span class="op">|</span><span class="st"> </span>cut <span class="op">-</span>f <span class="dv">2</span><span class="op">-</span><span class="st"> </span><span class="er">&gt;</span><span class="st"> </span>sample.sorted.bam.stat.txt</span></code></pre></div>
 <p>Example output of BAM summary:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Preprocessing.html#cb4-1"></a>raw total sequences<span class="op">:</span><span class="st">    </span><span class="dv">60589702</span></span>
-<span id="cb4-2"><a href="Preprocessing.html#cb4-2"></a>filtered sequences<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
-<span id="cb4-3"><a href="Preprocessing.html#cb4-3"></a>sequences<span class="op">:</span><span class="st">  </span><span class="dv">60589702</span></span>
-<span id="cb4-4"><a href="Preprocessing.html#cb4-4"></a>is sorted<span class="op">:</span><span class="st">  </span><span class="dv">1</span></span>
-<span id="cb4-5"><a href="Preprocessing.html#cb4-5"></a>1st fragments<span class="op">:</span><span class="st">  </span><span class="dv">30294851</span></span>
-<span id="cb4-6"><a href="Preprocessing.html#cb4-6"></a>last fragments<span class="op">:</span><span class="st"> </span><span class="dv">30294851</span></span>
-<span id="cb4-7"><a href="Preprocessing.html#cb4-7"></a>reads mapped<span class="op">:</span><span class="st">   </span><span class="dv">59963698</span></span>
-<span id="cb4-8"><a href="Preprocessing.html#cb4-8"></a>reads mapped and paired<span class="op">:</span><span class="st">    </span><span class="dv">59963698</span>    <span class="co"># paired-end technology bit set + both mates mapped</span></span>
-<span id="cb4-9"><a href="Preprocessing.html#cb4-9"></a>reads unmapped<span class="op">:</span><span class="st"> </span><span class="dv">626004</span></span>
-<span id="cb4-10"><a href="Preprocessing.html#cb4-10"></a>reads properly paired<span class="op">:</span><span class="st">  </span><span class="dv">59963698</span>    <span class="co"># proper-pair bit set</span></span>
-<span id="cb4-11"><a href="Preprocessing.html#cb4-11"></a>reads paired<span class="op">:</span><span class="st">   </span><span class="dv">60589702</span>    <span class="co"># paired-end technology bit set</span></span>
-<span id="cb4-12"><a href="Preprocessing.html#cb4-12"></a>reads duplicated<span class="op">:</span><span class="st">   </span><span class="dv">0</span>   <span class="co"># PCR or optical duplicate bit set</span></span>
-<span id="cb4-13"><a href="Preprocessing.html#cb4-13"></a>reads MQ0<span class="op">:</span><span class="st">  </span><span class="dv">110872</span>  <span class="co"># mapped and MQ=0</span></span>
-<span id="cb4-14"><a href="Preprocessing.html#cb4-14"></a>reads QC failed<span class="op">:</span><span class="st">    </span><span class="dv">0</span></span>
-<span id="cb4-15"><a href="Preprocessing.html#cb4-15"></a>non<span class="op">-</span>primary alignments<span class="op">:</span><span class="st"> </span><span class="dv">3102614</span></span>
-<span id="cb4-16"><a href="Preprocessing.html#cb4-16"></a>total length<span class="op">:</span><span class="st">   </span><span class="dv">6058970200</span>  <span class="co"># ignores clipping</span></span>
-<span id="cb4-17"><a href="Preprocessing.html#cb4-17"></a>total first fragment length<span class="op">:</span><span class="st">    </span><span class="dv">3029485100</span>  <span class="co"># ignores clipping</span></span>
-<span id="cb4-18"><a href="Preprocessing.html#cb4-18"></a>total last fragment length<span class="op">:</span><span class="st"> </span><span class="dv">3029485100</span>  <span class="co"># ignores clipping</span></span>
-<span id="cb4-19"><a href="Preprocessing.html#cb4-19"></a>bases mapped<span class="op">:</span><span class="st">   </span><span class="dv">5996369800</span>  <span class="co"># ignores clipping</span></span>
-<span id="cb4-20"><a href="Preprocessing.html#cb4-20"></a>bases <span class="kw">mapped</span> (cigar)<span class="op">:</span><span class="st">   </span><span class="dv">5952761135</span>  <span class="co"># more accurate</span></span>
-<span id="cb4-21"><a href="Preprocessing.html#cb4-21"></a>bases trimmed<span class="op">:</span><span class="st">  </span><span class="dv">0</span></span>
-<span id="cb4-22"><a href="Preprocessing.html#cb4-22"></a>bases duplicated<span class="op">:</span><span class="st">   </span><span class="dv">0</span></span>
-<span id="cb4-23"><a href="Preprocessing.html#cb4-23"></a>mismatches<span class="op">:</span><span class="st"> </span><span class="dv">0</span>   <span class="co"># from NM fields</span></span>
-<span id="cb4-24"><a href="Preprocessing.html#cb4-24"></a>error rate<span class="op">:</span><span class="st"> </span><span class="fl">0.000000e+00</span>    <span class="co"># mismatches / bases mapped (cigar)</span></span>
-<span id="cb4-25"><a href="Preprocessing.html#cb4-25"></a>average length<span class="op">:</span><span class="st"> </span><span class="dv">100</span></span>
-<span id="cb4-26"><a href="Preprocessing.html#cb4-26"></a>average first fragment length<span class="op">:</span><span class="st">  </span><span class="dv">100</span></span>
-<span id="cb4-27"><a href="Preprocessing.html#cb4-27"></a>average last fragment length<span class="op">:</span><span class="st">   </span><span class="dv">100</span></span>
-<span id="cb4-28"><a href="Preprocessing.html#cb4-28"></a>maximum length<span class="op">:</span><span class="st"> </span><span class="dv">100</span></span>
-<span id="cb4-29"><a href="Preprocessing.html#cb4-29"></a>maximum first fragment length<span class="op">:</span><span class="st">  </span><span class="dv">100</span></span>
-<span id="cb4-30"><a href="Preprocessing.html#cb4-30"></a>maximum last fragment length<span class="op">:</span><span class="st">   </span><span class="dv">100</span></span>
-<span id="cb4-31"><a href="Preprocessing.html#cb4-31"></a>average quality<span class="op">:</span><span class="st">    </span><span class="fl">39.7</span></span>
-<span id="cb4-32"><a href="Preprocessing.html#cb4-32"></a>insert size average<span class="op">:</span><span class="st">    </span><span class="fl">971.3</span></span>
-<span id="cb4-33"><a href="Preprocessing.html#cb4-33"></a>insert size standard deviation<span class="op">:</span><span class="st"> </span><span class="fl">1899.5</span></span>
-<span id="cb4-34"><a href="Preprocessing.html#cb4-34"></a>inward oriented pairs<span class="op">:</span><span class="st">  </span><span class="dv">29281286</span></span>
-<span id="cb4-35"><a href="Preprocessing.html#cb4-35"></a>outward oriented pairs<span class="op">:</span><span class="st"> </span><span class="dv">700563</span></span>
-<span id="cb4-36"><a href="Preprocessing.html#cb4-36"></a>pairs with other orientation<span class="op">:</span><span class="st">   </span><span class="dv">0</span></span>
-<span id="cb4-37"><a href="Preprocessing.html#cb4-37"></a>pairs on different chromosomes<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="Preprocessing.html#cb17-1"></a>raw total sequences<span class="op">:</span><span class="st">    </span><span class="dv">60589702</span></span>
+<span id="cb17-2"><a href="Preprocessing.html#cb17-2"></a>filtered sequences<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span>
+<span id="cb17-3"><a href="Preprocessing.html#cb17-3"></a>sequences<span class="op">:</span><span class="st">  </span><span class="dv">60589702</span></span>
+<span id="cb17-4"><a href="Preprocessing.html#cb17-4"></a>is sorted<span class="op">:</span><span class="st">  </span><span class="dv">1</span></span>
+<span id="cb17-5"><a href="Preprocessing.html#cb17-5"></a>1st fragments<span class="op">:</span><span class="st">  </span><span class="dv">30294851</span></span>
+<span id="cb17-6"><a href="Preprocessing.html#cb17-6"></a>last fragments<span class="op">:</span><span class="st"> </span><span class="dv">30294851</span></span>
+<span id="cb17-7"><a href="Preprocessing.html#cb17-7"></a>reads mapped<span class="op">:</span><span class="st">   </span><span class="dv">59963698</span></span>
+<span id="cb17-8"><a href="Preprocessing.html#cb17-8"></a>reads mapped and paired<span class="op">:</span><span class="st">    </span><span class="dv">59963698</span>    <span class="co"># paired-end technology bit set + both mates mapped</span></span>
+<span id="cb17-9"><a href="Preprocessing.html#cb17-9"></a>reads unmapped<span class="op">:</span><span class="st"> </span><span class="dv">626004</span></span>
+<span id="cb17-10"><a href="Preprocessing.html#cb17-10"></a>reads properly paired<span class="op">:</span><span class="st">  </span><span class="dv">59963698</span>    <span class="co"># proper-pair bit set</span></span>
+<span id="cb17-11"><a href="Preprocessing.html#cb17-11"></a>reads paired<span class="op">:</span><span class="st">   </span><span class="dv">60589702</span>    <span class="co"># paired-end technology bit set</span></span>
+<span id="cb17-12"><a href="Preprocessing.html#cb17-12"></a>reads duplicated<span class="op">:</span><span class="st">   </span><span class="dv">0</span>   <span class="co"># PCR or optical duplicate bit set</span></span>
+<span id="cb17-13"><a href="Preprocessing.html#cb17-13"></a>reads MQ0<span class="op">:</span><span class="st">  </span><span class="dv">110872</span>  <span class="co"># mapped and MQ=0</span></span>
+<span id="cb17-14"><a href="Preprocessing.html#cb17-14"></a>reads QC failed<span class="op">:</span><span class="st">    </span><span class="dv">0</span></span>
+<span id="cb17-15"><a href="Preprocessing.html#cb17-15"></a>non<span class="op">-</span>primary alignments<span class="op">:</span><span class="st"> </span><span class="dv">3102614</span></span>
+<span id="cb17-16"><a href="Preprocessing.html#cb17-16"></a>total length<span class="op">:</span><span class="st">   </span><span class="dv">6058970200</span>  <span class="co"># ignores clipping</span></span>
+<span id="cb17-17"><a href="Preprocessing.html#cb17-17"></a>total first fragment length<span class="op">:</span><span class="st">    </span><span class="dv">3029485100</span>  <span class="co"># ignores clipping</span></span>
+<span id="cb17-18"><a href="Preprocessing.html#cb17-18"></a>total last fragment length<span class="op">:</span><span class="st"> </span><span class="dv">3029485100</span>  <span class="co"># ignores clipping</span></span>
+<span id="cb17-19"><a href="Preprocessing.html#cb17-19"></a>bases mapped<span class="op">:</span><span class="st">   </span><span class="dv">5996369800</span>  <span class="co"># ignores clipping</span></span>
+<span id="cb17-20"><a href="Preprocessing.html#cb17-20"></a>bases <span class="kw">mapped</span> (cigar)<span class="op">:</span><span class="st">   </span><span class="dv">5952761135</span>  <span class="co"># more accurate</span></span>
+<span id="cb17-21"><a href="Preprocessing.html#cb17-21"></a>bases trimmed<span class="op">:</span><span class="st">  </span><span class="dv">0</span></span>
+<span id="cb17-22"><a href="Preprocessing.html#cb17-22"></a>bases duplicated<span class="op">:</span><span class="st">   </span><span class="dv">0</span></span>
+<span id="cb17-23"><a href="Preprocessing.html#cb17-23"></a>mismatches<span class="op">:</span><span class="st"> </span><span class="dv">0</span>   <span class="co"># from NM fields</span></span>
+<span id="cb17-24"><a href="Preprocessing.html#cb17-24"></a>error rate<span class="op">:</span><span class="st"> </span><span class="fl">0.000000e+00</span>    <span class="co"># mismatches / bases mapped (cigar)</span></span>
+<span id="cb17-25"><a href="Preprocessing.html#cb17-25"></a>average length<span class="op">:</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb17-26"><a href="Preprocessing.html#cb17-26"></a>average first fragment length<span class="op">:</span><span class="st">  </span><span class="dv">100</span></span>
+<span id="cb17-27"><a href="Preprocessing.html#cb17-27"></a>average last fragment length<span class="op">:</span><span class="st">   </span><span class="dv">100</span></span>
+<span id="cb17-28"><a href="Preprocessing.html#cb17-28"></a>maximum length<span class="op">:</span><span class="st"> </span><span class="dv">100</span></span>
+<span id="cb17-29"><a href="Preprocessing.html#cb17-29"></a>maximum first fragment length<span class="op">:</span><span class="st">  </span><span class="dv">100</span></span>
+<span id="cb17-30"><a href="Preprocessing.html#cb17-30"></a>maximum last fragment length<span class="op">:</span><span class="st">   </span><span class="dv">100</span></span>
+<span id="cb17-31"><a href="Preprocessing.html#cb17-31"></a>average quality<span class="op">:</span><span class="st">    </span><span class="fl">39.7</span></span>
+<span id="cb17-32"><a href="Preprocessing.html#cb17-32"></a>insert size average<span class="op">:</span><span class="st">    </span><span class="fl">971.3</span></span>
+<span id="cb17-33"><a href="Preprocessing.html#cb17-33"></a>insert size standard deviation<span class="op">:</span><span class="st"> </span><span class="fl">1899.5</span></span>
+<span id="cb17-34"><a href="Preprocessing.html#cb17-34"></a>inward oriented pairs<span class="op">:</span><span class="st">  </span><span class="dv">29281286</span></span>
+<span id="cb17-35"><a href="Preprocessing.html#cb17-35"></a>outward oriented pairs<span class="op">:</span><span class="st"> </span><span class="dv">700563</span></span>
+<span id="cb17-36"><a href="Preprocessing.html#cb17-36"></a>pairs with other orientation<span class="op">:</span><span class="st">   </span><span class="dv">0</span></span>
+<span id="cb17-37"><a href="Preprocessing.html#cb17-37"></a>pairs on different chromosomes<span class="op">:</span><span class="st"> </span><span class="dv">0</span></span></code></pre></div>
 </div>
 </div>
 <div id="quality-control" class="section level2">
@@ -299,12 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>RseQC is a standard tool for checking the quality of reads alignment, providing principal measurements of RNA-seq data quality. RseQC tutorial is available at <a href="http://rseqc.sourceforge.net/">here</a>.<br />
 </p>
 <p>To reduce running time, we first subsampled the BAM file and use only housekeeping genes for quality check using RseQC.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Preprocessing.html#cb5-1"></a><span class="co">## Example of subsampling 50% of input alignment</span></span>
-<span id="cb5-2"><a href="Preprocessing.html#cb5-2"></a>samtools view <span class="op">-</span>s <span class="fl">0.5</span> <span class="op">-</span>b sampleAligned.sortedByCoord.out.bam  <span class="op">&gt;</span><span class="st"> </span>sample_downsampling.bam </span>
-<span id="cb5-3"><a href="Preprocessing.html#cb5-3"></a><span class="co"># Extract the alignment of housekeeping gene.</span></span>
-<span id="cb5-4"><a href="Preprocessing.html#cb5-4"></a>bedtools intersect <span class="op">-</span>a sample_downsampling.bam <span class="op">-</span>b housekeeping_refseqGenes.bed <span class="op">&gt;</span><span class="st"> </span>sample_downsampling_housekeeping.bam </span>
-<span id="cb5-5"><a href="Preprocessing.html#cb5-5"></a><span class="co"># index BAM</span></span>
-<span id="cb5-6"><a href="Preprocessing.html#cb5-6"></a>samtools index sample_downsampling_housekeeping.bam <span class="op">&gt;</span><span class="st"> </span>sample_downsampling_housekeeping.bam.bai </span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Preprocessing.html#cb18-1"></a><span class="co">## Example of subsampling 50% of input alignment</span></span>
+<span id="cb18-2"><a href="Preprocessing.html#cb18-2"></a>samtools view <span class="op">-</span>s <span class="fl">0.5</span> <span class="op">-</span>b sampleAligned.sortedByCoord.out.bam  <span class="op">&gt;</span><span class="st"> </span>sample_downsampling.bam </span>
+<span id="cb18-3"><a href="Preprocessing.html#cb18-3"></a><span class="co"># Extract the alignment of housekeeping gene.</span></span>
+<span id="cb18-4"><a href="Preprocessing.html#cb18-4"></a>bedtools intersect <span class="op">-</span>a sample_downsampling.bam <span class="op">-</span>b housekeeping_refseqGenes.bed <span class="op">&gt;</span><span class="st"> </span>sample_downsampling_housekeeping.bam </span>
+<span id="cb18-5"><a href="Preprocessing.html#cb18-5"></a><span class="co"># index BAM</span></span>
+<span id="cb18-6"><a href="Preprocessing.html#cb18-6"></a>samtools index sample_downsampling_housekeeping.bam <span class="op">&gt;</span><span class="st"> </span>sample_downsampling_housekeeping.bam.bai </span></code></pre></div>
 <div id="quality-metrics" class="section level3">
 <h3><span class="header-section-number">3.2.1</span> Quality metrics</h3>
 <ol style="list-style-type: decimal">
@@ -381,7 +384,7 @@ Figure 3.1: Before(left) and after(right) batch correction with Limma
           </div>
         </div>
       </div>
-<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="how-to-run-rima.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="Differential.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Running RIMA on AWS | Tutorial of RNA-seq tumor immunity analysis</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Running RIMA on AWS | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Running RIMA on AWS | Tutorial of RNA-seq tumor immunity analysis" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+
+
+<meta name="date" content="2021-06-28" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="Preprocessing.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html"><i class="fa fa-check"></i><b>2</b> Running RIMA on AWS</a><ul>
+<li class="chapter" data-level="2.1" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#available-tools-checklist"><i class="fa fa-check"></i><b>2.1</b> Available Tools Checklist</a></li>
+<li class="chapter" data-level="2.2" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#create-an-aws-instance"><i class="fa fa-check"></i><b>2.2</b> Create an AWS instance</a></li>
+<li class="chapter" data-level="2.3" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#rima-installation"><i class="fa fa-check"></i><b>2.3</b> RIMA installation</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#other-required-software-and-packages"><i class="fa fa-check"></i><b>2.3.1</b> Other required software and packages</a></li>
+<li class="chapter" data-level="2.3.2" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#build-and-activate-the-rima-environment"><i class="fa fa-check"></i><b>2.3.2</b> Build and activate the RIMA environment</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#prepare-the-execution-files"><i class="fa fa-check"></i><b>2.4</b> Prepare the execution files</a></li>
+<li class="chapter" data-level="2.5" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#execute-rima"><i class="fa fa-check"></i><b>2.5</b> Execute RIMA</a></li>
+<li class="chapter" data-level="2.6" data-path="running-rima-on-aws.html"><a href="running-rima-on-aws.html#output"><i class="fa fa-check"></i><b>2.6</b> Output</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
+<li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-mapping"><i class="fa fa-check"></i><b>3.1</b> Read Mapping</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="Preprocessing.html"><a href="Preprocessing.html#star"><i class="fa fa-check"></i><b>3.1.1</b> STAR</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-control"><i class="fa fa-check"></i><b>3.2</b> Quality Control</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-metrics"><i class="fa fa-check"></i><b>3.2.1</b> Quality metrics</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="Preprocessing.html"><a href="Preprocessing.html#gene-quantification"><i class="fa fa-check"></i><b>3.3</b> Gene quantification</a></li>
+<li class="chapter" data-level="3.4" data-path="Preprocessing.html"><a href="Preprocessing.html#batch-effect-removal"><i class="fa fa-check"></i><b>3.4</b> Batch effect removal</a></li>
+<li class="chapter" data-level="3.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>3.5</b> Video demo of RIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>4</b> Differential gene analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="Differential.html"><a href="Differential.html#differential-gene-expression-using-deseq2"><i class="fa fa-check"></i><b>4.1</b> Differential gene expression using DESeq2</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
+<li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Repertoire.html"><a href="Repertoire.html"><i class="fa fa-check"></i><b>5</b> Immune repertoire</a><ul>
+<li class="chapter" data-level="5.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4"><i class="fa fa-check"></i><b>5.1</b> TRUST4</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4-output"><i class="fa fa-check"></i><b>5.1.1</b> TRUST4 output</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Repertoire.html"><a href="Repertoire.html#bcr-cluster-calculation"><i class="fa fa-check"></i><b>5.2</b> BCR cluster calculation</a></li>
+<li class="chapter" data-level="5.3" data-path="Repertoire.html"><a href="Repertoire.html#clonotypes-per-kilo-reads-cpk"><i class="fa fa-check"></i><b>5.3</b> Clonotypes per kilo-reads (CPK)</a></li>
+<li class="chapter" data-level="5.4" data-path="Repertoire.html"><a href="Repertoire.html#tcr-and-bcr-entropy-and-colonality"><i class="fa fa-check"></i><b>5.4</b> TCR and BCR entropy and Colonality</a></li>
+<li class="chapter" data-level="5.5" data-path="Repertoire.html"><a href="Repertoire.html#fraction-of-reads-mapped-to-tcr-and-bcr"><i class="fa fa-check"></i><b>5.5</b> Fraction of reads mapped to TCR and BCR</a></li>
+<li class="chapter" data-level="5.6" data-path="Repertoire.html"><a href="Repertoire.html#somatic-hypermutation-rate-of-bcr"><i class="fa fa-check"></i><b>5.6</b> Somatic hypermutation rate of BCR</a></li>
+<li class="chapter" data-level="5.7" data-path="Repertoire.html"><a href="Repertoire.html#ig-isotype-frequency"><i class="fa fa-check"></i><b>5.7</b> Ig isotype frequency</a></li>
+<li class="chapter" data-level="5.8" data-path="Repertoire.html"><a href="Repertoire.html#cohort-analysis"><i class="fa fa-check"></i><b>5.8</b> Cohort analysis</a></li>
+<li class="chapter" data-level="5.9" data-path="Repertoire.html"><a href="Repertoire.html#video-demo"><i class="fa fa-check"></i><b>5.9</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>6</b> Immune Infiltration</a><ul>
+<li class="chapter" data-level="6.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>6.1</b> Cibersort</a></li>
+<li class="chapter" data-level="6.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>6.2</b> TIMER</a></li>
+<li class="chapter" data-level="6.3" data-path="Infiltration.html"><a href="Infiltration.html#quantiseq"><i class="fa fa-check"></i><b>6.3</b> quanTIseq</a></li>
+<li class="chapter" data-level="6.4" data-path="Infiltration.html"><a href="Infiltration.html#xcell"><i class="fa fa-check"></i><b>6.4</b> xCell</a></li>
+<li class="chapter" data-level="6.5" data-path="Infiltration.html"><a href="Infiltration.html#epic"><i class="fa fa-check"></i><b>6.5</b> EPIC</a></li>
+<li class="chapter" data-level="6.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>6.6</b> MCP-counter</a></li>
+<li class="chapter" data-level="6.7" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-cell-type"><i class="fa fa-check"></i><b>6.7</b> Comparison across cell type</a></li>
+<li class="chapter" data-level="6.8" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-sample"><i class="fa fa-check"></i><b>6.8</b> Comparison across sample</a></li>
+<li class="chapter" data-level="6.9" data-path="Infiltration.html"><a href="Infiltration.html#video-demo-1"><i class="fa fa-check"></i><b>6.9</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Response.html"><a href="Response.html"><i class="fa fa-check"></i><b>7</b> Immune Response</a><ul>
+<li class="chapter" data-level="7.1" data-path="Response.html"><a href="Response.html#tide"><i class="fa fa-check"></i><b>7.1</b> TIDE</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="Response.html"><a href="Response.html#cold-and-hot-tumors"><i class="fa fa-check"></i><b>7.1.1</b> Cold and hot tumors</a></li>
+<li class="chapter" data-level="7.1.2" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>7.1.2</b> T cell dysfunction</a></li>
+<li class="chapter" data-level="7.1.3" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>7.1.3</b> T cell exclusion</a></li>
+<li class="chapter" data-level="7.1.4" data-path="Response.html"><a href="Response.html#normaliztion"><i class="fa fa-check"></i><b>7.1.4</b> Normaliztion</a></li>
+<li class="chapter" data-level="7.1.5" data-path="Response.html"><a href="Response.html#running-tide"><i class="fa fa-check"></i><b>7.1.5</b> Running TIDE</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.2</b> Microsatelite instability (MSI)</a></li>
+<li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#response-comparison-analysis-of-biomarkers"><i class="fa fa-check"></i><b>7.3</b> Response comparison analysis of biomarkers</a></li>
+<li class="chapter" data-level="7.4" data-path="Response.html"><a href="Response.html#video-demo-2"><i class="fa fa-check"></i><b>7.4</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Calling</a></li>
+<li class="chapter" data-level="9" data-path="Neoantigen.html"><a href="Neoantigen.html"><i class="fa fa-check"></i><b>9</b> Neoantigen Analysis</a><ul>
+<li class="chapter" data-level="9.1" data-path="Neoantigen.html"><a href="Neoantigen.html#somatic-mutation"><i class="fa fa-check"></i><b>9.1</b> Somatic mutation</a></li>
+<li class="chapter" data-level="9.2" data-path="Neoantigen.html"><a href="Neoantigen.html#neoantigen-identification"><i class="fa fa-check"></i><b>9.2</b> Neoantigen identification</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>10</b> Fusion</a><ul>
+<li class="chapter" data-level="10.1" data-path="fusion.html"><a href="fusion.html#fusion-calling-from-chimeric"><i class="fa fa-check"></i><b>10.1</b> Fusion calling from CHIMERIC</a></li>
+<li class="chapter" data-level="10.2" data-path="fusion.html"><a href="fusion.html#remove-homolog"><i class="fa fa-check"></i><b>10.2</b> Remove homolog</a></li>
+<li class="chapter" data-level="10.3" data-path="fusion.html"><a href="fusion.html#comparison"><i class="fa fa-check"></i><b>10.3</b> Comparison</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>11</b> Microbiome</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Tutorial of RNA-seq tumor immunity analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="running-rima-on-aws" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Running RIMA on AWS</h1>
+<div id="available-tools-checklist" class="section level2">
+<h2><span class="header-section-number">2.1</span> Available Tools Checklist</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><strong>Methods</strong></th>
+<th align="center"><strong>Description</strong></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—ENVIRONMENT—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">rnaseq</td>
+<td align="center">basic tools wihout dependency</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">rseqc</td>
+<td align="center">dependent packages for quality control</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">stat_perl_r</td>
+<td align="center">dependent packages for plotting</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">fusion</td>
+<td align="center">dependent package for fusion</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">centrifuge</td>
+<td align="center">dependent package for microbiome</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—PREPROCESSING—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">STAR</td>
+<td align="center">Spliced Transcripts Alignment to a Reference</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">Salmon</td>
+<td align="center">Gene Quantification</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">RSeQC</td>
+<td align="center">High Throughput Sequence Data Evaluation</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">batch_removal</td>
+<td align="center">Remove Batch Effects Using Limma</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—DIFFERENTIAL EXPRESSION—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">DESeq2</td>
+<td align="center">Dene Differential Expression Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">GSEA</td>
+<td align="center">Gene Set Enrichment Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">ssGSEA</td>
+<td align="center">Single-sample GSEA</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE REPERTOIRE—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">TRUST4</td>
+<td align="center">TCR and BCR Sequences Analysis</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE INFILTRATION—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">ImmuneDeconv</td>
+<td align="center">Cell Components Estimation</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center"></td>
+<td align="center"><strong>—IMMNUE RESPONSE—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center">MSIsensor2</td>
+<td align="center">Microsatellite Instability (MSI) Detection</td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">TIDEpy</td>
+<td align="center">T cell dysfunction and exclusion prediction</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—MICROBIOME—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">Centrifuge</td>
+<td align="center">Bacterial Abundance Detection</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—Mutation—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">STAR-Fusion</td>
+<td align="center">Identify the fusion gene pairs</td>
+<td align="center"></td>
+</tr>
+<tr class="odd">
+<td align="center"></td>
+<td align="center"><strong>—NEO-ANTIGEN—</strong></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="center">arcasHLA</td>
+<td align="center">HLA Class I and Class II Genes Typing</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="create-an-aws-instance" class="section level2">
+<h2><span class="header-section-number">2.2</span> Create an AWS instance</h2>
+<p>If you are not familiar with AWS instances, we recommend Amazon’s Getting Started <a href="https://aws.amazon.com/getting-started/">webpage</a>. You will need to be familiar with how to launch an instance and how to access it using a command line interface.</p>
+<p>We typically use EC2 spot instances with the following parameters:</p>
+<ul>
+<li><strong>machine type</strong> : m4.16xlarge
+<ul>
+<li>This machine has 64 cores. A list of machine costs can be found <a href="https://aws.amazon.com/ec2/pricing/on-demand/">here</a>.</li>
+</ul></li>
+<li><strong>storage</strong>:
+You will need at least 20GB of storage on the root disk for installation of required software. Alternatively, you can install this software on an attached disk. (see below)
+Add an additional disk with enough storage for the following:
+<ul>
+<li>Reference files and pipeline code – 65 GB</li>
+<li>Raw data – we recommend reserving five times the size of your data files. For example, if your fastq files are 50GB each, then you should allot 250GB for each fastq file. Zipped fastq files are recommended.</li>
+<li>Required software – reserve ~20GB for installation of miniconda, mamba and snakemake if you will install these on this disk instead of the root.</li>
+</ul></li>
+</ul>
+<p>Once you have created a new instance, you will need to format and mount the disk. To format the disk, you can use the following code:</p>
+<pre><code>format disk  sudo mkfs -t xfs /dev/&lt;your disk name&gt;</code></pre>
+</div>
+<div id="rima-installation" class="section level2">
+<h2><span class="header-section-number">2.3</span> RIMA installation</h2>
+<p>To run RIMA, you will create a working directory and install references, the pipeline code and other required software.</p>
+<p><strong>Prepare a working directory</strong></p>
+<pre><code>mkdir RIMA</code></pre>
+<p><strong>References</strong></p>
+<p>A pre-prepared RIMA reference folder can be downloaded using the following code:</p>
+<pre><code>cd RIMA
+wget http://cistrome.org/~lyang/ref.tar.gz 
+
+# unzip the reference  
+tar -zxvf ref.tar.gz
+
+# remove the reference zip file to save some space
+rm ref.tar.gz </code></pre>
+<p>If you want to prepare a customized reference, you can follow <a href="https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/">this tutorial</a> to build your own reference.</p>
+<p>Currently, RIMA_AWS supports <strong>hg38</strong>.</p>
+<p><strong>Optional step</strong><br />
+</p>
+<p>If you download your RIMA reference folder in another directory, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
+For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link</p>
+<pre><code>cd rnaseq_pipeline
+
+# remove the current link of ref_files
+rm ref_files
+
+# create a new symoblic link to your reference folder
+ln -s /mnt/tutorial/ref_files</code></pre>
+<p><strong>Get the pipeline code</strong></p>
+<p>Download the RIMA_pipeline folder to your working directory.</p>
+<pre><code>git clone  https://github.com/kateyliu/RIMA_pipeline.git</code></pre>
+<div id="other-required-software-and-packages" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Other required software and packages</h3>
+<p><strong>Conda</strong></p>
+<p>If conda was installed on your AWS instance previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens, if you are unsure about any setting, accept the defaults.
+#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on root disk (&gt;= 20G)</p>
+<pre><code>bash Miniconda3-latest-Linux-x86_64.sh
+conda list  #to see whether you have successfully installed conda</code></pre>
+<p><strong>mamba</strong></p>
+<p>Install mamba in your conda environment. mamba will be used to install the rest of the environments necessary to run the pipeline.</p>
+<pre><code>conda install -c conda-forge mamba</code></pre>
+<p><strong>Snakemake</strong></p>
+<p>Install snakemake in your conda environment. Check the version of your snakemake. Make sure the version if &gt; 5.0.</p>
+<pre><code>mamba install -c conda-forge -c bioconda snakemake=5.5.4
+snakemake --version #to see whether you have successfully installed snakemake</code></pre>
+</div>
+<div id="build-and-activate-the-rima-environment" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Build and activate the RIMA environment</h3>
+<p><strong>Build the RIMA environment</strong></p>
+<p><em>Check the ‘execution.yaml’ in the rnaseq_pipeline folder – all modules should be set to false except environment</em></p>
+<pre><code>cd rnaseq_pipeline ## if we could make this a separate scripts rather than RIMA.snakemake. One way is to directly call the installation command. It could be confusing when mentioning &#39;execution.yaml&#39; file here
+snakemake -s RIMA.snakefile  
+</code></pre>
+<p><strong>Activate the RIMA environment</strong></p>
+<p>Based on the conda environments information, the main environment “rnaseq” can be activated as below.</p>
+<pre><code>export CONDA_ROOT=/home/{username}/miniconda3
+export PATH=/home/{username}/miniconda3/bin:$PATH
+source activate rnaseq</code></pre>
+<p><strong>Install one basic package which is missing on the AWS ubuntu system</strong></p>
+<pre><code>source activate rnaseq 
+sudo apt install libfontconfig1 libxrender1 </code></pre>
+<p><strong>Install the genomics-bcftbx for fusion homologous gene pairs estimation</strong>
+if you want to run the mutation module which estimates fusion gene pairs, you need to install one more package under the fusion_env:</p>
+<pre><code>source activate fusion_env`
+pip install git+https://github.com/fls-bioinformatics-core/genomics.git</code></pre>
+</div>
+</div>
+<div id="prepare-the-execution-files" class="section level2">
+<h2><span class="header-section-number">2.4</span> Prepare the execution files</h2>
+<p><strong>Metasheet.csv</strong>
+Ensure your metasheet contains <strong>Three Required Columns</strong> (SampleName, PatName) in comma-delimited format. Enter “U”(unknown) for missing data.
+You can also add more phenotype information that you may want to compare e.g. columns for Responder, Age, Sex etc.
+The Group column controls what samples will be used to run DESeq2, ‘NA’ are the sample not included in the comparison.</p>
+<pre><code>SampleName,PatName,Batch,Group,Age,Tissue,Replicate,Gender,Timing,Responder,TumorLocation,OngoingTreatment,PFS,Survival,OS,SampleId,syn_batch
+SRR8281218,P20,1,NR,63,Brain,NA,male,Pre,NR,temporal,no,110,1,278,4790-NL-AS,1
+SRR8281219,P20,1,NA,63,Brain,NA,male,Post,NR,temporal,no,110,1,278,4975-NL-AS,1
+SRR8281226,P53,1,NR,70,Brain,NA,male,Pre,NR,frontal,Yes,83,1,337,3981-NL-AS,2
+SRR8281236,P53,1,NA,70,Brain,2,male,Post,NR,frontal,Yes,83,1,337,4760-D1,2
+SRR8281233,P56,1,NR,54,Brain,NA,female,Pre,NR,Parietal,no,83,1,83,4341-D3,3
+SRR8281230,P56,1,NA,54,Brain,NA,female,Post,NR,Parietal,no,83,1,83,4680-A1,3
+SRR8281244,P100,1,NA,31,Brain,NA,male,Post,R,Frontal-crossesmidline,yes,151,0,615,4956-NL-AS,2
+SRR8281245,P100,1,R,31,Brain,NA,male,Pre,R,Frontal-crossesmidline,yes,151,0,615,4595-G1,2
+SRR8281243,P101,1,R,32,Brain,NA,male,Pre,R,frontal,no,0,1,414,3542-NL-AS,2
+SRR8281238,P102,1,NA,64,Brain,NA,female,Post,R,Temporal-anterior,yes,519,0,539,5094-NL-AS,1
+SRR8281251,P101,1,NA,32,Brain,2,male,Post,R,frontal,no,0,1,414,4943-A1,2
+SRR8281250,P102,1,R,64,Brain,NA,female,Pre,R,Temporal-anterior,yes,519,0,539,4443-NL-AS,1</code></pre>
+<p><strong>Config.yaml</strong></p>
+<p>In the rnaseq_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameter and (iii)Samples list.</p>
+<p>You should provide these parameters with column names in metasheet.csv as mentioned in ‘Metasheet’.</p>
+<p>Below is an example of how to input that information in the config file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).</p>
+<pre><code>---
+metasheet: metasheet.csv
+ref: ref.yaml
+assembly: hg38
+cancer_type: GBM
+rseqc_ref: house_keeping  #option: &#39;house_keeping&#39; or &#39;false&#39;. If check alignment quality on house keeping                              gene.
+mate: [1,2]               #paired-end fastq format
+
+#########Parameter used for cohort level analysis################
+design: Group #condition to do comparsion
+Treatment: R
+Control: NR
+batch: syb_batch          #option: false or column name. If check the batch effect of samples included in the                            design column and used a covariates for differential analysis.
+
+pre_treated: false          #option: true or false. If patients are pre or post treatment.
+
+#########Location of raw fastq data##############
+samples:
+  SRR8281218:
+    - /mnt/zhao_trial/data/SRR8281218_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281218_2.fastq.gz
+  SRR8281219:
+    - /mnt/zhao_trial/data/SRR8281219_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281219_2.fastq.gz
+  SRR8281226:
+    - /mnt/zhao_trial/data/SRR8281226_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281226_2.fastq.gz
+  SRR8281236:
+    - /mnt/zhao_trial/data/SRR8281236_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281236_2.fastq.gz
+  SRR8281230:
+    - /mnt/zhao_trial/data/SRR8281230_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281230_2.fastq.gz
+  SRR8281233:
+    - /mnt/zhao_trial/data/SRR8281233_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281233_2.fastq.gz
+  SRR8281244:
+    - /mnt/zhao_trial/data/SRR8281244_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281244_2.fastq.gz
+  SRR8281245:
+    - /mnt/zhao_trial/data/SRR8281245_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281245_2.fastq.gz
+  SRR8281243:
+    - /mnt/zhao_trial/data/SRR8281243_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281243_2.fastq.gz
+  SRR8281251:
+    - /mnt/zhao_trial/data/SRR8281251_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281251_2.fastq.gz
+  SRR8281238:
+    - /mnt/zhao_trial/data/SRR8281238_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281238_2.fastq.gz
+  SRR8281250:
+    - /mnt/zhao_trial/data/SRR8281250_1.fastq.gz
+    - /mnt/zhao_trial/data/SRR8281250_2.fastq.gz
+    
+</code></pre>
+<p><strong>execution.yaml</strong></p>
+<p>Use <strong>execution.yaml</strong> to control which modules to run in RIMA.
+There are three required modules: (1) Environment (2) Preprocess individual (3) Preprocess mutation_cohort
+Preprocess module outputs are required for optional modules(downstream analysis).</p>
+<pre><code>#Note: This module creates the environment necessary to run the remaining modules. Environment installation is only required for the first time on any server. For recurring users, the command can be set to false to avoid reinstallations.
+environment: true  
+
+#Note: Preprocess individual and cohort module necessary to get the alignment and quality results. Run the remaining modules only after these two modules.
+preprocess_individual: true
+preprocess_cohort: true
+
+#Optional modules
+#Note: The below modules are specialized modules, each dealing with specific targets. Make sure to r
+un individual and cohort of each module to get all the results.
+
+differential_expression_cohort: false
+
+immune_infiltration_cohort: false
+
+mutation_individual: false
+mutation_cohort: false
+
+immune_response_individual: false
+immune_response_cohort: false
+
+immune_repertoire_individual: false
+immune_repertoire_cohort: false
+
+microbiome_individual: false
+microbiome_cohort: false
+
+neoantigen_individual: false
+neoantigen_cohort: false
+
+#Note: This module generates a standalone  HTML report. It shows the results from the modules that user decides to run.
+report: false
+</code></pre>
+</div>
+<div id="execute-rima" class="section level2">
+<h2><span class="header-section-number">2.5</span> Execute RIMA</h2>
+<p><strong>Check the path of your conda env</strong></p>
+<pre><code>conda env list 
+# conda environments:
+#
+base                  *  /home/ubuntu/miniconda3
+centrifuge_env           /home/ubuntu/miniconda3/envs/centrifuge_env
+fusion_env               /home/ubuntu/miniconda3/envs/fusion_env
+rnaseq                   /home/ubuntu/miniconda3/envs/rnaseq
+rseqc_env                /home/ubuntu/miniconda3/envs/rseqc_env
+stat_perl_r              /home/ubuntu/miniconda3/envs/stat_perl_r</code></pre>
+<p><strong>Check the pipeline with a dry run to ensure correct script and data usage.</strong></p>
+<pre><code>snakemake -s RIMA.snakefile -np </code></pre>
+<p><strong>Submit the job.</strong></p>
+<p>For system with AWS, we can use nohup as below.</p>
+<pre><code>nohup time snakemake -s RIMA.snakefile -j 4 &gt; RIMA.out &amp;</code></pre>
+<p>note: Argument -j sets the cores for parallel runs. (e.g. ‘-j 4’ can run 4 jobs in parallel at the same time.) note: Here, output log records the run information. A user may run one module at a time to obtain a record of each module’s output log.</p>
+</div>
+<div id="output" class="section level2">
+<h2><span class="header-section-number">2.6</span> Output</h2>
+<p>Output folders are generated in a folder called “analysis”.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Preprocessing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["RIMA-tutorial.pdf", "RIMA-tutorial.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

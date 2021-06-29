@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-05-07" />
+<meta name="date" content="2021-06-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -133,11 +133,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">A Minimal Book Example</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About this tutorial</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#pre-built-reference-data"><i class="fa fa-check"></i><b>1.2</b> Pre-built reference data</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
+<li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
+<li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
 <li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
 <li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-mapping"><i class="fa fa-check"></i><b>3.1</b> Read Mapping</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="Preprocessing.html"><a href="Preprocessing.html#star"><i class="fa fa-check"></i><b>3.1.1</b> STAR</a></li>
@@ -244,22 +247,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="bcr-cluster-calculation" class="section level2">
 <h2><span class="header-section-number">5.2</span> BCR cluster calculation</h2>
 <p>We use one sample for a instance to show how RIMA process the results from TRUST4. We start from a proccessed file that RIMA directly add the sample ID to TRUST4_report.tsv. This step makes it more easier to combine all of individual sample results in following analysis.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="Repertoire.html#cb14-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb14-2"><a href="Repertoire.html#cb14-2"></a></span>
-<span id="cb14-3"><a href="Repertoire.html#cb14-3"></a><span class="co">#load processed function </span></span>
-<span id="cb14-4"><a href="Repertoire.html#cb14-4"></a><span class="kw">source</span>(<span class="st">&quot;TRUST4/trust4_metric_functions.R&quot;</span>)</span>
-<span id="cb14-5"><a href="Repertoire.html#cb14-5"></a></span>
-<span id="cb14-6"><a href="Repertoire.html#cb14-6"></a><span class="co"># read the individual sample result from RIMA</span></span>
-<span id="cb14-7"><a href="Repertoire.html#cb14-7"></a>cdr3 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;TRUST4/SRR8281233_cdr3.out.processed.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb14-8"><a href="Repertoire.html#cb14-8"></a></span>
-<span id="cb14-9"><a href="Repertoire.html#cb14-9"></a><span class="co">#filter out count of cdr ==0 and add the phenotype info for downstream comparison</span></span>
-<span id="cb14-10"><a href="Repertoire.html#cb14-10"></a><span class="co">#This SRR8281233 smaple is Non-responder</span></span>
-<span id="cb14-11"><a href="Repertoire.html#cb14-11"></a>phenotype &lt;-<span class="st"> &quot;NR&quot;</span></span>
-<span id="cb14-12"><a href="Repertoire.html#cb14-12"></a>cdr3 &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-13"><a href="Repertoire.html#cb14-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">V =</span> <span class="kw">as.character</span>(V), <span class="dt">J =</span> <span class="kw">as.character</span>(J), <span class="dt">C =</span> <span class="kw">as.character</span>(C), <span class="dt">CDR3aa =</span> <span class="kw">as.character</span>(CDR3aa)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-14"><a href="Repertoire.html#cb14-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">clinic =</span> <span class="kw">as.character</span>(phenotype))</span>
-<span id="cb14-15"><a href="Repertoire.html#cb14-15"></a></span>
-<span id="cb14-16"><a href="Repertoire.html#cb14-16"></a><span class="kw">head</span>(cdr3)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="Repertoire.html#cb27-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb27-2"><a href="Repertoire.html#cb27-2"></a></span>
+<span id="cb27-3"><a href="Repertoire.html#cb27-3"></a><span class="co">#load processed function </span></span>
+<span id="cb27-4"><a href="Repertoire.html#cb27-4"></a><span class="kw">source</span>(<span class="st">&quot;TRUST4/trust4_metric_functions.R&quot;</span>)</span>
+<span id="cb27-5"><a href="Repertoire.html#cb27-5"></a></span>
+<span id="cb27-6"><a href="Repertoire.html#cb27-6"></a><span class="co"># read the individual sample result from RIMA</span></span>
+<span id="cb27-7"><a href="Repertoire.html#cb27-7"></a>cdr3 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="dt">file =</span> <span class="st">&quot;TRUST4/SRR8281233_cdr3.out.processed.txt&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb27-8"><a href="Repertoire.html#cb27-8"></a></span>
+<span id="cb27-9"><a href="Repertoire.html#cb27-9"></a><span class="co">#filter out count of cdr ==0 and add the phenotype info for downstream comparison</span></span>
+<span id="cb27-10"><a href="Repertoire.html#cb27-10"></a><span class="co">#This SRR8281233 smaple is Non-responder</span></span>
+<span id="cb27-11"><a href="Repertoire.html#cb27-11"></a>phenotype &lt;-<span class="st"> &quot;NR&quot;</span></span>
+<span id="cb27-12"><a href="Repertoire.html#cb27-12"></a>cdr3 &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, count <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-13"><a href="Repertoire.html#cb27-13"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">V =</span> <span class="kw">as.character</span>(V), <span class="dt">J =</span> <span class="kw">as.character</span>(J), <span class="dt">C =</span> <span class="kw">as.character</span>(C), <span class="dt">CDR3aa =</span> <span class="kw">as.character</span>(CDR3aa)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb27-14"><a href="Repertoire.html#cb27-14"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">clinic =</span> <span class="kw">as.character</span>(phenotype))</span>
+<span id="cb27-15"><a href="Repertoire.html#cb27-15"></a></span>
+<span id="cb27-16"><a href="Repertoire.html#cb27-16"></a><span class="kw">head</span>(cdr3)</span></code></pre></div>
 <pre><code>##   count  frequency                                           CDR3nt
 ## 1   125 0.03682734                TGCATGCAAGCTCTACAAACTCCGTACACTTTT
 ## 2   124 0.03654850                TGTCAGCAGCGTAGCAACTGGCCTTGGACGTTC
@@ -281,40 +284,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 SRR8281233     NR
 ## 5 SRR8281233     NR
 ## 6 SRR8281233     NR</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="Repertoire.html#cb16-1"></a><span class="co">#determine whether the cdr animo acid is complete or partial</span></span>
-<span id="cb16-2"><a href="Repertoire.html#cb16-2"></a>cdr3<span class="op">$</span>is_complete &lt;-<span class="st"> </span><span class="kw">sapply</span>(cdr3<span class="op">$</span>CDR3aa, <span class="cf">function</span>(x) <span class="kw">ifelse</span>(x <span class="op">!=</span><span class="st"> &quot;partial&quot;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>x <span class="op">!=</span><span class="st"> &quot;out_of_frame&quot;</span> <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">grepl</span>(<span class="st">&quot;^_&quot;</span>,x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">?&quot;</span>, x),<span class="st">&quot;Y&quot;</span>,<span class="st">&quot;N&quot;</span>))</span>
-<span id="cb16-3"><a href="Repertoire.html#cb16-3"></a></span>
-<span id="cb16-4"><a href="Repertoire.html#cb16-4"></a><span class="co">#exact the TCR and BCR</span></span>
-<span id="cb16-5"><a href="Repertoire.html#cb16-5"></a>cdr3.bcr &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, <span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,C))</span>
-<span id="cb16-6"><a href="Repertoire.html#cb16-6"></a>cdr3.tcr &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, <span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,C))</span>
-<span id="cb16-7"><a href="Repertoire.html#cb16-7"></a></span>
-<span id="cb16-8"><a href="Repertoire.html#cb16-8"></a><span class="co">#add lib size and clinic traits</span></span>
-<span id="cb16-9"><a href="Repertoire.html#cb16-9"></a>cdr3.bcr &lt;-<span class="st"> </span>cdr3.bcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">lib.size =</span> <span class="kw">sum</span>(count)) </span>
-<span id="cb16-10"><a href="Repertoire.html#cb16-10"></a>cdr3.tcr &lt;-<span class="st"> </span>cdr3.tcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">lib.size =</span> <span class="kw">sum</span>(count)) </span>
-<span id="cb16-11"><a href="Repertoire.html#cb16-11"></a></span>
-<span id="cb16-12"><a href="Repertoire.html#cb16-12"></a><span class="co">#split BCR into heavy chain and light chain</span></span>
-<span id="cb16-13"><a href="Repertoire.html#cb16-13"></a>cdr3.bcr.heavy &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3.bcr, <span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,C))</span>
-<span id="cb16-14"><a href="Repertoire.html#cb16-14"></a>cdr3.bcr.light &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3.bcr, <span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,C))</span>
-<span id="cb16-15"><a href="Repertoire.html#cb16-15"></a></span>
-<span id="cb16-16"><a href="Repertoire.html#cb16-16"></a><span class="co">#save BCR and TCR info for downsteam use</span></span>
-<span id="cb16-17"><a href="Repertoire.html#cb16-17"></a>outdir &lt;-<span class="st"> &quot;TRUST4/individual/&quot;</span></span>
-<span id="cb16-18"><a href="Repertoire.html#cb16-18"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
-<span id="cb16-19"><a href="Repertoire.html#cb16-19"></a><span class="kw">save</span>(cdr3.bcr.light, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_BCR_light.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb16-20"><a href="Repertoire.html#cb16-20"></a><span class="kw">save</span>(cdr3.bcr.heavy, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_BCR_heavy.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb16-21"><a href="Repertoire.html#cb16-21"></a><span class="kw">save</span>(cdr3.tcr, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_TCR.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb16-22"><a href="Repertoire.html#cb16-22"></a></span>
-<span id="cb16-23"><a href="Repertoire.html#cb16-23"></a><span class="co">#BCR clustering </span></span>
-<span id="cb16-24"><a href="Repertoire.html#cb16-24"></a><span class="co">#Note that not every sample have BCR cluster</span></span>
-<span id="cb16-25"><a href="Repertoire.html#cb16-25"></a>sample_bcr_cluster &lt;-<span class="st"> </span><span class="kw">BuildBCRlineage</span>(<span class="dt">sampleID =</span> sample, <span class="dt">Bdata =</span> cdr3.bcr.heavy, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="Repertoire.html#cb29-1"></a><span class="co">#determine whether the cdr animo acid is complete or partial</span></span>
+<span id="cb29-2"><a href="Repertoire.html#cb29-2"></a>cdr3<span class="op">$</span>is_complete &lt;-<span class="st"> </span><span class="kw">sapply</span>(cdr3<span class="op">$</span>CDR3aa, <span class="cf">function</span>(x) <span class="kw">ifelse</span>(x <span class="op">!=</span><span class="st"> &quot;partial&quot;</span> <span class="op">&amp;&amp;</span><span class="st"> </span>x <span class="op">!=</span><span class="st"> &quot;out_of_frame&quot;</span> <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">grepl</span>(<span class="st">&quot;^_&quot;</span>,x) <span class="op">&amp;&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw">grepl</span>(<span class="st">&quot;^</span><span class="ch">\\</span><span class="st">?&quot;</span>, x),<span class="st">&quot;Y&quot;</span>,<span class="st">&quot;N&quot;</span>))</span>
+<span id="cb29-3"><a href="Repertoire.html#cb29-3"></a></span>
+<span id="cb29-4"><a href="Repertoire.html#cb29-4"></a><span class="co">#exact the TCR and BCR</span></span>
+<span id="cb29-5"><a href="Repertoire.html#cb29-5"></a>cdr3.bcr &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, <span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG&quot;</span>,C))</span>
+<span id="cb29-6"><a href="Repertoire.html#cb29-6"></a>cdr3.tcr &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3, <span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^TR&quot;</span>,C))</span>
+<span id="cb29-7"><a href="Repertoire.html#cb29-7"></a></span>
+<span id="cb29-8"><a href="Repertoire.html#cb29-8"></a><span class="co">#add lib size and clinic traits</span></span>
+<span id="cb29-9"><a href="Repertoire.html#cb29-9"></a>cdr3.bcr &lt;-<span class="st"> </span>cdr3.bcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">lib.size =</span> <span class="kw">sum</span>(count)) </span>
+<span id="cb29-10"><a href="Repertoire.html#cb29-10"></a>cdr3.tcr &lt;-<span class="st"> </span>cdr3.tcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">lib.size =</span> <span class="kw">sum</span>(count)) </span>
+<span id="cb29-11"><a href="Repertoire.html#cb29-11"></a></span>
+<span id="cb29-12"><a href="Repertoire.html#cb29-12"></a><span class="co">#split BCR into heavy chain and light chain</span></span>
+<span id="cb29-13"><a href="Repertoire.html#cb29-13"></a>cdr3.bcr.heavy &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3.bcr, <span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IGH&quot;</span>,C))</span>
+<span id="cb29-14"><a href="Repertoire.html#cb29-14"></a>cdr3.bcr.light &lt;-<span class="st"> </span><span class="kw">subset</span>(cdr3.bcr, <span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,V) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,J) <span class="op">|</span><span class="st"> </span><span class="kw">grepl</span>(<span class="st">&quot;^IG[K|L]&quot;</span>,C))</span>
+<span id="cb29-15"><a href="Repertoire.html#cb29-15"></a></span>
+<span id="cb29-16"><a href="Repertoire.html#cb29-16"></a><span class="co">#save BCR and TCR info for downsteam use</span></span>
+<span id="cb29-17"><a href="Repertoire.html#cb29-17"></a>outdir &lt;-<span class="st"> &quot;TRUST4/individual/&quot;</span></span>
+<span id="cb29-18"><a href="Repertoire.html#cb29-18"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
+<span id="cb29-19"><a href="Repertoire.html#cb29-19"></a><span class="kw">save</span>(cdr3.bcr.light, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_BCR_light.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb29-20"><a href="Repertoire.html#cb29-20"></a><span class="kw">save</span>(cdr3.bcr.heavy, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_BCR_heavy.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb29-21"><a href="Repertoire.html#cb29-21"></a><span class="kw">save</span>(cdr3.tcr, <span class="dt">file =</span> <span class="kw">paste</span>(outdir, <span class="st">&quot;TRUST4_TCR.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb29-22"><a href="Repertoire.html#cb29-22"></a></span>
+<span id="cb29-23"><a href="Repertoire.html#cb29-23"></a><span class="co">#BCR clustering </span></span>
+<span id="cb29-24"><a href="Repertoire.html#cb29-24"></a><span class="co">#Note that not every sample have BCR cluster</span></span>
+<span id="cb29-25"><a href="Repertoire.html#cb29-25"></a>sample_bcr_cluster &lt;-<span class="st"> </span><span class="kw">BuildBCRlineage</span>(<span class="dt">sampleID =</span> sample, <span class="dt">Bdata =</span> cdr3.bcr.heavy, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## use default substitution matrix
 ## use default substitution matrix
 ## use default substitution matrix</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="Repertoire.html#cb18-1"></a><span class="kw">save</span>(sample_bcr_cluster,<span class="dt">file =</span> <span class="kw">paste</span>(outdir, sample,<span class="st">&quot;_TRUST4_BCR_heavy_cluster.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb18-2"><a href="Repertoire.html#cb18-2"></a></span>
-<span id="cb18-3"><a href="Repertoire.html#cb18-3"></a><span class="kw">attributes</span>(sample_bcr_cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="Repertoire.html#cb31-1"></a><span class="kw">save</span>(sample_bcr_cluster,<span class="dt">file =</span> <span class="kw">paste</span>(outdir, sample,<span class="st">&quot;_TRUST4_BCR_heavy_cluster.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb31-2"><a href="Repertoire.html#cb31-2"></a></span>
+<span id="cb31-3"><a href="Repertoire.html#cb31-3"></a><span class="kw">attributes</span>(sample_bcr_cluster)</span></code></pre></div>
 <pre><code>## $names
 ## [1] &quot;RGSPRFID&quot; &quot;KVPGRRTR&quot; &quot;RNLYYGAY&quot;</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="Repertoire.html#cb20-1"></a><span class="kw">head</span>(sample_bcr_cluster<span class="op">$</span>RGSPRFID)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="Repertoire.html#cb33-1"></a><span class="kw">head</span>(sample_bcr_cluster<span class="op">$</span>RGSPRFID)</span></code></pre></div>
 <pre><code>## $distMat
 ##      [,1] [,2] [,3] [,4]
 ## [1,]    0    1    1    3
@@ -348,10 +351,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="clonotypes-per-kilo-reads-cpk" class="section level2">
 <h2><span class="header-section-number">5.3</span> Clonotypes per kilo-reads (CPK)</h2>
 <p>CPK can be calculated by taking the number of unique CDR3 calls for a chain divided by the total number of reads for that chain, with this result being multiplied by 1000. This is used as a measure of clonotype diversity.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Repertoire.html#cb22-1"></a><span class="co">#TCR CPK</span></span>
-<span id="cb22-2"><a href="Repertoire.html#cb22-2"></a>cpk &lt;-<span class="st"> </span><span class="kw">aggregate</span>(CDR3aa <span class="op">~</span><span class="st"> </span>sample<span class="op">+</span>clinic<span class="op">+</span>lib.size, cdr3.tcr, <span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x))) <span class="op">%&gt;%</span></span>
-<span id="cb22-3"><a href="Repertoire.html#cb22-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CPK =</span> <span class="kw">signif</span>(CDR3aa<span class="op">/</span>(lib.size<span class="op">/</span><span class="dv">1000</span>),<span class="dv">4</span>))</span>
-<span id="cb22-4"><a href="Repertoire.html#cb22-4"></a>cpk</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="Repertoire.html#cb35-1"></a><span class="co">#TCR CPK</span></span>
+<span id="cb35-2"><a href="Repertoire.html#cb35-2"></a>cpk &lt;-<span class="st"> </span><span class="kw">aggregate</span>(CDR3aa <span class="op">~</span><span class="st"> </span>sample<span class="op">+</span>clinic<span class="op">+</span>lib.size, cdr3.tcr, <span class="cf">function</span>(x) <span class="kw">length</span>(<span class="kw">unique</span>(x))) <span class="op">%&gt;%</span></span>
+<span id="cb35-3"><a href="Repertoire.html#cb35-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CPK =</span> <span class="kw">signif</span>(CDR3aa<span class="op">/</span>(lib.size<span class="op">/</span><span class="dv">1000</span>),<span class="dv">4</span>))</span>
+<span id="cb35-4"><a href="Repertoire.html#cb35-4"></a>cpk</span></code></pre></div>
 <pre><code>##       sample clinic lib.size CDR3aa CPK
 ## 1 SRR8281233     NR       73     20 274</code></pre>
 </div>
@@ -359,54 +362,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">5.4</span> TCR and BCR entropy and Colonality</h2>
 <p>The Shannon entropy index is a measure used for repertoire diversity using clonotype frequencies, which reflects both richness and evenness of the repertoire. This measure informs us of the probability that two random selections from the same repertoire would represent the same clonotype.</p>
 <p>Clonality can be measured using normalized entropy over the number of unique clones. It is equivalent to 1 - Pielou’s Evenness, making it inversely proportional to diversity. A higher clonality index indicates an uneven repertoire due to expansion of clones.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="Repertoire.html#cb24-1"></a><span class="co">#BCR clonality and entropy</span></span>
-<span id="cb24-2"><a href="Repertoire.html#cb24-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
-<span id="cb24-3"><a href="Repertoire.html#cb24-3"></a></span>
-<span id="cb24-4"><a href="Repertoire.html#cb24-4"></a>single_sample_bcr_clonality &lt;-<span class="st"> </span><span class="kw">getClonality</span>(sample, cdr3.bcr.heavy, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="Repertoire.html#cb37-1"></a><span class="co">#BCR clonality and entropy</span></span>
+<span id="cb37-2"><a href="Repertoire.html#cb37-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
+<span id="cb37-3"><a href="Repertoire.html#cb37-3"></a></span>
+<span id="cb37-4"><a href="Repertoire.html#cb37-4"></a>single_sample_bcr_clonality &lt;-<span class="st"> </span><span class="kw">getClonality</span>(sample, cdr3.bcr.heavy, <span class="dt">start=</span><span class="dv">3</span>, <span class="dt">end=</span><span class="dv">10</span>)</span></code></pre></div>
 <pre><code>## use default substitution matrix
 ## use default substitution matrix
 ## use default substitution matrix
 ## [1] &quot;SRR8281233&quot;</code></pre>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="Repertoire.html#cb26-1"></a>single_sample_bcr_clonality[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="Repertoire.html#cb39-1"></a>single_sample_bcr_clonality[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]</span></code></pre></div>
 <pre><code>##               sample            clonality              entropy 
 ##         &quot;SRR8281233&quot; &quot;0.0899083128267854&quot;   &quot;6.83997594611138&quot;</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="Repertoire.html#cb28-1"></a><span class="co">#TCR clonality and entropy</span></span>
-<span id="cb28-2"><a href="Repertoire.html#cb28-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
-<span id="cb28-3"><a href="Repertoire.html#cb28-3"></a></span>
-<span id="cb28-4"><a href="Repertoire.html#cb28-4"></a>single_sample_tcr_clonality &lt;-<span class="st"> </span><span class="kw">getClonalityTCR</span>(sample,cdr3.tcr)</span>
-<span id="cb28-5"><a href="Repertoire.html#cb28-5"></a>single_sample_tcr_clonality</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="Repertoire.html#cb41-1"></a><span class="co">#TCR clonality and entropy</span></span>
+<span id="cb41-2"><a href="Repertoire.html#cb41-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
+<span id="cb41-3"><a href="Repertoire.html#cb41-3"></a></span>
+<span id="cb41-4"><a href="Repertoire.html#cb41-4"></a>single_sample_tcr_clonality &lt;-<span class="st"> </span><span class="kw">getClonalityTCR</span>(sample,cdr3.tcr)</span>
+<span id="cb41-5"><a href="Repertoire.html#cb41-5"></a>single_sample_tcr_clonality</span></code></pre></div>
 <pre><code>##               sample            clonality              entropy 
 ##         &quot;SRR8281233&quot; &quot;0.0699534783052342&quot;    &quot;4.0850595412347&quot;</code></pre>
 </div>
 <div id="fraction-of-reads-mapped-to-tcr-and-bcr" class="section level2">
 <h2><span class="header-section-number">5.5</span> Fraction of reads mapped to TCR and BCR</h2>
 <p>The fraction of reads mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of clonotypes. The fraction is composed of the proportion of reads with genes prefixed by “TR” (TCR) and genes prefixed by “IG” (BCR).</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="Repertoire.html#cb30-1"></a><span class="co">#exact the mapped reads info from alignment index file </span></span>
-<span id="cb30-2"><a href="Repertoire.html#cb30-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
-<span id="cb30-3"><a href="Repertoire.html#cb30-3"></a></span>
-<span id="cb30-4"><a href="Repertoire.html#cb30-4"></a>file &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TRUST4/SRR8281233.sorted.bam.stat.txt&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,<span class="dt">row.names =</span> <span class="dv">1</span>)</span>
-<span id="cb30-5"><a href="Repertoire.html#cb30-5"></a>mapped.reads &lt;-<span class="st"> </span>file[<span class="st">&quot;reads mapped:&quot;</span>,<span class="st">&quot;V2&quot;</span>]</span>
-<span id="cb30-6"><a href="Repertoire.html#cb30-6"></a>individual.stats &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(<span class="dt">sample =</span> sample, <span class="dt">map.reads =</span> mapped.reads)</span>
-<span id="cb30-7"><a href="Repertoire.html#cb30-7"></a></span>
-<span id="cb30-8"><a href="Repertoire.html#cb30-8"></a><span class="co">#---------fraction of BCR reads------------------</span></span>
-<span id="cb30-9"><a href="Repertoire.html#cb30-9"></a><span class="co">##extract library size</span></span>
-<span id="cb30-10"><a href="Repertoire.html#cb30-10"></a>lib.size &lt;-<span class="st"> </span>cdr3.bcr.heavy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span></span>
-<span id="cb30-11"><a href="Repertoire.html#cb30-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">lib =</span> <span class="kw">mean</span>(lib.size))</span>
-<span id="cb30-12"><a href="Repertoire.html#cb30-12"></a></span>
-<span id="cb30-13"><a href="Repertoire.html#cb30-13"></a><span class="co">##combine stats and library size</span></span>
-<span id="cb30-14"><a href="Repertoire.html#cb30-14"></a>bcr.lib.reads &lt;-<span class="st"> </span><span class="kw">merge</span>(individual.stats,lib.size,<span class="dt">by =</span> <span class="st">&quot;sample&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb30-15"><a href="Repertoire.html#cb30-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Infil =</span> <span class="kw">signif</span>(<span class="kw">as.numeric</span>(lib)<span class="op">/</span><span class="kw">as.numeric</span>(map.reads),<span class="dv">4</span>))</span>
-<span id="cb30-16"><a href="Repertoire.html#cb30-16"></a></span>
-<span id="cb30-17"><a href="Repertoire.html#cb30-17"></a><span class="co">#------------fraction of TCR reads-----------------</span></span>
-<span id="cb30-18"><a href="Repertoire.html#cb30-18"></a><span class="co">##extract library size</span></span>
-<span id="cb30-19"><a href="Repertoire.html#cb30-19"></a>lib.size &lt;-<span class="st"> </span>cdr3.tcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span></span>
-<span id="cb30-20"><a href="Repertoire.html#cb30-20"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">lib =</span> <span class="kw">mean</span>(lib.size)) </span>
-<span id="cb30-21"><a href="Repertoire.html#cb30-21"></a><span class="co">##combine stats and library size</span></span>
-<span id="cb30-22"><a href="Repertoire.html#cb30-22"></a>tcr.lib.reads &lt;-<span class="st"> </span><span class="kw">merge</span>(individual.stats,lib.size,<span class="dt">by =</span> <span class="st">&quot;sample&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb30-23"><a href="Repertoire.html#cb30-23"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Infil =</span> <span class="kw">signif</span>(<span class="kw">as.numeric</span>(lib)<span class="op">/</span><span class="kw">as.numeric</span>(map.reads),<span class="dv">4</span>))</span>
-<span id="cb30-24"><a href="Repertoire.html#cb30-24"></a></span>
-<span id="cb30-25"><a href="Repertoire.html#cb30-25"></a>combined &lt;-<span class="st"> </span><span class="kw">rbind</span>(bcr.lib.reads, tcr.lib.reads) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Type =</span> <span class="kw">c</span>(<span class="st">&quot;BCR&quot;</span>, <span class="st">&quot;TCR&quot;</span>))</span>
-<span id="cb30-26"><a href="Repertoire.html#cb30-26"></a>combined</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="Repertoire.html#cb43-1"></a><span class="co">#exact the mapped reads info from alignment index file </span></span>
+<span id="cb43-2"><a href="Repertoire.html#cb43-2"></a>sample &lt;-<span class="st"> &quot;SRR8281233&quot;</span></span>
+<span id="cb43-3"><a href="Repertoire.html#cb43-3"></a></span>
+<span id="cb43-4"><a href="Repertoire.html#cb43-4"></a>file &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TRUST4/SRR8281233.sorted.bam.stat.txt&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,<span class="dt">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb43-5"><a href="Repertoire.html#cb43-5"></a>mapped.reads &lt;-<span class="st"> </span>file[<span class="st">&quot;reads mapped:&quot;</span>,<span class="st">&quot;V2&quot;</span>]</span>
+<span id="cb43-6"><a href="Repertoire.html#cb43-6"></a>individual.stats &lt;-<span class="st"> </span><span class="kw">cbind.data.frame</span>(<span class="dt">sample =</span> sample, <span class="dt">map.reads =</span> mapped.reads)</span>
+<span id="cb43-7"><a href="Repertoire.html#cb43-7"></a></span>
+<span id="cb43-8"><a href="Repertoire.html#cb43-8"></a><span class="co">#---------fraction of BCR reads------------------</span></span>
+<span id="cb43-9"><a href="Repertoire.html#cb43-9"></a><span class="co">##extract library size</span></span>
+<span id="cb43-10"><a href="Repertoire.html#cb43-10"></a>lib.size &lt;-<span class="st"> </span>cdr3.bcr.heavy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span></span>
+<span id="cb43-11"><a href="Repertoire.html#cb43-11"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">lib =</span> <span class="kw">mean</span>(lib.size))</span>
+<span id="cb43-12"><a href="Repertoire.html#cb43-12"></a></span>
+<span id="cb43-13"><a href="Repertoire.html#cb43-13"></a><span class="co">##combine stats and library size</span></span>
+<span id="cb43-14"><a href="Repertoire.html#cb43-14"></a>bcr.lib.reads &lt;-<span class="st"> </span><span class="kw">merge</span>(individual.stats,lib.size,<span class="dt">by =</span> <span class="st">&quot;sample&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-15"><a href="Repertoire.html#cb43-15"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Infil =</span> <span class="kw">signif</span>(<span class="kw">as.numeric</span>(lib)<span class="op">/</span><span class="kw">as.numeric</span>(map.reads),<span class="dv">4</span>))</span>
+<span id="cb43-16"><a href="Repertoire.html#cb43-16"></a></span>
+<span id="cb43-17"><a href="Repertoire.html#cb43-17"></a><span class="co">#------------fraction of TCR reads-----------------</span></span>
+<span id="cb43-18"><a href="Repertoire.html#cb43-18"></a><span class="co">##extract library size</span></span>
+<span id="cb43-19"><a href="Repertoire.html#cb43-19"></a>lib.size &lt;-<span class="st"> </span>cdr3.tcr <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(sample) <span class="op">%&gt;%</span></span>
+<span id="cb43-20"><a href="Repertoire.html#cb43-20"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">lib =</span> <span class="kw">mean</span>(lib.size)) </span>
+<span id="cb43-21"><a href="Repertoire.html#cb43-21"></a><span class="co">##combine stats and library size</span></span>
+<span id="cb43-22"><a href="Repertoire.html#cb43-22"></a>tcr.lib.reads &lt;-<span class="st"> </span><span class="kw">merge</span>(individual.stats,lib.size,<span class="dt">by =</span> <span class="st">&quot;sample&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb43-23"><a href="Repertoire.html#cb43-23"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Infil =</span> <span class="kw">signif</span>(<span class="kw">as.numeric</span>(lib)<span class="op">/</span><span class="kw">as.numeric</span>(map.reads),<span class="dv">4</span>))</span>
+<span id="cb43-24"><a href="Repertoire.html#cb43-24"></a></span>
+<span id="cb43-25"><a href="Repertoire.html#cb43-25"></a>combined &lt;-<span class="st"> </span><span class="kw">rbind</span>(bcr.lib.reads, tcr.lib.reads) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Type =</span> <span class="kw">c</span>(<span class="st">&quot;BCR&quot;</span>, <span class="st">&quot;TCR&quot;</span>))</span>
+<span id="cb43-26"><a href="Repertoire.html#cb43-26"></a>combined</span></code></pre></div>
 <pre><code>##       sample map.reads  lib     Infil Type
 ## 1 SRR8281233  59972094 5184 8.644e-05  BCR
 ## 2 SRR8281233  59972094   73 1.217e-06  TCR</code></pre>
@@ -414,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="somatic-hypermutation-rate-of-bcr" class="section level2">
 <h2><span class="header-section-number">5.6</span> Somatic hypermutation rate of BCR</h2>
 <p>A somatic hypermutation (SHM) is a cellular mechanism of the immune system when adapting to new foreign elements and occurs with a point mutation in the variable regions of Ig genes. TRUST4 collapses reads with SHMs into the same contig by representing a contig as the consensus of the assembled reads. The consensus indicates that a specific nucleotide sequence has the highest weight among the assembled reads.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="Repertoire.html#cb32-1"></a>SHM.ratio &lt;-<span class="st"> </span><span class="kw">getSHMratio</span>(sample_bcr_cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="Repertoire.html#cb45-1"></a>SHM.ratio &lt;-<span class="st"> </span><span class="kw">getSHMratio</span>(sample_bcr_cluster)</span></code></pre></div>
 <pre><code>## [1] 54
 ## [1] 2
 ## [1] 48
@@ -425,17 +428,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ig-isotype-frequency" class="section level2">
 <h2><span class="header-section-number">5.7</span> Ig isotype frequency</h2>
 <p>The immunoglobulin heavy (IGH) locus includes the constant heavy (IGHC) gene segment. This gene segment includes different isotypes (IGHA1, IGHA2, IGHD, IGHE, IGHG1, IGHG2, IGHG3, IGHG4, IGHM) and the proportion of the abundance of these different segments indicates the isotype frequency. The isotype frequency can be found by isolating reads with genes prefixed “IGH” and comparing the occurrence of different isotypes in the C_gene column.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="Repertoire.html#cb34-1"></a><span class="co">#This SRR8281233 smaple is Non-responder</span></span>
-<span id="cb34-2"><a href="Repertoire.html#cb34-2"></a>phenotype &lt;-<span class="st"> &quot;NR&quot;</span></span>
-<span id="cb34-3"><a href="Repertoire.html#cb34-3"></a></span>
-<span id="cb34-4"><a href="Repertoire.html#cb34-4"></a>st.Ig &lt;-<span class="st"> </span>cdr3.bcr.heavy <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb34-5"><a href="Repertoire.html#cb34-5"></a><span class="st">  </span><span class="kw">group_by</span>(clinic,sample) <span class="op">%&gt;%</span></span>
-<span id="cb34-6"><a href="Repertoire.html#cb34-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">est_clonal_exp_norm =</span> frequency<span class="op">/</span><span class="kw">sum</span>(frequency)) <span class="op">%&gt;%</span><span class="st">   </span><span class="co">#as.numeric(sample.clones[filename,2])</span></span>
-<span id="cb34-7"><a href="Repertoire.html#cb34-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(C <span class="op">!=</span><span class="st"> &quot;*&quot;</span> <span class="op">&amp;</span><span class="st"> </span>C <span class="op">!=</span><span class="st">&quot;.&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb34-8"><a href="Repertoire.html#cb34-8"></a><span class="st">  </span><span class="kw">group_by</span>(sample, C) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb34-9"><a href="Repertoire.html#cb34-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">Num.Ig =</span> <span class="kw">sum</span>(est_clonal_exp_norm)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">clinic =</span> phenotype)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="Repertoire.html#cb47-1"></a><span class="co">#This SRR8281233 smaple is Non-responder</span></span>
+<span id="cb47-2"><a href="Repertoire.html#cb47-2"></a>phenotype &lt;-<span class="st"> &quot;NR&quot;</span></span>
+<span id="cb47-3"><a href="Repertoire.html#cb47-3"></a></span>
+<span id="cb47-4"><a href="Repertoire.html#cb47-4"></a>st.Ig &lt;-<span class="st"> </span>cdr3.bcr.heavy <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb47-5"><a href="Repertoire.html#cb47-5"></a><span class="st">  </span><span class="kw">group_by</span>(clinic,sample) <span class="op">%&gt;%</span></span>
+<span id="cb47-6"><a href="Repertoire.html#cb47-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">est_clonal_exp_norm =</span> frequency<span class="op">/</span><span class="kw">sum</span>(frequency)) <span class="op">%&gt;%</span><span class="st">   </span><span class="co">#as.numeric(sample.clones[filename,2])</span></span>
+<span id="cb47-7"><a href="Repertoire.html#cb47-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">filter</span>(C <span class="op">!=</span><span class="st"> &quot;*&quot;</span> <span class="op">&amp;</span><span class="st"> </span>C <span class="op">!=</span><span class="st">&quot;.&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb47-8"><a href="Repertoire.html#cb47-8"></a><span class="st">  </span><span class="kw">group_by</span>(sample, C) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb47-9"><a href="Repertoire.html#cb47-9"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">Num.Ig =</span> <span class="kw">sum</span>(est_clonal_exp_norm)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">clinic =</span> phenotype)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by &#39;sample&#39;. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="Repertoire.html#cb36-1"></a>st.Ig</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="Repertoire.html#cb49-1"></a>st.Ig</span></code></pre></div>
 <pre><code>## # A tibble: 8 x 4
 ## # Groups:   sample [1]
 ##   sample     C      Num.Ig clinic
@@ -452,28 +455,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="cohort-analysis" class="section level2">
 <h2><span class="header-section-number">5.8</span> Cohort analysis</h2>
 <p>We show the basic immune repertoire-related metrics above using a single sample. Now we combine all of samples in the demo dataset to do some comparison.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="Repertoire.html#cb38-1"></a><span class="co">#load the pre-processed results that contain all samples </span></span>
-<span id="cb38-2"><a href="Repertoire.html#cb38-2"></a><span class="co">#These results would be automatically generated after running RIMA immune repertoire module</span></span>
-<span id="cb38-3"><a href="Repertoire.html#cb38-3"></a></span>
-<span id="cb38-4"><a href="Repertoire.html#cb38-4"></a>inputdir &lt;-<span class="st"> &quot;TRUST4/Cohort/&quot;</span></span>
-<span id="cb38-5"><a href="Repertoire.html#cb38-5"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_cluster.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-6"><a href="Repertoire.html#cb38-6"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_clonality.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-7"><a href="Repertoire.html#cb38-7"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_SHMRatio.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-8"><a href="Repertoire.html#cb38-8"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-9"><a href="Repertoire.html#cb38-9"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_Ig_CS.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-10"><a href="Repertoire.html#cb38-10"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-11"><a href="Repertoire.html#cb38-11"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-12"><a href="Repertoire.html#cb38-12"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-13"><a href="Repertoire.html#cb38-13"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-14"><a href="Repertoire.html#cb38-14"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR_clonality.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
-<span id="cb38-15"><a href="Repertoire.html#cb38-15"></a></span>
-<span id="cb38-16"><a href="Repertoire.html#cb38-16"></a></span>
-<span id="cb38-17"><a href="Repertoire.html#cb38-17"></a><span class="co">#call the ploting function</span></span>
-<span id="cb38-18"><a href="Repertoire.html#cb38-18"></a><span class="kw">source</span>(<span class="st">&quot;TRUST4/trust4_plot.R&quot;</span>)</span>
-<span id="cb38-19"><a href="Repertoire.html#cb38-19"></a>meta &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;metasheet.csv&quot;</span>)</span>
-<span id="cb38-20"><a href="Repertoire.html#cb38-20"></a>p &lt;-<span class="st"> </span><span class="kw">Trust4_plot</span>(<span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>, <span class="dt">metasheet =</span> meta)</span>
-<span id="cb38-21"><a href="Repertoire.html#cb38-21"></a></span>
-<span id="cb38-22"><a href="Repertoire.html#cb38-22"></a>p</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="Repertoire.html#cb51-1"></a><span class="co">#load the pre-processed results that contain all samples </span></span>
+<span id="cb51-2"><a href="Repertoire.html#cb51-2"></a><span class="co">#These results would be automatically generated after running RIMA immune repertoire module</span></span>
+<span id="cb51-3"><a href="Repertoire.html#cb51-3"></a></span>
+<span id="cb51-4"><a href="Repertoire.html#cb51-4"></a>inputdir &lt;-<span class="st"> &quot;TRUST4/Cohort/&quot;</span></span>
+<span id="cb51-5"><a href="Repertoire.html#cb51-5"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_cluster.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-6"><a href="Repertoire.html#cb51-6"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_clonality.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-7"><a href="Repertoire.html#cb51-7"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_SHMRatio.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-8"><a href="Repertoire.html#cb51-8"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-9"><a href="Repertoire.html#cb51-9"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_Ig_CS.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-10"><a href="Repertoire.html#cb51-10"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-11"><a href="Repertoire.html#cb51-11"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-12"><a href="Repertoire.html#cb51-12"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR_lib_reads_Infil.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-13"><a href="Repertoire.html#cb51-13"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-14"><a href="Repertoire.html#cb51-14"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_TCR_clonality.Rdata&quot;</span>,<span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb51-15"><a href="Repertoire.html#cb51-15"></a></span>
+<span id="cb51-16"><a href="Repertoire.html#cb51-16"></a></span>
+<span id="cb51-17"><a href="Repertoire.html#cb51-17"></a><span class="co">#call the ploting function</span></span>
+<span id="cb51-18"><a href="Repertoire.html#cb51-18"></a><span class="kw">source</span>(<span class="st">&quot;TRUST4/trust4_plot.R&quot;</span>)</span>
+<span id="cb51-19"><a href="Repertoire.html#cb51-19"></a>meta &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;metasheet.csv&quot;</span>)</span>
+<span id="cb51-20"><a href="Repertoire.html#cb51-20"></a>p &lt;-<span class="st"> </span><span class="kw">Trust4_plot</span>(<span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>, <span class="dt">metasheet =</span> meta)</span>
+<span id="cb51-21"><a href="Repertoire.html#cb51-21"></a></span>
+<span id="cb51-22"><a href="Repertoire.html#cb51-22"></a>p</span></code></pre></div>
 <p><img src="RIMA-tutorial_files/figure-html/unnamed-chunk-19-1.png" width="576" /></p>
 </div>
 <div id="video-demo" class="section level2">
