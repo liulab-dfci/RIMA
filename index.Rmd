@@ -223,7 +223,7 @@ mate: [1,2]               #paired-end fastq format
 design: Group #condition on which to do comparsion (as set up in metasheet.csv)
 Treatment: R
 Control: NR
-batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
+batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
 
 pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
 
