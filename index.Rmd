@@ -216,7 +216,7 @@ metasheet: metasheet.csv
 ref: ref.yaml
 assembly: hg38
 cancer_type: GBM  #TCGA cancer type abbreviations
-rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amlunt of time needed to run rseqc.  
+rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amount of time needed to run rseqc.  
 mate: [1,2]               #paired-end fastq format
 
 #########Parameter used for cohort level analysis################
