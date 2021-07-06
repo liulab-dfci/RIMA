@@ -3,9 +3,11 @@ In this chapter, we will introduce how we align RNA-seq data, check the data qua
 
 ## Read Mapping
 ### STAR
-<a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial of runing STAR is available at <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. Once you have installed STAR, the first step is to create genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>. 
+<a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial for STAR is available <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. 
 
-To run STAR of a sample:
+When using STAR, the first step is to create genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>. 
+
+RIMA runs STAR using the following command structure:
 ```{r eval=FALSE}
       STAR --runThreadN 4 --genomeDir /path/to/index
         --outReadsUnmapped None 
@@ -18,7 +20,7 @@ To run STAR of a sample:
         --quantMode TranscriptomeSAM GeneCounts # generate outputs in transcript coordinates and mapped read counts per gene
 ```
 
-Example outputs:
+This generates outputs such as the following:
 ```{r eval=FALSE}
 sampleAligned.sortedByCoord.out.bam
 sampleAligned.toTranscriptome.out.bam 
@@ -27,11 +29,12 @@ sampleChimeric.out.junction
 sampleLog.final.out
 ```
 
-Then we use samtools to generate statistics of alignment BAM file:
+RIMA uses samtools to generate statistics from the alignment BAM file (sampleAligned.sortedByCoord.out.bam):
 ```{r eval=FALSE}
 samtools stats sampleAligned.sortedByCoord.out.bam | grep ^SN | cut -f 2- > sample.sorted.bam.stat.txt
 ```
-Example output of BAM summary:
+
+The resulting file (sample.sorted.bam.stat.txt) provides the following information:
 ```{r eval=FALSE}
 raw total sequences:	60589702
 filtered sequences:	0
@@ -71,10 +74,12 @@ outward oriented pairs:	700563
 pairs with other orientation:	0
 pairs on different chromosomes:	0
 ```
-## Quality Control
-RseQC is a standard tool for checking the quality of reads alignment, providing principal measurements of RNA-seq data quality. RseQC tutorial is available at <a href="http://rseqc.sourceforge.net/">here</a>. \
 
-To reduce running time, we first subsampled the BAM file and use only housekeeping genes for quality check using RseQC.
+## Quality Control
+RseQC is a standard tool for checking the quality of reads alignment, providing the principal measurements of RNA-seq data quality. An RseQC tutorial is available <a href="http://rseqc.sourceforge.net/">here</a>. \
+
+To reduce running time, we first create a subset of the BAM files to be used by RseQC to assess alignment quality.  The subset BAM files are a set of housekeeping genes.
+.
 ```{r eval=FALSE}
 ## Example of subsampling 50% of input alignment
 samtools view -s 0.5 -b sampleAligned.sortedByCoord.out.bam  > sample_downsampling.bam 
@@ -83,22 +88,25 @@ bedtools intersect -a sample_downsampling.bam -b housekeeping_refseqGenes.bed > 
 # index BAM
 samtools index sample_downsampling_housekeeping.bam > sample_downsampling_housekeeping.bam.bai 
 ```
+
 ### Quality metrics
 
-1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure RNA integrity, which is the percentage of transcripts that has uniform read coverage across the genome. RseQC calculated the TIN each transcripts and the <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts has is commonly used to indicate the RNA integrity and of each sample. \
+1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure of RNA integrity, which is the percentage of transcripts that have uniform read coverage across the genome. RseQC calculates the TIN of each transcript and reports mean TIN, median TIN and standard deviation for all transcripts in a sample. The <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts is commonly used to indicate the RNA integrity of each sample. \
 2. <a href="http://rseqc.sourceforge.net/#read-distribution-py">Read distribution </a> summarizes the fraction of reads aligned into different genomic regions, such as exon and intron regions. \
 3. <a href="http://rseqc.sourceforge.net/#genebody-coverage-py">Gene body coverage</a> shows the RNA-seq read coverage over the gene body. \
-4. <a href="http://rseqc.sourceforge.net/#junction-saturation-py">Junction saturation</a> detects the splicing junctions with different resampling percentages of reads to determine if the sequencing depth is sufficient to perform alternative splicing analysis. \
+4. <a href="http://rseqc.sourceforge.net/#junction-saturation-py">Junction saturation</a> is used to determine if sequencing depth is sufficient to perform alternative splicing analysis. \
 
-Samples with low alignment fraction or low integrity or abnormal reads distribution usually have bad quality and should be removed in downstream analysis. \
+Low quality samples have low alignment fractions, low integrity (median TIN) and/or abnormal read distributions and should be removed in downstream analysis. \
 
 ## Gene quantification
-After the alignment of sequencing reads and quality check, we will quantify the gene or transcript expression from the BAM file.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performed both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. Both tools generate transcripts per million (TPM), reads per kilobase of exon model per million reads (RPKM) and fragments per kilobase of exon model per million mapped reads (FPKM) expression, which is the normalized gene quantification that removing the effect of different gene length. In addition to TPM, <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> and STAR quantify gene expression according to mapped read counts. Both normalized gene expression and read counts can be used for differential expression analysis. \
+After the alignment of sequencing reads and quality check, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. Both tools generate transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> and STAR quantify gene expression according to mapped read counts. Both normalized gene expression and read counts can be used for differential expression analysis. \
 
-To Run Salmon:
+RIMA runs Salmon with a command similar to the following:
 ```
 salmon quant -t salmon_gdc_index/gencode.v22.ts.fa -l A -a sample.transcriptome.bam -o SRR8281218
+```
 
+```
 ##---Output folder structure---##
 
 SRR8281218
@@ -115,10 +123,9 @@ SRR8281218
 ├── libParams
 └── logs
     └── salmon_quant.log
-    
-```
+```   
 
-Example outputs of 'SRR8281218.quant.sf' from Salmon:
+The following is an example of output from a quant.sf file from Salmon ('SRR8281218.quant.sf'):
 ```
 Name	Length	EffectiveLength	TPM	NumReads
 ENST00000456328.2	1657	1474.085	0.000000	0.000
@@ -131,10 +138,12 @@ ENST00000607096.1	138	16.202	0.000000	0.000
 ```
 
 ## Batch effect removal
-Batch effects across samples is easily ignored but worth considering problems for immunotherapy cohort study. It is usually caused by unbalanced experimental design where estimation of group difference, and they are interdependent. To avoid the actual biology variation confounded by batch effect, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> Limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct the batch effects. Limma uses a two-way ANOVA approach, while Combat uses the empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
-To check whether the batch effect has been removed,  principal components analysis (PCA) or unsupervised clustering before and after batch effect removal will be an excellent way to validate. To ensure a solid downstream RNA-seq analysis, it is essential to generate a gene expression profile mitigating the batch effect and group difference from a well-designed study.
+Batch effects across samples are easily ignored but worth considering for immunotherapy cohort studies. Bacth effects are usually caused by unbalanced experimental design and confound the estimation of group differences. For example, samples processed at different facilities may have sequencing differences that are not due to actual biological differences in the samples themselves.  To avoid confounding actual biology variation with the effects of experimental design, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct batch effects. Limma uses a two-way ANOVA approach.  Combat uses an empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
+Principal components analysis (PCA) or unsupervised clustering before and after batch effect removal is an excellent way to validate that a batch effect has been removed. 
 
-Example of PCA before and after batch effect of tumor location:
+To evaluate if your samples have a batch effect, RIMA will generate PCA plots of gene expression data before and after batch effect removal by limma.  To utilize this feature, modify the "batch" parameter in the config.yaml file for your run.  
+
+Example of PCA before and after batch correction using limma.
 ```{r fig.align='center', echo=FALSE, fig.cap='Before(left) and after(right) batch correction with Limma'}
 knitr::include_graphics('images/PCA_synbatch.png', dpi = NA)
 ```
