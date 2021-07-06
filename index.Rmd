@@ -82,7 +82,7 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 
 # How to run RIMA
 
-## Installation ##
+## Install RIMA and Set Up the Running Environment ##
 
 To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.
 
@@ -110,32 +110,46 @@ Download the RIMA_pipeline folder to your working directory.
 git clone  https://github.com/kateyliu/RIMA_pipeline.git
 ```
 
+**Install conda**
 
-**Set up running environment**
+If conda was installed on your system (HCP or cloud instance) previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens. If you are unsure about any setting, accept the defaults.
+#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on root disk (>= 20G)
+
 ```
-Shell command to set up env, possiblly
-env.sh -p AWS for running on AWS
-or
-env.sh -p GCP for running on GPC
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash sh Miniconda3-latest-Linux-x86_64.sh
+conda list  #to see whether you have successfully installed conda
+```
+
+**Set up the running environment**
+
+The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.  The user will need to answer two questions during the process -- one at the beginning of the program and one near the end.
+
+```
+#shell command for 
+bash ./RIMA_environment.sh -p {platform --AWS, GCP}
+
+#example for AWS
+bash ./RIMA_environment.sh -p AWS
 ```
 
 **Activate the RIMA environment**
 
-Based on the conda environments information, the main environment "rnaseq" can be activated as below.
+Based on the conda environments information, the main environment "RIMA" can be activated as below.
 
 ```
 export CONDA_ROOT=/home/{username}/miniconda3
 export PATH=/home/{username}/miniconda3/bin:$PATH
-source activate rnaseq
+source activate RIMA
 ```
 
-## Download pre-built reference 
+## Download pre-built references 
 
 A pre-prepared RIMA reference folder can be downloaded using the code below. 
 
 If you want to prepare a customized reference, you can follow [this tutorial](https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/) to build your own reference.
 
-Currently, RIMA supports **hg38**.   ###is this true for all platforms?  (AWS, GDP and HCS?)
+Currently, RIMA supports **hg38**.   ###is this true for all platforms?  (AWS, GCP and HCS?)
  
 ```
 cd RIMA
@@ -168,9 +182,9 @@ ln -s /mnt/tutorial/ref_files
 
 **Metasheet.csv**
 
-Ensure your metasheet contains **Three Required Columns** (SampleName, PatName) in comma-delimited format. Enter "U"(unknown) for missing data.
-You can also add more phenotype information that you may want to compare e.g. columns for Responder, Age, Sex etc.
-The Group column controls what samples will be used to run DESeq2, 'NA' are the sample not included in the comparison.
+Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder.  Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. Enter "U"(unknown) for missing data.
+You can add columns to the metasheet in order to compare other phenotypes e.g. columns for Responder, Age, Sex etc.
+The Group column controls what samples will be used to run DESeq2, 'NA' indicates samples that should not be included in the comparison.
 
 ```
 SampleName,PatName,Batch,Group,Age,Tissue,Replicate,Gender,Timing,Responder,TumorLocation,OngoingTreatment,PFS,Survival,OS,SampleId,syn_batch
@@ -190,28 +204,28 @@ SRR8281250,P102,1,R,64,Brain,NA,female,Pre,R,Temporal-anterior,yes,519,0,539,444
 
 **Config.yaml**
 
-In the rnaseq_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameter and (iii)Samples list. 
+In the RIMA_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameters and (iii)Samples list. 
 
-You should provide these parameters with column names in metasheet.csv as mentioned in 'Metasheet'.
+You should provide these parameters with column names that match the columns in metasheet.csv.
 
-Below is an example of how to input that information in the config file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).
+Below is an example of a config.yaml file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).
 
 ```
 ---
 metasheet: metasheet.csv
 ref: ref.yaml
 assembly: hg38
-cancer_type: GBM
-rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. If check alignment quality on house keeping                              gene.
+cancer_type: GBM  #TCGA cancer type abbreviations
+rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amlunt of time needed to run rseqc.  
 mate: [1,2]               #paired-end fastq format
 
 #########Parameter used for cohort level analysis################
-design: Group #condition to do comparsion
+design: Group #condition on which to do comparsion (as set up in metasheet.csv)
 Treatment: R
 Control: NR
-batch: syb_batch          #option: false or column name. If check the batch effect of samples included in the                            design column and used a covariates for differential analysis.
+batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
 
-pre_treated: false          #option: true or false. If patients are pre or post treatment.
+pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
 
 #########Location of raw fastq data##############
 samples:
@@ -298,6 +312,7 @@ report: false
 ```
 
 **ref.yaml**
+The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change this file.
 
 ```
 hg38:
@@ -349,7 +364,7 @@ snakemake -s RIMA.snakefile -np
 
 **Submit the job.**
 
-For system with AWS, we can use nohup as below.
+Alignment and some of the other modules of RIMA will take several hours to run.  It is recommended that you run the RIMA in the background using a command such as nohup as below.
 
 ```
 nohup time snakemake -s RIMA.snakefile -j 4 > RIMA.out &
@@ -359,7 +374,6 @@ note: Argument -j sets the cores for parallel runs. (e.g. '-j 4' can run 4 jobs 
 
 ## Output
 Output folders are generated in a folder called "analysis".
-
 
 
 
