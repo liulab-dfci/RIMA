@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-06-29" />
+<meta name="date" content="2021-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,8 +135,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
-<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
-<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#install-rima-and-set-up-the-running-environment"><i class="fa fa-check"></i><b>2.1</b> Install RIMA and Set Up the Running Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-references"><i class="fa fa-check"></i><b>2.2</b> Download pre-built references</a></li>
 <li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
 <li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
 <li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
@@ -157,9 +157,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.2</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.3</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
 <li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
@@ -285,8 +286,8 @@ Dysfunction = \frac{d}{StdErr(d)}
 </code></pre>
 <p>Example outputs of TIDE:<br />
 </p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="Response.html#cb64-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb64-2"><a href="Response.html#cb64-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="Response.html#cb66-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb66-2"><a href="Response.html#cb66-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
 <pre><code>##             X No.benefits Responder       TIDE        IFNG    MSI.Score
 ## 1  SRR8281219       False     False  1.6807050  0.05776435 0.9171423549
 ## 2  SRR8281236       False     False  1.4737267 -0.44182240 0.0891168795
@@ -331,15 +332,15 @@ Dysfunction = \frac{d}{StdErr(d)}
 <div id="microsatelite-instability-msi" class="section level2">
 <h2><span class="header-section-number">7.2</span> Microsatelite instability (MSI)</h2>
 <p>Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="Response.html#cb66-1"></a><span class="co">#Run MSIsensor2 </span></span>
-<span id="cb66-2"><a href="Response.html#cb66-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
-<span id="cb66-3"><a href="Response.html#cb66-3"></a></span>
-<span id="cb66-4"><a href="Response.html#cb66-4"></a><span class="co">## Output of MSIsensor2</span></span>
-<span id="cb66-5"><a href="Response.html#cb66-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
-<span id="cb66-6"><a href="Response.html#cb66-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="Response.html#cb68-1"></a><span class="co">#Run MSIsensor2 </span></span>
+<span id="cb68-2"><a href="Response.html#cb68-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
+<span id="cb68-3"><a href="Response.html#cb68-3"></a></span>
+<span id="cb68-4"><a href="Response.html#cb68-4"></a><span class="co">## Output of MSIsensor2</span></span>
+<span id="cb68-5"><a href="Response.html#cb68-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
+<span id="cb68-6"><a href="Response.html#cb68-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
 <p>Example outputs of combined MSI:</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="Response.html#cb67-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb67-2"><a href="Response.html#cb67-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="Response.html#cb69-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb69-2"><a href="Response.html#cb69-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
 <pre><code>##            V1    V2
 ## 1  SRR8281218 20.34
 ## 2  SRR8281219 13.39
@@ -356,14 +357,14 @@ Dysfunction = \frac{d}{StdErr(d)}
 </div>
 <div id="response-comparison-analysis-of-biomarkers" class="section level2">
 <h2><span class="header-section-number">7.3</span> Response comparison analysis of biomarkers</h2>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="Response.html#cb69-1"></a><span class="co">#read the metasheet</span></span>
-<span id="cb69-2"><a href="Response.html#cb69-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
-<span id="cb69-3"><a href="Response.html#cb69-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
-<span id="cb69-4"><a href="Response.html#cb69-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
-<span id="cb69-5"><a href="Response.html#cb69-5"></a><span class="co">#load ploting function</span></span>
-<span id="cb69-6"><a href="Response.html#cb69-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
-<span id="cb69-7"><a href="Response.html#cb69-7"></a></span>
-<span id="cb69-8"><a href="Response.html#cb69-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="Response.html#cb71-1"></a><span class="co">#read the metasheet</span></span>
+<span id="cb71-2"><a href="Response.html#cb71-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
+<span id="cb71-3"><a href="Response.html#cb71-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
+<span id="cb71-4"><a href="Response.html#cb71-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
+<span id="cb71-5"><a href="Response.html#cb71-5"></a><span class="co">#load ploting function</span></span>
+<span id="cb71-6"><a href="Response.html#cb71-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
+<span id="cb71-7"><a href="Response.html#cb71-7"></a></span>
+<span id="cb71-8"><a href="Response.html#cb71-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/response.png" alt="Comparision of biomarkers between R and NR"  />
 <p class="caption">

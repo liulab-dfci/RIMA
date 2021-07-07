@@ -4,8 +4,8 @@ fig:unnamed-chunk-11
 fig:unnamed-chunk-32
 intro
 how-to-run-rima
-installation
-download-pre-built-reference
+install-rima-and-set-up-the-running-environment
+download-pre-built-references
 prepare-input-files
 execute-rima
 output
@@ -21,6 +21,7 @@ Differential
 differential-gene-expression-using-deseq2
 inputs-of-deseq2
 different-gene-expression-analysis
+running-deseq2-without-batch-effect
 running-deseq2-with-batch-effect
 output-from-deseq2
 volcano-plots

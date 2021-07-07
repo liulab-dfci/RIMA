@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-06-29" />
+<meta name="date" content="2021-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,8 +135,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
-<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
-<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#install-rima-and-set-up-the-running-environment"><i class="fa fa-check"></i><b>2.1</b> Install RIMA and Set Up the Running Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-references"><i class="fa fa-check"></i><b>2.2</b> Download pre-built references</a></li>
 <li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
 <li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
 <li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
@@ -157,9 +157,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.2</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.3</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
 <li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
@@ -233,8 +234,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="how-to-run-rima" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> How to run RIMA</h1>
-<div id="installation" class="section level2">
-<h2><span class="header-section-number">2.1</span> Installation</h2>
+<div id="install-rima-and-set-up-the-running-environment" class="section level2">
+<h2><span class="header-section-number">2.1</span> Install RIMA and Set Up the Running Environment</h2>
 <p>To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.</p>
 <p><strong>Software requirements</strong></p>
 <p>Processing power: We usually run RIMA on a machine with 64 cores.</p>
@@ -249,22 +250,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Get the pipeline code</strong></p>
 <p>Download the RIMA_pipeline folder to your working directory.</p>
 <pre><code>git clone  https://github.com/kateyliu/RIMA_pipeline.git</code></pre>
-<p><strong>Set up running environment</strong></p>
-<pre><code>Shell command to set up env, possiblly
-env.sh -p AWS for running on AWS
-or
-env.sh -p GCP for running on GPC</code></pre>
+<p><strong>Install conda</strong></p>
+<p>If conda was installed on your system (HCP or cloud instance) previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens. If you are unsure about any setting, accept the defaults.
+#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on root disk (&gt;= 20G)</p>
+<pre><code>wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash sh Miniconda3-latest-Linux-x86_64.sh
+conda list  #to see whether you have successfully installed conda</code></pre>
+<p><strong>Set up the running environment</strong></p>
+<p>The RIMA environment can be set up by running a shell command. In the command, you need to specify the platform you are using – Amazon Web Services (AWS) or Google Cloud Platform (GCP). This process may take ten to fifteen minutes. The user will need to answer two questions during the process – one at the beginning of the program and one near the end.</p>
+<pre><code>#shell command for 
+bash ./RIMA_environment.sh -p {platform --AWS, GCP}
+
+#example for AWS
+bash ./RIMA_environment.sh -p AWS</code></pre>
 <p><strong>Activate the RIMA environment</strong></p>
-<p>Based on the conda environments information, the main environment “rnaseq” can be activated as below.</p>
+<p>Based on the conda environments information, the main environment “RIMA” can be activated as below.</p>
 <pre><code>export CONDA_ROOT=/home/{username}/miniconda3
 export PATH=/home/{username}/miniconda3/bin:$PATH
-source activate rnaseq</code></pre>
+source activate RIMA</code></pre>
 </div>
-<div id="download-pre-built-reference" class="section level2">
-<h2><span class="header-section-number">2.2</span> Download pre-built reference</h2>
+<div id="download-pre-built-references" class="section level2">
+<h2><span class="header-section-number">2.2</span> Download pre-built references</h2>
 <p>A pre-prepared RIMA reference folder can be downloaded using the code below.</p>
 <p>If you want to prepare a customized reference, you can follow <a href="https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/">this tutorial</a> to build your own reference.</p>
-<p>Currently, RIMA supports <strong>hg38</strong>. ###is this true for all platforms? (AWS, GDP and HCS?)</p>
+<p>Currently, RIMA supports <strong>hg38</strong>. ###is this true for all platforms? (AWS, GCP and HCS?)</p>
 <pre><code>cd RIMA
 wget http://cistrome.org/~lyang/ref.tar.gz  
 
@@ -288,9 +297,9 @@ ln -s /mnt/tutorial/ref_files</code></pre>
 <div id="prepare-input-files" class="section level2">
 <h2><span class="header-section-number">2.3</span> Prepare input files</h2>
 <p><strong>Metasheet.csv</strong></p>
-<p>Ensure your metasheet contains <strong>Three Required Columns</strong> (SampleName, PatName) in comma-delimited format. Enter “U”(unknown) for missing data.
-You can also add more phenotype information that you may want to compare e.g. columns for Responder, Age, Sex etc.
-The Group column controls what samples will be used to run DESeq2, ‘NA’ are the sample not included in the comparison.</p>
+<p>Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. Ensure your metasheet contains <strong>Three Required Columns</strong> (SampleName, PatName, Group) in comma-delimited format. Enter “U”(unknown) for missing data.
+You can add columns to the metasheet in order to compare other phenotypes e.g. columns for Responder, Age, Sex etc.
+The Group column controls what samples will be used to run DESeq2, ‘NA’ indicates samples that should not be included in the comparison.</p>
 <pre><code>SampleName,PatName,Batch,Group,Age,Tissue,Replicate,Gender,Timing,Responder,TumorLocation,OngoingTreatment,PFS,Survival,OS,SampleId,syn_batch
 SRR8281218,P20,1,NR,63,Brain,NA,male,Pre,NR,temporal,no,110,1,278,4790-NL-AS,1
 SRR8281219,P20,1,NA,63,Brain,NA,male,Post,NR,temporal,no,110,1,278,4975-NL-AS,1
@@ -305,24 +314,24 @@ SRR8281238,P102,1,NA,64,Brain,NA,female,Post,R,Temporal-anterior,yes,519,0,539,5
 SRR8281251,P101,1,NA,32,Brain,2,male,Post,R,frontal,no,0,1,414,4943-A1,2
 SRR8281250,P102,1,R,64,Brain,NA,female,Pre,R,Temporal-anterior,yes,519,0,539,4443-NL-AS,1</code></pre>
 <p><strong>Config.yaml</strong></p>
-<p>In the rnaseq_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameter and (iii)Samples list.</p>
-<p>You should provide these parameters with column names in metasheet.csv as mentioned in ‘Metasheet’.</p>
-<p>Below is an example of how to input that information in the config file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).</p>
+<p>In the RIMA_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameters and (iii)Samples list.</p>
+<p>You should provide these parameters with column names that match the columns in metasheet.csv.</p>
+<p>Below is an example of a config.yaml file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).</p>
 <pre><code>---
 metasheet: metasheet.csv
 ref: ref.yaml
 assembly: hg38
-cancer_type: GBM
-rseqc_ref: house_keeping  #option: &#39;house_keeping&#39; or &#39;false&#39;. If check alignment quality on house keeping                              gene.
+cancer_type: GBM  #TCGA cancer type abbreviations
+rseqc_ref: house_keeping  #option: &#39;house_keeping&#39; or &#39;false&#39;. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amount of time needed to run rseqc.  
 mate: [1,2]               #paired-end fastq format
 
 #########Parameter used for cohort level analysis################
-design: Group #condition to do comparsion
+design: Group #condition on which to do comparsion (as set up in metasheet.csv)
 Treatment: R
 Control: NR
-batch: syb_batch          #option: false or column name. If check the batch effect of samples included in the                            design column and used a covariates for differential analysis.
+batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
 
-pre_treated: false          #option: true or false. If patients are pre or post treatment.
+pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
 
 #########Location of raw fastq data##############
 samples:
@@ -401,7 +410,8 @@ neoantigen_cohort: false
 #Note: This module generates a standalone  HTML report. It shows the results from the modules that user decides to run.
 report: false
 </code></pre>
-<p><strong>ref.yaml</strong></p>
+<p><strong>ref.yaml</strong>
+The ref.yaml file provides the paths for all reference files. If you downloaded the pre-built reference files, you should not need to change this file.</p>
 <pre><code>hg38:
 ###annotation path
   fasta_path: ./ref_files/GRCh38.d1.vd1.fa 
@@ -442,7 +452,7 @@ stat_perl_r              /home/ubuntu/miniconda3/envs/stat_perl_r</code></pre>
 <p><strong>Check the pipeline with a dry run to ensure correct script and data usage.</strong></p>
 <pre><code>snakemake -s RIMA.snakefile -np </code></pre>
 <p><strong>Submit the job.</strong></p>
-<p>For system with AWS, we can use nohup as below.</p>
+<p>Alignment and some of the other modules of RIMA will take several hours to run. It is recommended that you run the RIMA in the background using a command such as nohup as below.</p>
 <pre><code>nohup time snakemake -s RIMA.snakefile -j 4 &gt; RIMA.out &amp;</code></pre>
 <p>note: Argument -j sets the cores for parallel runs. (e.g. ‘-j 4’ can run 4 jobs in parallel at the same time.) note: Here, output log records the run information. A user may run one module at a time to obtain a record of each module’s output log.</p>
 </div>
