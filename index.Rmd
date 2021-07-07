@@ -149,7 +149,7 @@ A pre-prepared RIMA reference folder can be downloaded using the code below.
 
 If you want to prepare a customized reference, you can follow [this tutorial](https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/) to build your own reference.
 
-Currently, RIMA supports **hg38**.   ###is this true for all platforms?  (AWS, GCP and HCS?)
+Currently, RIMA supports **hg38**.
  
 ```
 cd RIMA
