@@ -88,7 +88,7 @@ cpk
 ## TCR and BCR entropy and Clonality
 The Shannon entropy index is a measure used for repertoire diversity using clonotype frequencies, which reflects both richness and evenness of the repertoire. This measure informs us of the probability that two random selections from the same repertoire would represent the same clonotype.
 
-Clonality can be measured using normalized entropy over the number of unique clones (1-shannon entropy/log(N), where N is the number of unique clones). A higher clonality index indicates an uneven repertoire due to expansion of clones.
+Clonality can be measured using normalized entropy over the number of unique clones (1-shannon entropy/log(N), where N is the number of unique clones). It is equivalent to 1 - Pielou’s Evenness, making it inversely proportional to diversity. A higher clonality index indicates an uneven repertoire due to expansion of clones.
 
 ``` {R}
 #BCR clonality and entropy
