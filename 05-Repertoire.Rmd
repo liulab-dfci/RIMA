@@ -163,7 +163,7 @@ st.Ig
 ``` 
 
 ## Cohort analysis 
-The examples above demonstrated the basic immune repertoire-related metrics using a single sample. In the cohort anlysis, all of samples are combined in order to facilitate comparisons within a particular phenotype.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.
+The examples above demonstrated the basic immune repertoire-related metrics using a single sample. In the cohort anlysis, all of samples are combined in order to facilitate comparisons within a particular phenotype.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described in more detail in Chapter 4.2.1.
 .
 ``` {R warning = FALSE, fig.height = 3, fig.width = 6}
 #load the pre-processed results that contain all samples 
