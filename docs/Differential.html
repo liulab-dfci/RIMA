@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-06-29" />
+<meta name="date" content="2021-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -135,8 +135,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html"><i class="fa fa-check"></i><b>2</b> How to run RIMA</a><ul>
-<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#installation"><i class="fa fa-check"></i><b>2.1</b> Installation</a></li>
-<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-reference"><i class="fa fa-check"></i><b>2.2</b> Download pre-built reference</a></li>
+<li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#install-rima-and-set-up-the-running-environment"><i class="fa fa-check"></i><b>2.1</b> Install RIMA and Set Up the Running Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-references"><i class="fa fa-check"></i><b>2.2</b> Download pre-built references</a></li>
 <li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
 <li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
 <li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
@@ -157,9 +157,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.2</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.3</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
 <li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
@@ -237,55 +238,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The differential gene analysis module of RIMA allows you to perform these comparisons.</p>
 <div id="differential-gene-expression-using-deseq2" class="section level2">
 <h2><span class="header-section-number">4.1</span> Differential gene expression using DESeq2</h2>
-<p>The <a href='https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8'>DESeq2</a> is the most commonly used package that provides methods for comparison of gene expression levels. The package is described in:</p>
+<p><a href='https://genomebiology.biomedcentral.com/articles/10.1186/s13059-014-0550-8'>DESeq2</a> is the most commonly used package that provides methods for comparison of gene expression levels. The package is described in:</p>
 <p>Love, M.I., Huber, W., Anders, S. (2014) Moderated estimation of fold change and dispersion for RNA-seq data with DESeq2. Genome Biology, 15:550. 10.1186/s13059-014-0550-8</p>
 <p>Details about how to run DeSeq2 are also included in the DESeq2
 <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">vignette</a>.</p>
 <div id="inputs-of-deseq2" class="section level3">
 <h3><span class="header-section-number">4.1.1</span> Inputs of DESeq2</h3>
-<p>The DESeq2 accepts four kinds of inputs: 1) Transcript abundance; 2) Read count matrix: 3) htseq-count files and 4) A SummarizedExpreriment object. We processed our gene quantification using Salmon in our preprocess module, so we will run DESeq2 using the output in the quant.sf files provided from salmon. The quant.sf files were generated during the preprocessing module. <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">vignette</a>.</p>
-<p>We first created a tx2gene.csv files that contains transcripts id and gene names as below:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="Differential.html#cb21-1"></a>ID,GENENAME</span>
-<span id="cb21-2"><a href="Differential.html#cb21-2"></a>ENST00000000233<span class="fl">.8</span>,ARF5</span>
-<span id="cb21-3"><a href="Differential.html#cb21-3"></a>ENST00000000412<span class="fl">.6</span>,M6PR</span>
-<span id="cb21-4"><a href="Differential.html#cb21-4"></a>ENST00000000442<span class="fl">.9</span>,ESRRA</span>
-<span id="cb21-5"><a href="Differential.html#cb21-5"></a>ENST00000001008<span class="fl">.5</span>,FKBP4</span>
-<span id="cb21-6"><a href="Differential.html#cb21-6"></a>ENST00000001146<span class="fl">.5</span>,CYP26B1</span>
-<span id="cb21-7"><a href="Differential.html#cb21-7"></a>ENST00000002125<span class="fl">.7</span>,NDUFAF7</span>
-<span id="cb21-8"><a href="Differential.html#cb21-8"></a>ENST00000002165<span class="fl">.9</span>,FUCA2</span>
-<span id="cb21-9"><a href="Differential.html#cb21-9"></a>ENST00000002501<span class="fl">.9</span>,DBNDD1</span>
-<span id="cb21-10"><a href="Differential.html#cb21-10"></a>ENST00000002596<span class="fl">.5</span>,HS3ST1</span></code></pre></div>
-<p>Then we uses tximport to import transcripts abundance data from the quant.sf files from salmon as described in the DESeq2:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="Differential.html#cb22-1"></a><span class="co">### filelist are a list of quant.sf files generated by Salmon gene quantification.</span></span>
-<span id="cb22-2"><a href="Differential.html#cb22-2"></a>txi &lt;-<span class="st"> </span><span class="kw">tximport</span>(filelist, <span class="dt">type=</span>Salmon, <span class="dt">tx2gene=</span>tx2gene)</span></code></pre></div>
+<p>DESeq2 accepts four kinds of inputs: 1) Transcript abundance; 2) A read count matrix: 3) htseq-count files and 4) A SummarizedExpreriment object.</p>
+<p>Tximport is a tool that can import gene quantification data generated by Salmon (quant.sf) and convert the data into a transcript abundance format that DESeq2 can use. RIMA generated quant.sf files during the preprocessing module. <a href="https://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">vignette</a>.</p>
+<p>As a part of using tximport, Ensemble transcript IDs are converted into gene names. RIMA contains a tx2gene.csv file with transcripts id and gene names as below:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="Differential.html#cb23-1"></a>ID,GENENAME</span>
+<span id="cb23-2"><a href="Differential.html#cb23-2"></a>ENST00000000233<span class="fl">.8</span>,ARF5</span>
+<span id="cb23-3"><a href="Differential.html#cb23-3"></a>ENST00000000412<span class="fl">.6</span>,M6PR</span>
+<span id="cb23-4"><a href="Differential.html#cb23-4"></a>ENST00000000442<span class="fl">.9</span>,ESRRA</span>
+<span id="cb23-5"><a href="Differential.html#cb23-5"></a>ENST00000001008<span class="fl">.5</span>,FKBP4</span>
+<span id="cb23-6"><a href="Differential.html#cb23-6"></a>ENST00000001146<span class="fl">.5</span>,CYP26B1</span>
+<span id="cb23-7"><a href="Differential.html#cb23-7"></a>ENST00000002125<span class="fl">.7</span>,NDUFAF7</span>
+<span id="cb23-8"><a href="Differential.html#cb23-8"></a>ENST00000002165<span class="fl">.9</span>,FUCA2</span>
+<span id="cb23-9"><a href="Differential.html#cb23-9"></a>ENST00000002501<span class="fl">.9</span>,DBNDD1</span>
+<span id="cb23-10"><a href="Differential.html#cb23-10"></a>ENST00000002596<span class="fl">.5</span>,HS3ST1</span></code></pre></div>
+<p>Tximport uses the quant.sf files generated by Salmon and the tx2gene.csv file to generate matrices as described in DESeq2:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="Differential.html#cb24-1"></a><span class="co">### filelist are a list of quant.sf files generated by Salmon gene quantification.</span></span>
+<span id="cb24-2"><a href="Differential.html#cb24-2"></a>txi &lt;-<span class="st"> </span><span class="kw">tximport</span>(filelist, <span class="dt">type=</span>Salmon, <span class="dt">tx2gene=</span>tx2gene)</span></code></pre></div>
 </div>
 </div>
 <div id="different-gene-expression-analysis" class="section level2">
 <h2><span class="header-section-number">4.2</span> Different gene expression analysis</h2>
-<p>After loading the transcripts abundance, we are ready to find out differentially expressed gene between your selected condition. We need to be careful when running DESeq2 with batch effects.
-### Running DESeq2 without batch effect
-We will run DESeq2 to determine differential expression for a particular phenotype. In our case, we are interested in the genes differential between responders and non-responders, which is the “Responders” column headings in the metasheet.
-We uses the information in “designs” for DESeq2 in the following manner:</p>
+<p>After loading the transcripts abundance, we are ready to find differentially expressed gene between your selected condition. If you have identified a batch effect in your earlier analysis, DESeq2 can be run to account for this batch effect. We will first describe how to run DESeq2 without a batch effect. We will then describe how to run DESeq2 when a batch effect exists.</p>
+<div id="running-deseq2-without-batch-effect" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Running DESeq2 without batch effect</h3>
+<p>We will run DESeq2 to determine differential expression for a particular phenotype. In our case, we are interested in the genes that are differentially expressed between responders and non-responders. For this example, the Group column in the metasheet.csv has been set up with “R”, “NR” or “NA” as shown in Chapter 2.3 and the config.yaml file is set up with</p>
+<ul>
+<li>the “batch” parameter is set to false;</li>
+<li>“design” set to Group</li>
+<li>“Treatment” set to R</li>
+<li>“Control” set to NR</li>
+</ul>
+<p>as seen in Chapter 2.3.</p>
+<p>This results in a DESeq call like the following:</p>
 <pre><code>ddsTxi &lt;- DESeqDataSetFromTximport(txi,
                                        colData = samples,
                                        design = ~ Responder)
 
 dds &lt;- DESeq(ddsTxi)</code></pre>
+</div>
 <div id="running-deseq2-with-batch-effect" class="section level3">
-<h3><span class="header-section-number">4.2.1</span> Running DESeq2 with batch effect</h3>
+<h3><span class="header-section-number">4.2.2</span> Running DESeq2 with batch effect</h3>
 <p>DESeq2 can account for any batch effect by providing the batch variable as a covariate. If your batch effect analysis from the preprocessing module indicated that there is a batch effect in your samples, set the “batch” field in config.yaml to the appropriate column name in your metasheet.
-We uses the information in “batch” for DESeq2 in the following manner:</p>
+We use the information in “batch” for DESeq2 in the following manner, where “syn_batch” is the column designated in the config.yaml file:</p>
 <pre><code>ddsTxi &lt;- DESeqDataSetFromTximport(txi,
                                        colData = samples,
                                        design = ~ syn_batch + Responder)
 dds &lt;- DESeq(ddsTxi)</code></pre>
 </div>
 <div id="output-from-deseq2" class="section level3">
-<h3><span class="header-section-number">4.2.2</span> Output from DESeq2</h3>
-<p>Output file of DESeq2 generated values for baseMean, log2FoldChange, lfcSE, stat, pvalue, padj. These fields have the following meaning:</p>
+<h3><span class="header-section-number">4.2.3</span> Output from DESeq2</h3>
+<p>DESeq2 output includes values for baseMean, log2FoldChange, lfcSE, stat, pvalue, padj. These fields have the following meaning:</p>
 <ul>
 <li>baseMean = the average of the normalized counts for all samples</li>
-<li>Log2FoldChange = log base 2 fold changes for the condition tested. For example if the file is Responder_nonresponder_VS_resonder_DESqe2_raw.txt, Log2FoldChange will be the estimated logarithmic fold change log2(nonresponder/responder).</li>
+<li>Log2FoldChange = log base 2 fold changes for the condition tested. For example if the file is Responder_responder_VS_nonresponder_DESqe2_raw.txt, Log2FoldChange will be the estimated logarithmic fold change log2(responder/nonresponder).</li>
 <li>lfcSE = Log2FoldChange Standard Error</li>
 <li>stat= Wald statistic</li>
 <li>pvalue = Wald test p value for the Log2FoldChange estimate</li>
@@ -294,9 +305,9 @@ dds &lt;- DESeq(ddsTxi)</code></pre>
 <p>{comparison condition}_DEseq2_raw.txt lists Gene names directly from the DESeq2 output. It also contains a value for -log10(padj).</p>
 </div>
 <div id="volcano-plots" class="section level3">
-<h3><span class="header-section-number">4.2.3</span> Volcano Plot(s)</h3>
-<p>Vocalno plot is usually used to visualize the results of differentially expressed genes with x axis represents the logFC and y axis represent the -log10(P.value). Up-regulated genes has positive logFC and down-regulated genes has negative logFC.<br />
-Below is an example of volcano plot from previous differential results and we labeled the genes with below cutoff:</p>
+<h3><span class="header-section-number">4.2.4</span> Volcano Plot(s)</h3>
+<p>Volcano plots are often used to visualize the results of differential expression analysis. The x axis represents the logFC, and the y axis represent the -log10(P.value). Up-regulated genes have positive logFCs and down-regulated genes have negative logFCs.<br />
+Below is an example of a volcano plot from the previous differential expression analysis. Genes that meet the following criteria are labeled:</p>
 <ul>
 <li>FDR &lt; 0.05</li>
 <li>Log2FoldChange &gt; 1</li>
@@ -314,7 +325,7 @@ Figure 4.1: Volcano plot
 <p>GSEA was developed by UC San Diego and the Broad Institute. It is described in</p>
 <p>Subramanian, Tamayo, et al. (2005, PNAS 102, 15545-15550) and Mootha, Lindgren, et al. (2003, Nat Genet 34, 267-273).</p>
 <p>GSEA tools and software can be found on the GSEA <a href="https://www.gsea-msigdb.org/gsea/index.jsp">website</a>.</p>
-<p>Gene Set Enrichment Analysis can be used to detect patterns in differential expression that affect particular gene pathways, molecular functions, cellular components or processes. We uses the GSEA software to look for enrichment in the following gene sets:</p>
+<p>Gene Set Enrichment Analysis can be used to detect patterns in differential expression that affect particular gene pathways, molecular functions, cellular components or processes. RIMA uses the GSEA software to look for enrichment in the following gene sets:</p>
 <ul>
 <li>KEGG canonical pathways</li>
 <li>Gene Ontology sets – including Biological Process (BP), Cellular Component (CC) and Molecular Function (MF).</li>
@@ -348,10 +359,9 @@ Figure 4.1: Volcano plot
 </div>
 <div id="single-sample-gene-set-enrichment-analysis-ssgsea" class="section level2">
 <h2><span class="header-section-number">4.4</span> Single sample gene set enrichment analysis (ssGSEA)</h2>
-<p>ssGSEA is a different method of trying to find enriched pathways in your dataset. GSEA uses the differential expression patterns of all samples to generate enrichment scores based on phenotypic differences. In contrast, ssGSEA generates enrichment scores for each sample. Phenotypic differences can then be used to compare enriched pathways rather than differential genes expression levels. Please see <a href="https://gsea-msigdb.github.io/ssGSEA-gpmodule/v10/index.html">ssGSEA</a> for more information.</p>
-<p>The input to ssGSEA is the tpm_convertID.batch file generated by LIMMA. The file contains log2 transformed tpm values.</p>
-<p>config.yaml setting for ssGSEA…</p>
-<p>output from ssGSEA….</p>
+<p>ssGSEA is a different method of trying to find enriched pathways in your dataset. GSEA uses the differential expression patterns of all samples to generate enrichment scores based on phenotypic differences. In contrast, ssGSEA generates enrichment scores for each sample. Phenotypic differences can then be used to compare enriched pathways rather than differential gene expression levels. Please see <a href="https://gsea-msigdb.github.io/ssGSEA-gpmodule/v10/index.html">ssGSEA</a> for more information.</p>
+<p>The input to ssGSEA is the tpm_convertID.batch file generated by limma. The file contains log2 transformed tpm values.</p>
+<p>From the ssGSEA output, RIMA generates a heatmap of the gene sets that are most differentially enriched between the groups defined in the config.yaml file.</p>
 
 </div>
 </div>
