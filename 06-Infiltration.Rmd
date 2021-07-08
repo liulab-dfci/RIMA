@@ -95,7 +95,7 @@ res_mcp = as.data.frame(deconvolute(df, "mcp_counter"))
 
 
 ## Comparisons across cell type and across samples
-Using results from CIBERSORT abs mode as an example, we provide two other functions to perform inter- or intra sample comparison.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.
+Using results from CIBERSORT abs mode as an example, we provide two other functions to perform inter- or intra sample comparison.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more detail in Chapter 4.2.1.
 
 ### Comparison across cell type
 ```{R}
