@@ -1,10 +1,13 @@
 # Immune Infiltration {#Infiltration}
+
 **Cell infiltration estimation in the tumor microenvironment**\
-TME is a complicated system consisting of tumor cells, immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanism of tumor progression and immune evasion, which is essential for providing a guideline for immunotherapy selection. There are two major approaches for estimating cell infiltration in TME, deconvolution-based and marker-based approaches. The deconvolution-based method infers cell type fractions from the bulk gene expression of a given list of signature genes, such as TIMER, quanTIseq, EPIC, and CIBERSORT. The marker-based approaches to quantify the enrichment score utilizing a list of cell-specific marker genes, such as xCell and MCP-counter. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that integrated these six methods. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq make it available to assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter support only inter-comparison between sample groups for one cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. The best way is to focus on the observations consistently predicted by various algorithms, in which case the gold standard is not available. \
+The tumor microenviroment (**TME**) is a complicated system consisting of immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanism of tumor progression and immune evasion, which is essential for providing a guideline for immunotherapy selection. 
+
+There are two major approaches for estimating cell infiltration in the TME --  1) deconvolution-based and 2) marker-based approaches. Deconvolution-based methods use weighted mathematical models that infer cell type fractions from the bulk gene expression of a given list of signature genes.  Algorithms such as TIMER, quanTIseq, EPIC, and CIBERSORT use deconvolution-based methods.  Algorithms such as xCell and MCP-counter use marker-based approaches to quantify the enrichment score utilizing a list of cell-specific marker genes. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that integrates these six algorithms. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq also assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter support only inter-comparison between sample groups for one cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. When a gold standard is not available, is is best to focus on the observations consistently predicted by the various algorithms. \
 
 ## Cibersort
-<a href="https://www.nature.com/articles/nmeth.3337">CIBERSORT</a> is a deconvolution-based method that uses the v-support vector regression method (v-SVR) to estimate each immune cell type's relative proportion from gene expression profile (GEP). It requires an input of reference gene expression signatures. CIBERSORT provided a gene signature matrix (LM22.txt) which contains 547 genes distinguish 7 T-cell types, naïve and memory B cells, plasma cell, and NK cells. The CIBERSORT absolute mode scales cellular fraction to a score that reflects each cell type's absolute proportion, allowing comparison across both samples and cell types.
-The **CIBERSORT source code** and **LM22 signature matrix** are only freely available to academic users, which can be applied through <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>. \
+<a href="https://www.nature.com/articles/nmeth.3337">CIBERSORT</a> is a deconvolution-based method that uses the v-support vector regression method (v-SVR) to estimate each immune cell type's relative proportion from a gene expression profile (GEP). It requires an input of reference gene expression signatures. CIBERSORT provides a gene signature matrix (LM22.txt) which contains 547 genes and distinguishes 7 T-cell types, naïve and memory B cells, plasma cells, and NK cells. The CIBERSORT absolute mode scales cellular fractions to a score that reflects each cell type's absolute proportion, allowing comparison across both samples and cell types.
+The **CIBERSORT source code** and **LM22 signature matrix** are only freely available to academic users -- register for access on the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>. \
 
 To run CIBERSORT using ImmuneDeconv:
 ```{r, eval = TRUE}
@@ -31,8 +34,9 @@ res_ciber <- CIBERSORT(sig_matrix, input, perm = cibersort_perm, QN = cibersort_
 
 head(res_ciber,3)
 ```
+
 ## TIMER
-<a href="http://cistrome.org/TIMER/">TIMER</a> uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, one of key steps is that TIMER selected the specific genes as immune signatures based on the correlation between gene expression and tumor purity. \
+<a href="http://cistrome.org/TIMER/">TIMER</a> (Tumor IMmune Estimation Resource) uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, TIMER selects specific genes as immune signatures based on the correlation between gene expression and tumor purity. \
 Tutorial of TIMER:\
 <iframe width="560" height="315" src="https://www.youtube.com/embed/94v8XboCrXU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
 
@@ -54,14 +58,17 @@ res_timer = as.data.frame(deconvolute(df, "timer",indications=rep(tolower(cancer
 ```
 
 ## quanTIseq
-The <a href="https://icbi.i-med.ac.at/software/quantiseq/doc/index.html">quanTIseq</a> uses constrained least square regression to estimate absolute proportions of 10 immune cell types infiltration levels from RNA seq data. Therefore, the score of quanTIseq allows inter- or intra-samples comparison. quanTIseq provides an entire pipeline that can either process the pre-computed gene expression matrix (TPM matrix) or directly analyze bulk RNA-Seq data.
+<a href="https://icbi.i-med.ac.at/software/quantiseq/doc/index.html">quanTIseq</a> uses constrained least square regression to estimate absolute proportions of the infiltration levels of 10 immune cell types from RNA seq data. Therefore, the score of quanTIseq allows inter- or intra-samples comparison. quanTIseq provides an entire pipeline that can either process the pre-computed gene expression matrix (TPM matrix) or directly analyze bulk RNA-Seq data.  RIMA uses the TPM matrix generated in the proprocessing modules for all immune infiltration algorithms.
+
 ```{r,eval=FALSE}
 #Run quanTIseq 
 res_quant = as.data.frame(deconvolute(df, "quantiseq"))
 
 ```
+
 ## xCell
-<a href="https://xcell.ucsf.edu">xCell</a> performs single-sample gene set enrichment analysis (ssGSEA) on expression data to evaluate the enrichment of immune marker genes. These marker genes validated using cytometry immunophenotyping and in-silico simulations. Notes that results of xCell depend on the number of samples, the power of estimation might be lower if providing limited non-heterogeneous samples
+<a href="https://xcell.ucsf.edu">xCell</a> performs single-sample gene set enrichment analysis (ssGSEA) on expression data to evaluate the enrichment of immune marker genes. These marker genes were validated using cytometry immunophenotyping and in-silico simulations. Note that results of xCell depend on the number of samples, the power of estimation might be lower if your dataset has limited non-heterogeneous samples.
+
 ```{r,eval=FALSE}
 #Run xCell
 res_xcell = as.data.frame(deconvolute(df, "xcell"))
@@ -70,7 +77,7 @@ res_xcell = as.data.frame(deconvolute(df, "xcell"))
 
 
 ## EPIC
-<a href="https://gfellerlab.shinyapps.io/EPIC_1-1/">EPIC</a> uses constrained least square regression to estimate six immune cell types, fibroblasts, and endothelial cells. EPIC collects a unique gene expression reference from circulating and tumor-infiltrating cells. Further, it extended its algorithm to evaluate the uncharacterized cancer cell. The score that comes from the EPIC algorithm is the absolute value that can be compared within or across samples.
+<a href="https://gfellerlab.shinyapps.io/EPIC_1-1/">EPIC</a> uses constrained least square regression to estimate six immune cell types, fibroblasts, and endothelial cells. EPIC collects a unique gene expression reference from circulating and tumor-infiltrating cells. Further, it extended its algorithm to evaluate the uncharacterized cancer cell. The score that comes from the EPIC algorithm is an absolute value that can be compared within or across samples.
 
 ```{r,eval=FALSE}
 #Run EPIC
@@ -78,7 +85,7 @@ res_epic = as.data.frame(deconvolute(df, "epic"))
 ```
 
 ## MCP-counter
-<a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1070-5">MCP-counter</a> uses its transcriptomic markers (TM) curated from 81 public datasets to estimate fibroblasts, endothelial, and eight immune cell types. The difference of mean log2-expression of marker genes samples is a key to evaluate the immune cell infiltration levels.
+<a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1070-5">MCP-counter</a> uses its transcriptomic markers (TM) curated from 81 public datasets to estimate fibroblasts, endothelial, and eight immune cell types. 
 
 ```{r, eval=FALSE}
 #Run EPIC
@@ -86,9 +93,10 @@ res_mcp = as.data.frame(deconvolute(df, "mcp_counter"))
 ```
 
 
-## Comparison across cell type
-Using results from CIBERSORT abs mode as an example, we provide another two functions to do inter- or intra comparison.
+## Comparisons across cell type and across samples
+Using results from CIBERSORT abs mode as an example, we provide two other functions to perform inter- or intra sample comparison.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.
 
+### Comparison across cell type
 ```{R}
 
 #extract the immune cell score from results of CIBERSORT
@@ -105,7 +113,7 @@ metasheet <- read.csv("metasheet.csv")
 hmap(ta = res_ciber, meta = metasheet, methods = "CIBERSORT", phenotype = "Responder")
 ```
 
-## Comparison across sample
+## Comparison across samples
 ```{R}
 boxfig(ta = res_ciber, meta = meta, methods = "CIBERSORT", phenotype = "Responder")
 ```
