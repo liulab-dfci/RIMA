@@ -1,4 +1,0 @@
-# Neoantigen Analysis {#Neoantigen}
-
-## Somatic mutation
-## Neoantigen identification
