@@ -64,9 +64,9 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 | DESeq2 | Gene Differential Expression Analysis | 
 | GSEA | Gene Set Enrichment Analysis | 
 | ssGSEA | Single-sample GSEA | 
-|  | **---IMMNUE REPERTOIRE---** |  
+|  | **---IMMUNE REPERTOIRE---** |  
 | TRUST4 | TCR and BCR Sequences Analysis | 
-|  | **---IMMNUE INFILTRATION---** |  
+|  | **---IMMUNE INFILTRATION---** |  
 | ImmuneDeconv | Cell Components Estimation | 
 |  | **---IMMNUE RESPONSE---** |  
 | MSIsensor2 | Microsatellite Instability (MSI) Detection | 
@@ -79,22 +79,21 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 | arcasHLA | HLA Class I and Class II Genes Typing | 
 
 
-
 # How to run RIMA
 
 ## Install RIMA and Set Up the Running Environment ##
 
 To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.
 
-**Software requirements**
-
-Processing power:  We usually run RIMA on a machine with 64 cores.
-
-Memory --   You will need to reserve enough memory for the following:
-
-  - Reference files and pipeline code -- 65 GB
-  - Raw data -- we recommend reserving five times the size of your data files.  For example, if your fastq files are 50GB each, then you should allot 250GB for each fastq file. Zipped fastq files are recommended. 
-  - Required software -- reserve ~20GB for installation of miniconda, mamba and snakemake.  
+**Running machine requirements**
+<ul>
+<li> Cores and memory --  We usually run RIMA on a machine with at least 64 GB memeory to ensure smooth run of read alignment using STAR. </li>
+<li>Storage -- You will need to reserve enough storage for the following: \
+    1. Reference files and pipeline code -- 65 GB \
+    2. Raw data -- we recommend reserving five times the size of your data files.  For example, if your fastq files are 50GB each, then you should allot 250GB for each fastq file. Zipped fastq files are recommended. \
+    3. Required software -- reserve ~20GB for installation of miniconda, mamba and snakemake.  
+</li>
+</ul>
 
 **Prepare a working directory**
 
@@ -123,7 +122,7 @@ conda list  #to see whether you have successfully installed conda
 
 **Set up the running environment**
 
-The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.  The user will need to answer two questions during the process -- one at the beginning of the program and one near the end.
+The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.   The user will need to answer two questions about  asking permission to install miniconda and snakemake during the process -- one at the beginning of the program and one near the end.
 
 ```
 #shell command for 
@@ -149,7 +148,7 @@ A pre-prepared RIMA reference folder can be downloaded using the code below.
 
 If you want to prepare a customized reference, you can follow [this tutorial](https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/) to build your own reference.
 
-Currently, RIMA supports **hg38**.
+Currently, RIMA supports **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a>.
  
 ```
 cd RIMA
@@ -158,12 +157,12 @@ wget http://cistrome.org/~lyang/ref.tar.gz
 # unzip the reference  
 tar -zxvf ref.tar.gz
 
-# remove the reference zip file to save some space
+# remove the reference zip file to save some space (optional)
 rm ref.tar.gz 
 ```
 
 
-**Optional step** \
+**Optional step** 
 
 If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
 For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link
@@ -182,52 +181,70 @@ ln -s /mnt/tutorial/ref_files
 
 **Metasheet.csv**
 
-Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder.  Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. Enter "U"(unknown) for missing data.
-You can add columns to the metasheet in order to compare other phenotypes e.g. columns for Responder, Age, Sex etc.
-The Group column controls what samples will be used to run DESeq2, 'NA' indicates samples that should not be included in the comparison.
+Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder.  Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
+
+<ul>
+ <li>**SampleName:** Sequencing sample id.</li>
+ <li>**PatName**: Patient id</li>
+ <li>**Group**: Sample included for cohort level comparison. 'NA' indicates samples that should not be included in the comparison. Below shows the example that to compare responder(R) and non-responder(NR) use only treatment naive (pre) patient </li>
+ </ul>
+ 
+You can add columns to the metasheet in order to compare other phenotypes e.g. columns for Timing Age, Sex etc.
 
 ```
-SampleName,PatName,Batch,Group,Age,Tissue,Replicate,Gender,Timing,Responder,TumorLocation,OngoingTreatment,PFS,Survival,OS,SampleId,syn_batch
-SRR8281218,P20,1,NR,63,Brain,NA,male,Pre,NR,temporal,no,110,1,278,4790-NL-AS,1
-SRR8281219,P20,1,NA,63,Brain,NA,male,Post,NR,temporal,no,110,1,278,4975-NL-AS,1
-SRR8281226,P53,1,NR,70,Brain,NA,male,Pre,NR,frontal,Yes,83,1,337,3981-NL-AS,2
-SRR8281236,P53,1,NA,70,Brain,2,male,Post,NR,frontal,Yes,83,1,337,4760-D1,2
-SRR8281233,P56,1,NR,54,Brain,NA,female,Pre,NR,Parietal,no,83,1,83,4341-D3,3
-SRR8281230,P56,1,NA,54,Brain,NA,female,Post,NR,Parietal,no,83,1,83,4680-A1,3
-SRR8281244,P100,1,NA,31,Brain,NA,male,Post,R,Frontal-crossesmidline,yes,151,0,615,4956-NL-AS,2
-SRR8281245,P100,1,R,31,Brain,NA,male,Pre,R,Frontal-crossesmidline,yes,151,0,615,4595-G1,2
-SRR8281243,P101,1,R,32,Brain,NA,male,Pre,R,frontal,no,0,1,414,3542-NL-AS,2
-SRR8281238,P102,1,NA,64,Brain,NA,female,Post,R,Temporal-anterior,yes,519,0,539,5094-NL-AS,1
-SRR8281251,P101,1,NA,32,Brain,2,male,Post,R,frontal,no,0,1,414,4943-A1,2
-SRR8281250,P102,1,R,64,Brain,NA,female,Pre,R,Temporal-anterior,yes,519,0,539,4443-NL-AS,1
+SampleName,PatName,Group,Age,Tissue,Gender,Timing,Responder,TumorLocation,OngoingTreatment,PFS,Survival,OS,SampleId,syn_batch
+SRR8281218,P20,NR,63,Brain,male,Pre,NR,temporal,no,110,1,278,4790-NL-AS,1
+SRR8281219,P20,NA,63,Brain,male,Post,NR,temporal,no,110,1,278,4975-NL-AS,1
+SRR8281226,P53,NR,70,Brain,male,Pre,NR,frontal,Yes,83,1,337,3981-NL-AS,2
+SRR8281236,P53,NA,70,Brain,male,Post,NR,frontal,Yes,83,1,337,4760-D1,2
+SRR8281233,P56,NR,54,Brain,female,Pre,NR,Parietal,no,83,1,83,4341-D3,3
+SRR8281230,P56,NA,54,Brain,female,Post,NR,Parietal,no,83,1,83,4680-A1,3
+SRR8281244,P100,NA,31,Brain,male,Post,R,Frontal-crossesmidline,yes,151,0,615,4956-NL-AS,2
+SRR8281245,P100,R,31,Brain,male,Pre,R,Frontal-crossesmidline,yes,151,0,615,4595-G1,2
+SRR8281243,P101,R,32,Brain,male,Pre,R,frontal,no,0,1,414,3542-NL-AS,2
+SRR8281238,P102,NA,64,Brain,female,Post,R,Temporal-anterior,yes,519,0,539,5094-NL-AS,1
+SRR8281251,P101,NA,32,Brain,male,Post,R,frontal,no,0,1,414,4943-A1,2
+SRR8281250,P102,R,64,Brain,female,Pre,R,Temporal-anterior,yes,519,0,539,4443-NL-AS,1
 ```
 
 **Config.yaml**
 
-In the RIMA_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: (i)Fixed and user-defined parameters (ii) Cohort analysis parameters and (iii)Samples list. 
-
-You should provide these parameters with column names that match the columns in metasheet.csv.
+In the RIMA_pipeline folder, we have prepared a config.yaml as a template to run the pipeline. The config file is divided into three sections: 
+<ul>
+ <li>  Fixed and user-defined parameters. </li>
+ <li>  Cohort level analysis parameters. </li>
+ <li>  Samples list. </li>
+</ul>
+You should provide these parameters with column names that match the columns in **metasheet.csv**.
 
 Below is an example of a config.yaml file. You can set the patient name as the sample name. Note: Please make sure that sample names match the metasheet. Currently, only fastq files are accepted as input (including fastq.gz).
 
 ```
----
-metasheet: metasheet.csv
-ref: ref.yaml
+#########Fixed and user-defined parameters################
+metasheet: metasheet.csv  # Meta info 
+ref: ref.yaml             # Reference config 
 assembly: hg38
-cancer_type: GBM  #TCGA cancer type abbreviations
-rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amount of time needed to run rseqc.  
-mate: [1,2]               #paired-end fastq format
+cancer_type: GBM          #TCGA cancer type abbreviations
+rseqc_ref: house_keeping  #Option: 'house_keeping' or 'false'. 
+                          #By default, a subset of housekeeping genes is used by RSeQC to assess alignment quality.  
+                          #This reduces the amount of time needed to run RSeQC.  
+mate: [1,2]               #paired-end fastq format, we recommend naming paired-end reads with _1.fq.gz and _2.fq.gz
 
-#########Parameter used for cohort level analysis################
-design: Group #condition on which to do comparsion (as set up in metasheet.csv)
-Treatment: R
-Control: NR
-batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
 
-pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
+#########Cohort level analysis parameters################
+design: Group             # Condition on which to do comparsion (as set up in metasheet.csv)
+Treatment: R              # Treatment use in DESeq2, corresponding to positive log fold change
+Control: NR               # Control use in DESeq2, corresponding to negative log fold change
+batch: syb_batch          # Options: 'false' or a column name from the metasheet.csv.  
+                          # If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis                                (limma).  
+                          # It will also be used as a covariate for differential analysis (DESeq2) to account for batch effect.  
 
-#########Location of raw fastq data##############
+pre_treated: false        # Option: true or false. 
+                          # If set to false, patients are treatment naive.  
+                          # If set to true, patients have received some form of therapy prior to the current study.
+
+
+#########Samples list##############
 samples:
   SRR8281218:
     - /mnt/zhao_trial/data/SRR8281218_1.fastq.gz
@@ -265,50 +282,42 @@ samples:
   SRR8281250:
     - /mnt/zhao_trial/data/SRR8281250_1.fastq.gz
     - /mnt/zhao_trial/data/SRR8281250_2.fastq.gz
-    
-
 ```
 
 **execution.yaml**
 
-Use **execution.yaml** to control which modules to run in RIMA.
-There are three required modules: (1) Environment (2) Preprocess individual (3) Preprocess mutation_cohort
-Preprocess module outputs are required for optional modules(downstream analysis).
+Use **execution.yaml** to control which modules to run in RIMA. The preprocess module outputs are required for optional downstream analysis modules. Details of each module will be introduced in next chapters.
 
 ```
-#Note: This module creates the environment necessary to run the remaining modules. Environment installation is only required for the first time on any server. For recurring users, the command can be set to false to avoid reinstallations.
-environment: true  
-
-#Note: Preprocess individual and cohort module necessary to get the alignment and quality results. Run the remaining modules only after these two modules.
+##Note: Preprocess individual and cohort module necessary to get the alignment and quality results. 
+##Run the remaining modules only after these two modules.
 preprocess_individual: true
 preprocess_cohort: true
 
-#Optional modules
-#Note: The below modules are specialized modules, each dealing with specific targets. Make sure to r
-un individual and cohort of each module to get all the results.
+##Optional modules
+##Note: The below modules are specialized modules, each dealing with specific targets. 
+##Make sure to run individual and cohort of each module to get all the results.
 
-differential_expression_cohort: false
-
-immune_infiltration_cohort: false
-
+##Individual runs
 mutation_individual: false
-mutation_cohort: false
-
 immune_response_individual: false
-immune_response_cohort: false
-
 immune_repertoire_individual: false
-immune_repertoire_cohort: false
-
 microbiome_individual: false
-microbiome_cohort: false
-
 neoantigen_individual: false
+
+
+
+##Cohort runs
+differential_expression_cohort: false
+immune_infiltration_cohort: false
+mutation_cohort: false
+immune_response_cohort: false
+immune_repertoire_cohort: false
+microbiome_cohort: false
 neoantigen_cohort: false
 
 #Note: This module generates a standalone  HTML report. It shows the results from the modules that user decides to run.
 report: false
-
 ```
 
 **ref.yaml**
@@ -319,8 +328,6 @@ hg38:
 ###annotation path
   fasta_path: ./ref_files/GRCh38.d1.vd1.fa 
   gtf_path: ./ref_files/gencode.v22.annotation.gtf
-  bed_path: ./ref_files/refseqGenes.bed
-  driver_bed_path: ./ref_files/driverGene_refseqGenes.bed
   housekeeping_bed_path: ./ref_files/housekeeping_refseqGenes.bed
   trust4_reper_path: ./ref_files/TRUST4/hg38_bcrtcr.fa
   trust4_IMGT_path: ./ref_files/TRUST4/human_IMGT+C.fa
@@ -332,7 +339,6 @@ hg38:
   salmon_index:  ./ref_files/salmon_index/gencode.v22.ts.fa
   msisensor_index: ./ref_files/msisensor_gdc_index/hg38/microsatellite.list
   centrifuge_index: ./ref_files/centrifuge_index/p_compressed+h+v
-  neoantigen_iedb_mhcI: ./ref_files/
 
 ###tool path
   msisensor2_path: ./ref_files/msisensor2
@@ -340,7 +346,8 @@ hg38:
   arcasHLA_path: ./ref_files/arcasHLA
   prada_path: ./ref_files/pyPRADA/pyPRADA_1.2
 ```
-## Execute RIMA
+
+## Running RIMA 
 
 **Check the path of your conda env**
 
@@ -367,13 +374,13 @@ snakemake -s RIMA.snakefile -np
 Alignment and some of the other modules of RIMA will take several hours to run.  It is recommended that you run the RIMA in the background using a command such as nohup as below.
 
 ```
-nohup time snakemake -s RIMA.snakefile -j 4 > RIMA.out &
+nohup time snakemake -p -s RIMA.snakefile -j 4 > RIMA.out &
 ```
 
-note: Argument -j sets the cores for parallel runs. (e.g. '-j 4' can run 4 jobs in parallel at the same time.)  note: Here, output log records the run information.  A user may run one module at a time to obtain a record of each module's output log.
+note: Argument -j sets the cores for parallel runs (e.g. '-j 4' can run 4 jobs in parallel at the same time.). Argument -p prints the command in each rule. Note: Here, output log records the run information.  A user may run one module at a time to obtain a record of each module's output log.
 
 ## Output
-Output folders are generated in a folder called "analysis".
+Output folders are generated in a folder called "analysis". Output structure of each module will be introduced in below chapters.
 
 
 

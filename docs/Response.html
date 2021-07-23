@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2021-07-07" />
+<meta name="date" content="2021-07-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -138,16 +138,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#install-rima-and-set-up-the-running-environment"><i class="fa fa-check"></i><b>2.1</b> Install RIMA and Set Up the Running Environment</a></li>
 <li class="chapter" data-level="2.2" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#download-pre-built-references"><i class="fa fa-check"></i><b>2.2</b> Download pre-built references</a></li>
 <li class="chapter" data-level="2.3" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#prepare-input-files"><i class="fa fa-check"></i><b>2.3</b> Prepare input files</a></li>
-<li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#execute-rima"><i class="fa fa-check"></i><b>2.4</b> Execute RIMA</a></li>
+<li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#running-rima"><i class="fa fa-check"></i><b>2.4</b> Running RIMA</a></li>
 <li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
-<li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-mapping"><i class="fa fa-check"></i><b>3.1</b> Read Mapping</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="Preprocessing.html"><a href="Preprocessing.html#star"><i class="fa fa-check"></i><b>3.1.1</b> STAR</a></li>
-</ul></li>
-<li class="chapter" data-level="3.2" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-control"><i class="fa fa-check"></i><b>3.2</b> Quality Control</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-metrics"><i class="fa fa-check"></i><b>3.2.1</b> Quality metrics</a></li>
-</ul></li>
+<li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-alignment"><i class="fa fa-check"></i><b>3.1</b> Read Alignment</a></li>
+<li class="chapter" data-level="3.2" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-control"><i class="fa fa-check"></i><b>3.2</b> Quality Control</a></li>
 <li class="chapter" data-level="3.3" data-path="Preprocessing.html"><a href="Preprocessing.html#gene-quantification"><i class="fa fa-check"></i><b>3.3</b> Gene quantification</a></li>
 <li class="chapter" data-level="3.4" data-path="Preprocessing.html"><a href="Preprocessing.html#batch-effect-removal"><i class="fa fa-check"></i><b>3.4</b> Batch effect removal</a></li>
 <li class="chapter" data-level="3.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>3.5</b> Video demo of RIMA</a></li>
@@ -201,17 +197,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#response-comparison-analysis-of-biomarkers"><i class="fa fa-check"></i><b>7.3</b> Response comparison analysis of biomarkers</a></li>
 <li class="chapter" data-level="7.4" data-path="Response.html"><a href="Response.html#video-demo-2"><i class="fa fa-check"></i><b>7.4</b> Video demo</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Calling</a></li>
-<li class="chapter" data-level="9" data-path="Neoantigen.html"><a href="Neoantigen.html"><i class="fa fa-check"></i><b>9</b> Neoantigen Analysis</a><ul>
-<li class="chapter" data-level="9.1" data-path="Neoantigen.html"><a href="Neoantigen.html#somatic-mutation"><i class="fa fa-check"></i><b>9.1</b> Somatic mutation</a></li>
-<li class="chapter" data-level="9.2" data-path="Neoantigen.html"><a href="Neoantigen.html#neoantigen-identification"><i class="fa fa-check"></i><b>9.2</b> Neoantigen identification</a></li>
+<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Typing</a><ul>
+<li class="chapter" data-level="8.1" data-path="HLA.html"><a href="HLA.html#identify-hla-type"><i class="fa fa-check"></i><b>8.1</b> Identify HLA type</a></li>
+<li class="chapter" data-level="8.2" data-path="HLA.html"><a href="HLA.html#video-demo-3"><i class="fa fa-check"></i><b>8.2</b> Video demo</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>10</b> Fusion</a><ul>
-<li class="chapter" data-level="10.1" data-path="fusion.html"><a href="fusion.html#fusion-calling-from-chimeric"><i class="fa fa-check"></i><b>10.1</b> Fusion calling from CHIMERIC</a></li>
-<li class="chapter" data-level="10.2" data-path="fusion.html"><a href="fusion.html#remove-homolog"><i class="fa fa-check"></i><b>10.2</b> Remove homolog</a></li>
-<li class="chapter" data-level="10.3" data-path="fusion.html"><a href="fusion.html#comparison"><i class="fa fa-check"></i><b>10.3</b> Comparison</a></li>
+<li class="chapter" data-level="9" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>9</b> Fusion</a><ul>
+<li class="chapter" data-level="9.1" data-path="fusion.html"><a href="fusion.html#fusion-calling"><i class="fa fa-check"></i><b>9.1</b> Fusion calling</a></li>
+<li class="chapter" data-level="9.2" data-path="fusion.html"><a href="fusion.html#remove-fusion-homology"><i class="fa fa-check"></i><b>9.2</b> Remove fusion homology</a></li>
+<li class="chapter" data-level="9.3" data-path="fusion.html"><a href="fusion.html#comparison-within-phenotype"><i class="fa fa-check"></i><b>9.3</b> Comparison within phenotype</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>11</b> Microbiome</a></li>
+<li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
+<li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.3" data-path="microbiome.html"><a href="microbiome.html#video-demo-4"><i class="fa fa-check"></i><b>10.3</b> Video demo</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -286,8 +285,8 @@ Dysfunction = \frac{d}{StdErr(d)}
 </code></pre>
 <p>Example outputs of TIDE:<br />
 </p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="Response.html#cb66-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb66-2"><a href="Response.html#cb66-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="Response.html#cb68-1"></a>tide_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;TIDE_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb68-2"><a href="Response.html#cb68-2"></a><span class="kw">print</span>(tide_res)</span></code></pre></div>
 <pre><code>##             X No.benefits Responder       TIDE        IFNG    MSI.Score
 ## 1  SRR8281219       False     False  1.6807050  0.05776435 0.9171423549
 ## 2  SRR8281236       False     False  1.4737267 -0.44182240 0.0891168795
@@ -332,15 +331,15 @@ Dysfunction = \frac{d}{StdErr(d)}
 <div id="microsatelite-instability-msi" class="section level2">
 <h2><span class="header-section-number">7.2</span> Microsatelite instability (MSI)</h2>
 <p>Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous study shows that the MSI is highly associated with tumor mutation burden and closly related to immunothrapy response. Many tools MANTIS, MSIsensor, mSINGS, MSIsensor-pro are available to calcualte MSI score form RNA-seq data. in our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI score, which allows tumor-only BAM input.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="Response.html#cb68-1"></a><span class="co">#Run MSIsensor2 </span></span>
-<span id="cb68-2"><a href="Response.html#cb68-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
-<span id="cb68-3"><a href="Response.html#cb68-3"></a></span>
-<span id="cb68-4"><a href="Response.html#cb68-4"></a><span class="co">## Output of MSIsensor2</span></span>
-<span id="cb68-5"><a href="Response.html#cb68-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
-<span id="cb68-6"><a href="Response.html#cb68-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="Response.html#cb70-1"></a><span class="co">#Run MSIsensor2 </span></span>
+<span id="cb70-2"><a href="Response.html#cb70-2"></a>msisensor2 msi <span class="op">-</span>M models_hg38 <span class="op">-</span>t tumor.bam <span class="op">-</span>o tumor</span>
+<span id="cb70-3"><a href="Response.html#cb70-3"></a></span>
+<span id="cb70-4"><a href="Response.html#cb70-4"></a><span class="co">## Output of MSIsensor2</span></span>
+<span id="cb70-5"><a href="Response.html#cb70-5"></a>Total_Number_of_Sites   Number_of_Somatic_Sites %</span>
+<span id="cb70-6"><a href="Response.html#cb70-6"></a><span class="dv">156</span>                     <span class="dv">26</span>                     <span class="fl">16.67</span></span></code></pre></div>
 <p>Example outputs of combined MSI:</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="Response.html#cb69-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
-<span id="cb69-2"><a href="Response.html#cb69-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="Response.html#cb71-1"></a>msi_res &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;msi_score.txt&quot;</span>,<span class="dt">header=</span><span class="ot">FALSE</span>,<span class="dt">sep=</span><span class="st">&#39;</span><span class="ch">\t</span><span class="st">&#39;</span>)</span>
+<span id="cb71-2"><a href="Response.html#cb71-2"></a><span class="kw">print</span>(msi_res)</span></code></pre></div>
 <pre><code>##            V1    V2
 ## 1  SRR8281218 20.34
 ## 2  SRR8281219 13.39
@@ -357,14 +356,14 @@ Dysfunction = \frac{d}{StdErr(d)}
 </div>
 <div id="response-comparison-analysis-of-biomarkers" class="section level2">
 <h2><span class="header-section-number">7.3</span> Response comparison analysis of biomarkers</h2>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="Response.html#cb71-1"></a><span class="co">#read the metasheet</span></span>
-<span id="cb71-2"><a href="Response.html#cb71-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
-<span id="cb71-3"><a href="Response.html#cb71-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
-<span id="cb71-4"><a href="Response.html#cb71-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
-<span id="cb71-5"><a href="Response.html#cb71-5"></a><span class="co">#load ploting function</span></span>
-<span id="cb71-6"><a href="Response.html#cb71-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
-<span id="cb71-7"><a href="Response.html#cb71-7"></a></span>
-<span id="cb71-8"><a href="Response.html#cb71-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="Response.html#cb73-1"></a><span class="co">#read the metasheet</span></span>
+<span id="cb73-2"><a href="Response.html#cb73-2"></a>metafile &lt;-<span class="st"> &quot;metasheet.csv&quot;</span></span>
+<span id="cb73-3"><a href="Response.html#cb73-3"></a>tide_res &lt;-<span class="st"> &quot;TIDE_score.txt&quot;</span></span>
+<span id="cb73-4"><a href="Response.html#cb73-4"></a>msi_res &lt;-<span class="st"> &quot;msi_score.txt&quot;</span></span>
+<span id="cb73-5"><a href="Response.html#cb73-5"></a><span class="co">#load ploting function</span></span>
+<span id="cb73-6"><a href="Response.html#cb73-6"></a><span class="kw">source</span>(<span class="st">&quot;Tideploting.R&quot;</span>)</span>
+<span id="cb73-7"><a href="Response.html#cb73-7"></a></span>
+<span id="cb73-8"><a href="Response.html#cb73-8"></a><span class="kw">cmpr_biomk</span>(<span class="dt">msi_path =</span> msi_res, <span class="dt">tide_path =</span> tide_res, <span class="dt">meta_path =</span> metafile, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
 <img src="images/response.png" alt="Comparision of biomarkers between R and NR"  />
 <p class="caption">
