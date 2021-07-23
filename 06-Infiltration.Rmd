@@ -13,7 +13,7 @@ suppressMessages(library(immunedeconv))
 #read gene expression matrix 
 input <- "tpm_convertID.txt"
 
-#load CIBERSORT source code and signiture matrix 
+#load CIBERSORT source code and signature matrix 
 source("CIBERSORT.R")
 sig_matrix <- "LM22.txt"
 
