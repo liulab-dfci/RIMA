@@ -5,6 +5,7 @@ fig:unnamed-chunk-11
 fig:unnamed-chunk-32
 fig:unnamed-chunk-33
 fig:unnamed-chunk-34
+fig:unnamed-chunk-35
 intro
 how-to-run-rima
 install-rima-and-set-up-the-running-environment
@@ -33,7 +34,7 @@ trust4
 trust4-output
 bcr-cluster-calculation
 clonotypes-per-kilo-reads-cpk
-tcr-and-bcr-entropy-and-colonality
+tcr-and-bcr-entropy-and-clonality
 fraction-of-reads-mapped-to-tcr-and-bcr
 somatic-hypermutation-rate-of-bcr
 ig-isotype-frequency
@@ -46,15 +47,17 @@ quantiseq
 xcell
 epic
 mcp-counter
+comparisons-across-cell-type-and-across-samples
 comparison-across-cell-type
-comparison-across-sample
+comparison-across-samples
 video-demo-1
 Response
 tide
+config.yaml-sections-relevant-to-tide
 cold-and-hot-tumors
 t-cell-dysfunction
 t-cell-exclusion
-normaliztion
+normalization
 running-tide
 microsatelite-instability-msi
 response-comparison-analysis-of-biomarkers
