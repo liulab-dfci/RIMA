@@ -6,6 +6,7 @@ fig:unnamed-chunk-32
 fig:unnamed-chunk-33
 fig:unnamed-chunk-34
 fig:unnamed-chunk-35
+fig:unnamed-chunk-36
 intro
 how-to-run-rima
 install-rima-and-set-up-the-running-environment

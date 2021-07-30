@@ -34,8 +34,8 @@ SRR8281218	Spirochaeta thermophila	154	species	2516433	3	3	0.0
 ```
 From the results, RIMA selects the top 15 most enriched microbiota according to the Inverse Simpson Index and plots their relative abundance ratio at the cohort level.
 
-```
-insert the ratio figure
+```{r fig.align='center', echo=FALSE, fig.cap='Fuison violine plot'}
+knitr::include_graphics('images/Group_microbes_abundance.png', dpi = NA)
 ```
 
 ## Video demo

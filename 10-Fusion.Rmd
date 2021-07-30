@@ -40,7 +40,7 @@ Rscript src/mutation/fusion_plot.R  --pradafusion analysis/fusion/Group_pyprada_
 ```
 
 ```{r fig.align='center', echo=FALSE, fig.cap='Fuison violine plot'}
-knitr::include_graphics('images/fusion.png', dpi = NA)
+knitr::include_graphics('images/Group_fusion_gene_plot.png', dpi = NA)
 ```
 
 ```{r fig.align='center', echo=FALSE, fig.cap='Fusion box plot'}
