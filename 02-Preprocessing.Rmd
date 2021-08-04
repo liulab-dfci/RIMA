@@ -1,5 +1,5 @@
 # Pre-processing of bulk RNA-seq data {#Preprocessing}
-In this chapter, we will align RNA-seq data, check the data quality, quantify gene expression and handle batch effects across samples. To run the RIMA preprocess module, in **execution.yaml**, set preprocess module to *true*. The individual run of the preprocess module includes read alignment, quality check and gene quantification. The cohort run of the preprocess module will merge the alignment report, quality metrics, gene quantification and conduct batch effect removal.
+In this chapter, we will align RNA-seq data, check the data quality, quantify gene expression and handle batch effects across samples. To run the RIMA preprocess modules, in **execution.yaml**, set preprocess_individual and preprocess_cohort to *true*. The individual run of the preprocess module includes read alignment, quality checks and gene quantification. The cohort run of the preprocess module will merge data from all samples to produce cohort level reports for alignment, quality metrics and gene quantification.  The cohort run will also conduct batch effect removal.
 
 ```
 ## execution.yaml ##
@@ -54,9 +54,9 @@ RIMA also uses samtools to generate statistics from the alignment BAM file:
 samtools stats analysis/star/SRR828121/SRR8281218.sorted.bam | grep ^SN | cut -f 2- > analysis/star/SRR8281218/SRR8281218.sorted.bam.stat.txt
 ```
 
-**Merging STAR alignment report**
+**Merging the STAR alignment reports**
 
-After the individual alignment runs of each sample, RIMA will merge the alignment reports from all samples to generate a file named *STAR_Align_Report.csv*. Below is an example the merged output:
+After the individual alignment runs of each sample, RIMA will merge the alignment reports from all samples to generate a file named *STAR_Align_Report.csv*. Below is an example of merged output:
 ```
 STAR,SRR8281218,SRR8281219,SRR8281226,SRR8281236,SRR8281230,SRR8281233,SRR8281244,SRR8281245,SRR8281243,SRR8281251,SRR8281238,SRR8281250
 Number_of_input_reads,31058961,30244952,30144822,30214970,30219317,30294851,30233324,30188854,30267936,30155916,30238326,30205607
@@ -96,10 +96,10 @@ RseQC is a standard tool for checking the quality of read alignments, providing 
 To reduce running time, we first sub-sample sorted BAM files to be used by RseQC to assess alignment quality. If parameter 'rseqc_ref' is set to 'house_keeping', RIMA will extract alignments of house keeping genes for the sub-sample.
 
 ```{r eval=FALSE}
-## Example of subsampling 50% of input alignment
+## Example of subsampling 50% of input alignments
 samtools view -s 0.5 -b analysis/star/SRR8281218/SRR8281218.sorted.bam  > analysis/star/SRR8281218/SRR8281218_downsampling.bam 
 
-# Extract the alignment of housekeeping gene.
+# Extract the alignment of housekeeping genes.
 bedtools intersect -a analysis/star/SRR8281218/SRR8281218_downsampling.bam  -b ./ref_files/housekeeping_refseqGenes.bed > analysis/star/SRR8281218/SRR8281218_downsampling_housekeeping.bam 
 
 # index BAM
@@ -154,7 +154,7 @@ knitr::include_graphics('images/geneBodyCoverage.curves.png', dpi = NA)
 
 ## Gene quantification
 
-After the alignment of sequencing reads and quality check, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. Both tools generate transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> and STAR quantify gene expression according to mapped read counts. Both normalized gene expression and read counts can be used for differential expression analysis. \
+After the alignment of sequencing reads and quality checks, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. RSEM generates transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  Salmon provides TPMs as a part of its output.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> quantifies gene expression according to mapped read counts. Both normalized gene expression and raw read counts can be used for differential expression analysis. \
 
 RIMA uses Salmon for gene quantification. The transcriptome alignment result from STAR is used as the Salmon input:
 ```
@@ -190,7 +190,7 @@ A2ML1-AS1,0,0,0,0,0,0,0,0,0,3.506,0,0
 ```
 
 ## Batch effect removal
-Batch effects across samples are easily ignored but worth considering for immunotherapy cohort studies. Batch effects are usually caused by unbalanced experimental design and confound the estimation of group differences. For example, samples processed at different facilities may have sequencing differences that are not due to actual biological differences in the samples themselves.  To avoid confounding actual biological variation with the effects of experimental design, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct batch effects. Limma uses a two-way ANOVA approach.  Combat uses an empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
+Batch effects across samples are easily overlooked but worth considering for immunotherapy cohort studies. Batch effects are usually caused by unbalanced experimental design and confound the estimation of group differences. For example, samples processed at different facilities may have sequencing differences that are not due to actual biological differences in the samples themselves.  To avoid confounding actual biological variation with the effects of experimental design, <a href="https://www.degruyter.com/document/doi/10.2202/1544-6115.1027/html"> limma </a> and <a href="https://academic.oup.com/biostatistics/article/8/1/118/252073?login=true">Combat</a> are common approaches to correct batch effects. Limma uses a two-way ANOVA approach.  Combat uses an empirical Bayes approach, which is critical for small batches to avoid over-correction. For large batches, both methods should be similar. The <a href="https://bioconductor.org/packages/release/bioc/html/sva.html">sva</a> R package integrates both methods for batch effect correction.
 Principal components analysis (PCA) or unsupervised clustering before and after batch effect removal is an excellent way to validate that a batch effect has been removed. 
 
 To evaluate if your samples have a batch effect, RIMA will generate PCA plots of gene expression data before and after batch effect removal by limma.  To utilize this feature, modify the "batch" parameter in the config.yaml file for your run. 
