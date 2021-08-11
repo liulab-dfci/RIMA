@@ -102,20 +102,33 @@ Download the RIMA_pipeline folder to your working directory.
 git clone  https://github.com/kateyliu/RIMA_pipeline.git
 ```
 
-**Install conda**
+**Install miniconda**
 
-If conda was installed on your system (HCP or cloud instance) previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens. If you are unsure about any setting, accept the defaults.
-#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on the root disk (>= 20G)
+Download and configure your conda environment. Follow the prompts on the installer screens.  
+#Note: You will need to install miniconda3 into the RIMA directory.  If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)
 
 ```
+#go to your RIMA directory if you are not there already
+cd RIMA
+
+#obtain the Miniconda3 code and install in the RIMA directory
+
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash sh Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
 conda list  #to see whether you have successfully installed conda
 ```
 
 **Set up the running environment**
 
 The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.   The user will need to answer two questions during the process -- one at the beginning of the program and one near the end -- to give permissions to install miniconda and snakemake.
+
+#NOTE: before running the environment shell command, make sure to set the path for CONDA_ROOT
+```
+export CONDA_ROOT=/{path_to_your_RIMA_directory}/RIMA/miniconda3
+export PATH=/{path_to_your_RIMA_directory}/RIMA/miniconda3/bin:$PATH
+```
+
+Run the shell program:
 
 ```
 #shell command for 
@@ -130,8 +143,11 @@ bash ./RIMA_environment.sh -p AWS
 Based on the conda environments information, the main environment "RIMA" can be activated as below.
 
 ```
-export CONDA_ROOT=/home/{username}/miniconda3
-export PATH=/home/{username}/miniconda3/bin:$PATH
+#set the path if you this is a new login to your shell
+export CONDA_ROOT=/{path_to_your_RIMA_directory}/RIMA/miniconda3
+export PATH=/{path_to_your_RIMA_directory}/RIMA/miniconda3/bin:$PATH
+
+# activate the RIMA conda environment
 source activate RIMA
 ```
 
@@ -310,12 +326,10 @@ immune_repertoire_cohort: false
 microbiome_cohort: false
 neoantigen_cohort: false
 
-#Note: This module generates a standalone  HTML report. It shows the results from the modules that user decides to run.
-report: false
 ```
 
 **ref.yaml**
-The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change this file.
+The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change the ref.yaml file.
 
 ```
 hg38:
