@@ -105,7 +105,8 @@ git clone  https://github.com/kateyliu/RIMA_pipeline.git
 **Install miniconda**
 
 Download and configure your conda environment. Follow the prompts on the installer screens.  
-#Note: You will need to install miniconda3 into the RIMA directory.  If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)
+#Note: You will need to install miniconda3 into the RIMA directory.  This means you need to override the default directory when miniconda3 is installed.
+#If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)
 
 ```
 #go to your RIMA directory if you are not there already
@@ -114,7 +115,11 @@ cd RIMA
 #obtain the Miniconda3 code and install in the RIMA directory
 
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
+
+bash Miniconda3-latest-Linux-x86_64.sh  
+# !Don't forget to override the default directory for miniconda3!
+# Install miniconda3 into your RIMA directory.
+
 conda list  #to see whether you have successfully installed conda
 ```
 
