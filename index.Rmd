@@ -12,12 +12,12 @@ description: "This is a minimal example of using the bookdown package to write a
 
 #  Introduction {#intro}
 
-This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-seq data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
+This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-sequencing (RNA-seq) data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
 We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA/.
 
 Tumor RNA-seq has become an important technique for molecular profiling and
-immune characterization of tumors. RNA-seq Immune Analysis performs
-integrative computational modeling of tumor microenvironment from bulk tumor
+immune characterization of tumors. RNA-seq Immune Analysis (RIMA) performs
+integrative computational modeling of the tumor microenvironment from bulk tumor
 RNA-seq data, which has the potential to offer essential insights to cancer
 immunology and immune-oncology studies.\
 
@@ -35,13 +35,12 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
  The downstream analysis includes seven modules:
  <ul>
  <li>**Differential expression analysis**</li>
- <li>**Immune infiltration estimation**</li>
  <li>**Immune repertoire inference**</li>
- <li>**Neoantigen detection**</li>
- <li>**Microbiome characterization**</li>
+ <li>**Immune infiltration estimation**</li>
  <li>**Immunotherapy response prediction**</li>
  <li>**Gene fusion**</li>
- <li>**Microbiome**</li>
+ <li>**Microbiome characterization**</li>
+ <li>**Neoantigen detection**</li>
  </ul>
  
 **Available Tools Checklist** 
@@ -49,14 +48,8 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 
 | **Methods** | **Description** | 
 | :---: | :---: | :---: |
-|  | **---ENVIRONMENT---**| |
-| rnaseq | basic tools wihout dependency |  
-| rseqc | dependent packages for quality control | 
-| stat_perl_r | dependent packages for plotting | 
-| fusion | dependent package for fusion | 
-| centrifuge | dependent package for microbiome | 
 |  | **---PREPROCESSING---**| 
-| STAR | Spliced Transcripts Alignment to a Reference | 
+| STAR | Spliced Transcript Alignment to a Reference | 
 | Salmon | Gene Quantification | 
 | RSeQC | High Throughput Sequence Data Evaluation | 
 | batch_removal| Remove Batch Effects Using Limma | 
@@ -65,18 +58,18 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 | GSEA | Gene Set Enrichment Analysis | 
 | ssGSEA | Single-sample GSEA | 
 |  | **---IMMUNE REPERTOIRE---** |  
-| TRUST4 | TCR and BCR Sequences Analysis | 
+| TRUST4 | TCR and BCR Sequence Analysis | 
 |  | **---IMMUNE INFILTRATION---** |  
 | ImmuneDeconv | Cell Components Estimation | 
 |  | **---IMMNUE RESPONSE---** |  
 | MSIsensor2 | Microsatellite Instability (MSI) Detection | 
 | TIDEpy | T cell dysfunction and exclusion prediction | 
+|  | **---FUSION---** |  
+| STAR-Fusion | Identify the fusion gene pairs | 
 |  | **---MICROBIOME---** |  
 | Centrifuge | Bacterial Abundance Detection |
-|  | **---Mutation---** |  
-| STAR-Fusion | Identify the fusion gene pairs | 
 |  | **---NEO-ANTIGEN---** |  |
-| arcasHLA | HLA Class I and Class II Genes Typing | 
+| arcasHLA | HLA Class I and Class II Genotyping | 
 
 
 # How to run RIMA
@@ -87,7 +80,7 @@ To run RIMA, you will create a working directory. In the working directory, you 
 
 **Running machine requirements**
 <ul>
-<li> Cores and memory --  We usually run RIMA on a machine with at least 64 GB memeory to ensure smooth run of read alignment using STAR. </li>
+<li> Cores and memory --  We usually run RIMA on a machine with at least 64 GB of memory to ensure a smooth read alignment run using STAR. </li>
 <li>Storage -- You will need to reserve enough storage for the following: \
     1. Reference files and pipeline code -- 65 GB \
     2. Raw data -- we recommend reserving five times the size of your data files.  For example, if your fastq files are 50GB each, then you should allot 250GB for each fastq file. Zipped fastq files are recommended. \
@@ -109,20 +102,38 @@ Download the RIMA_pipeline folder to your working directory.
 git clone  https://github.com/kateyliu/RIMA_pipeline.git
 ```
 
-**Install conda**
+**Install miniconda**
 
-If conda was installed on your system (HCP or cloud instance) previously, you can skip this step. Otherwise, download and configure your conda environment. Follow the prompts on the installer screens. If you are unsure about any setting, accept the defaults.
-#Note: if you install conda in the /home directory on AWS, make sure that you have enough space on root disk (>= 20G)
+Download and configure your conda environment. Follow the prompts on the installer screens.  
+#Note: You will need to install miniconda3 into the RIMA directory.  This means you need to override the default directory when miniconda3 is installed.
+#If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)
 
 ```
+#go to your RIMA directory if you are not there already
+cd RIMA
+
+#obtain the Miniconda3 code and install in the RIMA directory
+
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash sh Miniconda3-latest-Linux-x86_64.sh
+
+bash Miniconda3-latest-Linux-x86_64.sh  
+# !Don't forget to override the default directory for miniconda3!
+# Install miniconda3 into your RIMA directory.
+
 conda list  #to see whether you have successfully installed conda
 ```
 
 **Set up the running environment**
 
-The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.   The user will need to answer two questions about  asking permission to install miniconda and snakemake during the process -- one at the beginning of the program and one near the end.
+The RIMA environment can be set up by running a shell command.  In the command, you need to specify the platform you are using -- Amazon Web Services (AWS) or Google Cloud Platform (GCP).  This process may take ten to fifteen minutes.   The user will need to answer two questions during the process -- one at the beginning of the program and one near the end -- to give permissions to install miniconda and snakemake.
+
+#NOTE: before running the environment shell command, make sure to set the path for CONDA_ROOT
+```
+export CONDA_ROOT=/{path_to_your_RIMA_directory}/RIMA/miniconda3
+export PATH=/{path_to_your_RIMA_directory}/RIMA/miniconda3/bin:$PATH
+```
+
+Run the shell program:
 
 ```
 #shell command for 
@@ -137,18 +148,21 @@ bash ./RIMA_environment.sh -p AWS
 Based on the conda environments information, the main environment "RIMA" can be activated as below.
 
 ```
-export CONDA_ROOT=/home/{username}/miniconda3
-export PATH=/home/{username}/miniconda3/bin:$PATH
+#set the path if you this is a new login to your shell
+export CONDA_ROOT=/{path_to_your_RIMA_directory}/RIMA/miniconda3
+export PATH=/{path_to_your_RIMA_directory}/RIMA/miniconda3/bin:$PATH
+
+# activate the RIMA conda environment
 source activate RIMA
 ```
 
-## Download pre-built references 
+## Download pre-built references
 
 A pre-prepared RIMA reference folder can be downloaded using the code below. 
 
-If you want to prepare a customized reference, you can follow [this tutorial](https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/) to build your own reference.
+If you want to prepare a customized reference, you can follow [this tutorial](https://github.com/kateyliu/RIMA/build-rima-reference/) to build your own reference.
 
-Currently, RIMA supports **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a>.
+Currently, RIMA supports the **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a>.
  
 ```
 cd RIMA
@@ -164,8 +178,10 @@ rm ref.tar.gz
 
 **Optional step** 
 
+
 If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
 For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link. Please refer to <a href = 'https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/'>here</a> if you are building your own reference.
+
 
 ```
 cd RIMA
@@ -181,12 +197,12 @@ ln -s /mnt/tutorial/ref_files
 
 **Metasheet.csv**
 
-Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder.  Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
+Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. The Metasheet.csv should contain phenotypic information about your samples that can be used for downstream analysis. Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
 
 <ul>
  <li>**SampleName:** Sequencing sample id.</li>
  <li>**PatName**: Patient id</li>
- <li>**Group**: Sample included for cohort level comparison. 'NA' indicates samples that should not be included in the comparison. Below shows the example that to compare responder(R) and non-responder(NR) use only treatment naive (pre) patient </li>
+ <li>**Group**: Sample included for cohort level comparison. 'NA' indicates samples that should not be included in the comparison. In the example below, we compare responders(R) and non-responders(NR) using only treatment naive (pre) patients.   </li>
  </ul>
  
 You can add columns to the metasheet in order to compare other phenotypes e.g. columns for Timing Age, Sex etc.
@@ -236,7 +252,7 @@ design: Group             # Condition on which to do comparsion (as set up in me
 Treatment: R              # Treatment use in DESeq2, corresponding to positive log fold change
 Control: NR               # Control use in DESeq2, corresponding to negative log fold change
 batch: syb_batch          # Options: 'false' or a column name from the metasheet.csv.  
-                          # If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis                                (limma).  
+                          # If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  
                           # It will also be used as a covariate for differential analysis (DESeq2) to account for batch effect.  
 
 pre_treated: false        # Option: true or false. 
@@ -286,17 +302,18 @@ samples:
 
 **execution.yaml**
 
-Use **execution.yaml** to control which modules to run in RIMA. The preprocess module outputs are required for optional downstream analysis modules. Details of each module will be introduced in next chapters.
+Use **execution.yaml** to control which modules to run in RIMA. The preprocess module outputs are required for optional downstream analysis modules. Details of each module will be introduced in the next chapters.
 
 ```
-##Note: Preprocess individual and cohort module necessary to get the alignment and quality results. 
+##Note: The preprocess individual and cohort modules are necessary to obtain alignment and quality results. 
 ##Run the remaining modules only after these two modules.
 preprocess_individual: true
 preprocess_cohort: true
 
 ##Optional modules
 ##Note: The below modules are specialized modules, each dealing with specific targets. 
-##Make sure to run individual and cohort of each module to get all the results.
+##Make sure to run both the individual and cohort parts of each module 
+##to get all results.
 
 ##Individual runs
 mutation_individual: false
@@ -316,12 +333,10 @@ immune_repertoire_cohort: false
 microbiome_cohort: false
 neoantigen_cohort: false
 
-#Note: This module generates a standalone  HTML report. It shows the results from the modules that user decides to run.
-report: false
 ```
 
 **ref.yaml**
-The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change this file.
+The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change the ref.yaml file.
 
 ```
 hg38:
@@ -371,7 +386,7 @@ snakemake -s RIMA.snakefile -np
 
 **Submit the job.**
 
-Alignment and some of the other modules of RIMA will take several hours to run.  It is recommended that you run the RIMA in the background using a command such as nohup as below.
+Alignment and some of the other modules of RIMA will take several hours to run.  It is recommended that you run RIMA in the background using a command such as nohup as below.
 
 ```
 nohup time snakemake -p -s RIMA.snakefile -j 4 > RIMA.out &
@@ -380,7 +395,7 @@ nohup time snakemake -p -s RIMA.snakefile -j 4 > RIMA.out &
 note: Argument -j sets the cores for parallel runs (e.g. '-j 4' can run 4 jobs in parallel at the same time.). Argument -p prints the command in each rule. Note: Here, output log records the run information.  A user may run one module at a time to obtain a record of each module's output log.
 
 ## Output
-Output folders are generated in a folder called "analysis". Output structure of each module will be introduced in below chapters.
+Output folders are generated in a folder called "analysis". The output structure of each module will be introduced in the next chapters.
 
 
 

@@ -1,21 +1,23 @@
 # Immune repertoire {#Repertoire}
 
-A key part of immune specific analysis is assessing the nature of the B and T cells that make up the tumor microenvironment.  This assessment includes, but is not limited to, measures such as receptor diversity and clonality.
+A key part of immune specific analysis is assessing the nature of the T and B cells that make up the tumor microenvironment.  This assessment includes, but is not limited to, measures such as receptor diversity and clonality.
 
-Once tumors are infiltrated with B cells and T cells, the B cells and T cells are activated if their receptors -- BCRs and TCRs, respectively -- recognize and bind to tumor-associated antigens. BCRs and TCRs are highly diverse to allow different B and T cells to recognize different pathogens or tumor-associated antigens.  Part of the diversity of BCRs and TCRs is due to V(D)J recombination which mixes and matches different V, D and J segments of the genome in order to produce a wide variety of receptors.  
+Once tumors are infiltrated with T cells and B cells, the T cells and B cells are activated if their receptors -- TCRs and BCRs, respectively -- recognize and bind to tumor-associated antigens. TCRs and BCRs are highly diverse to allow different T and B cells to recognize different pathogens or tumor-associated antigens.  Part of the diversity of TCRs and BCRs is due to V(D)J recombination which mixes and matches different V, D and J segments of the genome in order to produce a wide variety of receptors.  
 
-Complementary-determining region 3 (**CDR3**) is a highly variable region of both BCRs and TCRs that is central to the antigen binding site of these receptors.  V(D)J junctional sequence assembly is a major source of TCR/BCR CDR3 diversity.  **Immune repertoire profiling** (characterizing the  CDR3 sequences of BCRs and TCRs in a tumor sample) is essential for quantifying B/T cell diversity and clonality.  These measures, in turn, are important tumor immune characteristics and key indicators of immunotherapy response. 
+Complementary-determining region 3 (**CDR3**) is a highly variable region of both TCRs and BCRs that is central to the antigen binding site of these receptors.  V(D)J junctional sequence assembly is a major source of TCR/BCR CDR3 diversity.  **Immune repertoire profiling** (characterizing the  CDR3 sequences of TCRs and BCRs in a tumor sample) is essential for quantifying T/B cell diversity and clonality.  These measures, in turn, are important tumor immune characteristics and key indicators of immunotherapy response. 
 
-Currently, newly-emerging immune sequencing techniques, such as TCR-seq and BCR-seq, have been designed to sequence B and T cell receptors through quantitative PCR (qPCR). However, TCR-seq and BCR-seq are costly and not always available for particular datasets.  To overcome this difficulty, Tcr Receptor Utilities for Solid Tissue (TRUST) has been developed to infer the immune repertoire from bulk RNA-seq reads.  V(D)J recombination results in sequences that do not align to genome references.  TRUST combines reads that align to the V, D or J regions of the reference genome with sequences that do not align to the host genome to infer de novo assembled CDR3 sequences.
+Currently, newly-emerging immune sequencing techniques, such as TCR-seq and BCR-seq, have been designed to sequence T and B cell receptors through quantitative PCR (qPCR). However, TCR-seq and BCR-seq are costly and not always available for particular datasets.  To overcome this difficulty, *T*cr *R*eceptor *U*tilities for *S*olid *T*issue (TRUST) has been developed to infer the immune repertoire from bulk RNA-seq reads.  V(D)J recombination results in sequences that do not align to genome references.  TRUST combines reads that align to the V, D or J regions of the reference genome with sequences that do not align to the host genome to infer de novo assembled CDR3 sequences.
 
-TRUST provides an overview of the immune repertoire of tumors, including CDR3 sequence length and the frequency of various V genes, J genes, and VJ pairs for different chains in the TCR and BCR. For cohort analysis, some basic metrics for TCRs and BCRs across samples could be computed to relate immune repertoire characteristics to specific phenotypes, including the fraction of reads mapped to TCR/BCR, the number of TCR/BCR unique clonotypes of CDR3 sequences, TCR/BCR diversity, and clonality. Since activated B cells undergo somatic hyper-mutation, antibody production, and Immunoglobulin (Ig) class switches during B cell maturation, TRUST also calculates the somatic hypermutation (SHM) rate for BCRs. In addition, TRUST predicts Ig isotypes for BCRs, which allows for quantifying the Ig compositions representing different maturation statuses (IGHM, IGHD, IGHG3, IGHG1, IGHA1, IGHG2, IGHG4, IGHA2, IGHE) and generating an Ig class switches network. Taken together, the immune repertoire analysis quantifies the T/B cell population in both individual and cohort levels, enabling one to characterize dynamic evolution in the TME via the diversity and clonal expansion of tumor-infiltrating T cells or B cells.
+TRUST provides an overview of the immune repertoire of tumors, including CDR3 sequence length and the frequency of various V genes, J genes, and VJ pairs for different chains in the TCR and BCR. For cohort analysis, some basic metrics for TCRs and BCRs across samples could be computed to relate immune repertoire characteristics to specific phenotypes, including the fraction of reads mapped to TCR/BCR, the number of TCR/BCR unique clonotypes of CDR3 sequences, TCR/BCR diversity, and clonality. Since activated B cells undergo somatic hyper-mutation, antibody production, and Immunoglobulin (Ig) class switches during B cell maturation, TRUST also calculates the somatic hypermutation (SHM) rate for BCRs. In addition, TRUST predicts Ig isotypes for BCRs, which allows for quantification of the Ig compositions representing different maturation statuses (IGHM, IGHD, IGHG3, IGHG1, IGHA1, IGHG2, IGHG4, IGHA2, IGHE) and generation of an Ig class switches network. Taken together, the immune repertoire analysis quantifies the T/B cell population at both the individual and cohort levels, enabling one to characterize dynamic evolution in the TME via the diversity and clonal expansion of tumor-infiltrating T cells or B cells.
+
+RIMA currently uses the fourth version of TRUST, TRUST4.
 
 ## TRUST4
 Example Command:
 ```
 ./run-trust4 -b example.bam -f hg38_bcrtcr.fa --ref human_IMGT+C.fa
 ```
-The above command utilizes hg3_bcrtcr.fa (a fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (a V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This report contains a list of assembled clonotypes from example.bam with the following fields: "read_count, frequency(proportion of read_count), CDR3_dna, CDR3_amino_acids, V, D, J, C, consensus_id, consensus_id_full_length". These fields tell us the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage, and identifier for each clonotype.
+The above command utilizes hg3_bcrtcr.fa (a fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (a V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This report contains a list of assembled clonotypes from example.bam with the following fields: "read_count, frequency(proportion of read_count), CDR3_dna, CDR3_amino_acids, V, D, J, C, consensus_id, consensus_id_full_length". These fields contain the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage and identifier for each clonotype.
 
 ### TRUST4 output
 
@@ -23,7 +25,7 @@ In the example codes below, we use one sample to illustrate how RIMA processes t
 
 ## BCR cluster calculation
 
-Activation of B cells leads to somatic hypermutation (**SHM**).  As B cells proliferate, random mutations are generated at a high rate in the V-region sequence.  Favorable mutations lead to better antigen binding and are selected for survival as the B cells continue to proliferate.  BCR clustering is used to identify BCRs from the same lineage. The clusters can then be used to estimate somatic hypermutation rate.
+Activation of B cells leads to somatic hypermutation (**SHM**).  As B cells proliferate, random mutations are generated at a high rate in the V-region sequence.  Favorable mutations lead to better antigen binding and are selected for survival as the B cells continue to proliferate.  BCR clustering is used to identify BCRs from the same lineage. The clusters can then be used to estimate somatic hypermutation rate (described later in this chapter).
 
 ``` {R, message = FALSE}
 library(dplyr)
@@ -106,7 +108,7 @@ single_sample_tcr_clonality
 ``` 
 
 ## Fraction of reads mapped to TCR and BCR
-The fraction of reads mapped to TCR and BCR can be used as a rough approximation of T and B cell infiltration.  The fraction of all reads that are mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of the clonotypes identified by TRUST. The fraction is composed of the proportion of reads with genes prefixed by "TR" (TCR) and genes prefixed by "IG" (BCR) divided by the total of all mapped genes in the sample.
+The fraction of reads mapped to TCR and BCR can be used as a rough approximation of T and B cell infiltration.  The fraction of all reads that are mapped to either TCR or BCR is indicated by the V,D,J-gene prefixes of the clonotypes identified by TRUST4. The fraction is composed of the proportion of reads with genes prefixed by "TR" (TCR) and genes prefixed by "IG" (BCR) divided by the total of all mapped genes in the sample.
 
 
 ``` {R}
@@ -139,7 +141,7 @@ combined
 ``` 
 
 ## Somatic hypermutation rate of BCR
-As described in BCR clustering section of this chapter, somatic hypermutation (**SHM**) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate.  For each BCR cluster identified by TRUST, TRUST calculates the number of point mutations in the nucleotide sequences in order to estimate SHM.  SHM can be used as an approximation of B cell activity within a sample.  
+As described in BCR clustering section of this chapter, somatic hypermutation (**SHM**) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate.  For each BCR cluster identified by TRUST4, TRUST4 calculates the number of point mutations in the nucleotide sequences in order to estimate SHM.  SHM can be used as an approximation of B cell activity within a sample.  
 
 ``` {R}
 SHM.ratio <- getSHMratio(sample_bcr_cluster)
