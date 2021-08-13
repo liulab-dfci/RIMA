@@ -178,8 +178,10 @@ rm ref.tar.gz
 
 **Optional step** 
 
-If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder.
-For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link
+
+If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
+For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link. Please refer to <a href = 'https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/'>here</a> if you are building your own reference.
+
 
 ```
 cd RIMA
