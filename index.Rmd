@@ -1,5 +1,7 @@
 --- 
 title: "Tutorial of RNA-seq tumor immunity analysis"
+author: "Yang Liu, Jennifer Altreuter, Yang Lin"
+date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 #documentclass: book
@@ -196,7 +198,7 @@ ln -s /mnt/tutorial/ref_files
 
 **Metasheet.csv**
 
-Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. The Metasheet.csv should contain phenotypic information about your samples that can be used for downstream analysis. Ensure your metasheet contains **Three Required Columns** (SampleName, PatName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
+Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. The Metasheet.csv should contain phenotypic information about your samples that can be used for downstream analysis. Ensure your metasheet contains **Two Required Columns** (SampleName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
 
 <ul>
  <li>**SampleName:** Sequencing sample id.</li>
