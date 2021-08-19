@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Immune Analysis | Tutorial of RNA-seq tumor immunity analysis</title>
+  <title>Chapter 12 Steps to make your own custom reference files for RIMA pipeline | Tutorial of RNA-seq tumor immunity analysis</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Immune Analysis | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:title" content="Chapter 12 Steps to make your own custom reference files for RIMA pipeline | Tutorial of RNA-seq tumor immunity analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Immune Analysis | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta name="twitter:title" content="Chapter 12 Steps to make your own custom reference files for RIMA pipeline | Tutorial of RNA-seq tumor immunity analysis" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="Differential.html"/>
-<link rel="next" href="Repertoire.html"/>
+<link rel="prev" href="microbiome.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -251,18 +251,109 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="Immune" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Immune Analysis</h1>
-<p>Here is a review of existing methods.</p>
+<div id="steps-to-make-your-own-custom-reference-files-for-rima-pipeline" class="section level1">
+<h1><span class="header-section-number">Chapter 12</span> Steps to make your own custom reference files for RIMA pipeline</h1>
+<div id="reference-fasta" class="section level3">
+<h3><span class="header-section-number">12.0.1</span> Reference fasta</h3>
+<p>The human GDC hg38 fasta file is downloaded from <a href="https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files">GDC website</a>.</p>
+</div>
+<div id="gene-annotation-file-gtf" class="section level3">
+<h3><span class="header-section-number">12.0.2</span> Gene annotation file (gtf)</h3>
+<p>The human gtf annotation file is downloaded from <a href="https://www.gencodegenes.org/human/">GENCODE website</a>. The current annotation file we used is V27.</p>
+</div>
+<div id="build-star-index" class="section level3">
+<h3><span class="header-section-number">12.0.3</span> build STAR index</h3>
+<div class="sourceCode" id="cb86"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb86-1"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-1"></a><span class="ex">conda</span> activate rna</span>
+<span id="cb86-2"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-2"></a></span>
+<span id="cb86-3"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-3"></a><span class="co">## STAR Version: STAR_2.6.1d</span></span>
+<span id="cb86-4"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-4"></a><span class="ex">STAR</span> --runThreadN 16 --runMode genomeGenerate --genomeDir ./ref_files/v27_index --genomeFastaFiles GRCh38.d1.vd1.CIDC.fa --sjdbGTFfile gencode.v27.annotation.gtf</span>
+<span id="cb86-5"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-5"></a><span class="ex">...</span></span>
+<span id="cb86-6"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-6"></a><span class="ex">00</span>:04:54 ..... started STAR run</span>
+<span id="cb86-7"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-7"></a><span class="ex">00</span>:04:54 ... starting to generate Genome files</span>
+<span id="cb86-8"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-8"></a><span class="ex">00</span>:05:57 ... starting to sort Suffix Array. This may take a long time...</span>
+<span id="cb86-9"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-9"></a><span class="ex">00</span>:06:11 ... sorting Suffix Array chunks and saving them to disk...</span>
+<span id="cb86-10"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-10"></a><span class="ex">00</span>:17:43 ... loading chunks from disk, packing SA...</span>
+<span id="cb86-11"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-11"></a><span class="ex">00</span>:19:31 ... finished generating suffix array</span>
+<span id="cb86-12"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-12"></a><span class="ex">00</span>:19:31 ... generating Suffix Array index</span>
+<span id="cb86-13"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-13"></a><span class="ex">00</span>:23:20 ... completed Suffix Array index</span>
+<span id="cb86-14"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-14"></a><span class="ex">00</span>:23:20 ..... processing annotations GTF</span>
+<span id="cb86-15"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-15"></a><span class="ex">00</span>:23:35 ..... inserting junctions into the genome indices</span>
+<span id="cb86-16"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-16"></a><span class="ex">00</span>:26:49 ... writing Genome to disk ...</span>
+<span id="cb86-17"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-17"></a><span class="ex">00</span>:27:06 ... writing Suffix Array to disk ...</span>
+<span id="cb86-18"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-18"></a><span class="ex">00</span>:28:53 ... writing SAindex to disk</span>
+<span id="cb86-19"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb86-19"></a><span class="ex">00</span>:29:05 ..... finished successfully</span></code></pre></div>
+</div>
+<div id="rseqc-reference-files" class="section level3">
+<h3><span class="header-section-number">12.0.4</span> RSeQC reference files</h3>
+<p>We download the human annotation bed file including the whole genome bed file, and house keeping bed file from RSeQC page from <a href="https://sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/">sourcforge website</a>.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb87-1"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb87-1"></a><span class="ex">./ref_files/refseqGenes.bed</span></span>
+<span id="cb87-2"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb87-2"></a><span class="ex">./ref_files/housekeeping_refseqGenes.bed</span></span></code></pre></div>
+</div>
+<div id="build-salmon-index" class="section level3">
+<h3><span class="header-section-number">12.0.5</span> build salmon index</h3>
+<div class="sourceCode" id="cb88"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb88-1"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-1"></a><span class="ex">conda</span> activate rna</span>
+<span id="cb88-2"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-2"></a></span>
+<span id="cb88-3"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-3"></a><span class="co">## salmon Version: salmon 1.1.0</span></span>
+<span id="cb88-4"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-4"></a><span class="ex">salmon</span> index -t GRCh38.d1.vd1.CIDC.fa -i salmon_index</span>
+<span id="cb88-5"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-5"></a></span>
+<span id="cb88-6"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-6"></a><span class="ex">...</span></span>
+<span id="cb88-7"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-7"></a><span class="ex">index</span> [<span class="st">&quot;salmon_index&quot;</span>] did not previously exist  . . . creating it</span>
+<span id="cb88-8"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-8"></a>[<span class="ex">jLog</span>] [info] building index </span>
+<span id="cb88-9"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-9"></a>[<span class="ex">jointLog</span>] [info] [Step 1 of 4] : counting k-mers</span>
+<span id="cb88-10"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-10"></a>[<span class="ex">jointLog</span>] [info] Replaced 164,553,847 non-ATCG nucleotides</span>
+<span id="cb88-11"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-11"></a>[<span class="ex">jointLog</span>] [info] Clipped poly-A tails from 0 transcripts</span>
+<span id="cb88-12"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-12"></a>[<span class="ex">jointLog</span>] [info] Building rank-select dictionary and saving to disk</span>
+<span id="cb88-13"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-13"></a>[<span class="ex">jointLog</span>] [info] done</span>
+<span id="cb88-14"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-14"></a><span class="ex">Elapsed</span> time: 0.191866s</span>
+<span id="cb88-15"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-15"></a>[<span class="ex">jointLog</span>] [info] Writing sequence data to file . . .</span>
+<span id="cb88-16"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-16"></a>[<span class="ex">jointLog</span>] [info] done</span>
+<span id="cb88-17"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-17"></a><span class="ex">Elapsed</span> time: 1.91244s</span>
+<span id="cb88-18"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-18"></a>[<span class="ex">jointLog</span>] [info] Building 64-bit suffix array (length of generalized text is 3,088,286,426)</span>
+<span id="cb88-19"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-19"></a>[<span class="ex">jointLog</span>] [info] Building suffix array . . .</span>
+<span id="cb88-20"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-20"></a><span class="ex">success</span></span>
+<span id="cb88-21"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-21"></a><span class="ex">saving</span> to disk . . . done</span>
+<span id="cb88-22"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-22"></a><span class="ex">Elapsed</span> time: 18.3072s</span>
+<span id="cb88-23"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-23"></a><span class="kw">done</span></span>
+<span id="cb88-24"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#cb88-24"></a><span class="ex">Elapsed</span> time: 703.843s</span></code></pre></div>
+</div>
+<div id="gmt-file-for-gene-set-analysis" class="section level3">
+<h3><span class="header-section-number">12.0.6</span> GMT file for gene set analysis</h3>
+<p>The GMT file is downloaded from <a href="https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.1/">BROAD release page</a>. The current GMT file we used is “c2.cp.kegg.v6.1.symbols.gmt”</p>
+</div>
+<div id="star-fusion-genome-resource-lib" class="section level3">
+<h3><span class="header-section-number">12.0.7</span> STAR-Fusion genome resource lib</h3>
+<p>The genome resource lib is downloaded from <a href="https://www.gencodegenes.org/human/">BROAD release page</a>. The current lib we used is GRCh38_v22_CTAT_lib.</p>
+<p>You can also prep it for use with STAR-fusion.
+More details, read:</p>
+<ul>
+<li><a href="https://github.com/STAR-Fusion/STAR-Fusion/wiki/installing-star-fusion" class="uri">https://github.com/STAR-Fusion/STAR-Fusion/wiki/installing-star-fusion</a></li>
+</ul>
+</div>
+<div id="centrifuge-index" class="section level3">
+<h3><span class="header-section-number">12.0.8</span> Centrifuge index</h3>
+<p>The human Centrifuge index is downloaded from <a href="http://www.ccb.jhu.edu/software/centrifuge/">Centrifuge website</a>. The current index we used is p_compressed+h+v that includes human genome, prokaryotic genomes, and viral genomes.</p>
+<p>You can also build your own custom Centrifuge index.
+More details, read:</p>
+<ul>
+<li><a href="https://github.com/DaehwanKimLab/centrifuge" class="uri">https://github.com/DaehwanKimLab/centrifuge</a></li>
+</ul>
+</div>
+<div id="trust4-reference-files" class="section level3">
+<h3><span class="header-section-number">12.0.9</span> TRUST4 reference files</h3>
+<p>TRUST4 reference files includes 1. TCR, BCR genomic sequence fasta file; 2. Reference database sequence containing annotation information.</p>
+<pre><code>hg38_bcrtcr.fa
+human_IMGT+C.fa</code></pre>
+<p>These reference files can directlt be downloaded from <a href="https://github.com/liulab-dfci/TRUST4">TRUST4 github</a>.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="Differential.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Repertoire.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="microbiome.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
