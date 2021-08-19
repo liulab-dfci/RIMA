@@ -137,7 +137,7 @@ hmap(ta = res_ciber, meta = metasheet, methods = "CIBERSORT", phenotype = "Respo
 
 ### Comparison across samples
 ```{R}
-boxfig(ta = res_ciber, meta = meta, methods = "CIBERSORT", phenotype = "Responder")
+boxfig(ta = res_ciber, meta = metasheet, methods = "CIBERSORT", phenotype = "Responder")
 ```
 
 ## Video demo
