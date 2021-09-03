@@ -194,6 +194,10 @@ rm ref_files
 ln -s /mnt/tutorial/ref_files
 ```
 
+### Video tutorial
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XjggT6c0CW4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 ## Prepare input files 
 
 **Metasheet.csv**
@@ -362,6 +366,9 @@ hg38:
   arcasHLA_path: ./ref_files/arcasHLA
   prada_path: ./ref_files/pyPRADA/pyPRADA_1.2
 ```
+### Video tutorial
+<iframe width="560" height="315" src="https://www.youtube.com/embed/o5QA51nZVtI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 
 ## Running RIMA 
 
@@ -394,6 +401,10 @@ nohup time snakemake -p -s RIMA.snakefile -j 4 > RIMA.out &
 ```
 
 note: Argument -j sets the cores for parallel runs (e.g. '-j 4' can run 4 jobs in parallel at the same time.). Argument -p prints the command in each rule. Note: Here, output log records the run information.  A user may run one module at a time to obtain a record of each module's output log.
+
+
+
+
 
 ## Output
 Output folders are generated in a folder called "analysis". The output structure of each module will be introduced in the next chapters.
