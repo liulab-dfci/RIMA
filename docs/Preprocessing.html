@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2021-09-03" />
+<meta name="date" content="2021-09-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,14 +136,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#install-rima-and-set-up-the-running-environment"><i class="fa fa-check"></i><b>1.1</b> Install RIMA and Set Up the Running Environment</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#download-pre-built-references"><i class="fa fa-check"></i><b>1.2</b> Download pre-built references</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#prepare-input-files"><i class="fa fa-check"></i><b>1.3</b> Prepare input files</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#download-pre-built-references"><i class="fa fa-check"></i><b>1.2</b> Download pre-built references</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#video-tutorial"><i class="fa fa-check"></i><b>1.2.1</b> Video tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#prepare-input-files"><i class="fa fa-check"></i><b>1.3</b> Prepare input files</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#video-tutorial-1"><i class="fa fa-check"></i><b>1.3.1</b> Video tutorial</a></li>
+</ul></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#running-rima"><i class="fa fa-check"></i><b>1.4</b> Running RIMA</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#output"><i class="fa fa-check"></i><b>1.5</b> Output</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bulk RNA-seq data</a><ul>
 <li class="chapter" data-level="2.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-alignment"><i class="fa fa-check"></i><b>2.1</b> Read Alignment</a></li>
-<li class="chapter" data-level="2.2" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-control"><i class="fa fa-check"></i><b>2.2</b> Quality Control</a></li>
+<li class="chapter" data-level="2.2" data-path="Preprocessing.html"><a href="Preprocessing.html#alignment-quality-check"><i class="fa fa-check"></i><b>2.2</b> Alignment quality check</a></li>
 <li class="chapter" data-level="2.3" data-path="Preprocessing.html"><a href="Preprocessing.html#gene-quantification"><i class="fa fa-check"></i><b>2.3</b> Gene quantification</a></li>
 <li class="chapter" data-level="2.4" data-path="Preprocessing.html"><a href="Preprocessing.html#batch-effect-removal"><i class="fa fa-check"></i><b>2.4</b> Batch effect removal</a></li>
 <li class="chapter" data-level="2.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>2.5</b> Video demo of RIMA</a></li>
@@ -318,9 +322,11 @@ Number_of_reads_mapped_to_too_many_loci,9535,10773,11999,12262,15652,9758,8344,1
 %_of_reads_unmapped:_other,0.04%,0.04%,0.05%,0.04%,0.05%,0.03%,0.04%,0.04%,0.03%,0.05%,0.04%,0.04%
 Number_of_chimeric_reads,592271,594198,549596,631747,635307,717293,631225,666748,637640,622475,600743,636839
 %_of_chimeric_reads,1.91%,1.96%,1.82%,2.09%,2.10%,2.37%,2.09%,2.21%,2.11%,2.06%,1.99%,2.11%</code></pre>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ788TZ46tU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
 </div>
-<div id="quality-control" class="section level2">
-<h2><span class="header-section-number">2.2</span> Quality Control</h2>
+<div id="alignment-quality-check" class="section level2">
+<h2><span class="header-section-number">2.2</span> Alignment quality check</h2>
 <p><strong>Downsampling alignment BAMs</strong></p>
 <p>RseQC is a standard tool for checking the quality of read alignments, providing the principal measurements of RNA-seq data quality. An RseQC tutorial is available <a href="http://rseqc.sourceforge.net/">here</a>.<br />
 </p>

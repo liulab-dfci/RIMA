@@ -86,9 +86,10 @@ Number_of_chimeric_reads,592271,594198,549596,631747,635307,717293,631225,666748
 %_of_chimeric_reads,1.91%,1.96%,1.82%,2.09%,2.10%,2.37%,2.09%,2.21%,2.11%,2.06%,1.99%,2.11%
 ```
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KZ788TZ46tU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-## Quality Control
 
+## Alignment quality check
 **Downsampling alignment BAMs** 
 
 RseQC is a standard tool for checking the quality of read alignments, providing the principal measurements of RNA-seq data quality. An RseQC tutorial is available <a href="http://rseqc.sourceforge.net/">here</a>. \
