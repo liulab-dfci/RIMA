@@ -83,3 +83,5 @@ star-fusion-genome-resource-lib
 centrifuge-index
 trust4-reference-files
 alignment-quality-check
+fig:unnamed-chunk-1
+how-to-run-rima
