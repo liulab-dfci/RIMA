@@ -112,8 +112,9 @@ samtools index analysis/star/SRR8281218/SRR8281218_downsampling_housekeeping.bam
 1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure of RNA integrity, which is the percentage of transcripts that have uniform read coverage across the genome. RseQC calculates the TIN of each transcript and reports mean TIN, median TIN and standard deviation for all transcripts in a sample. The <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts is commonly used to indicate the RNA integrity of each sample. \
 2. <a href="http://rseqc.sourceforge.net/#read-distribution-py">Read distribution </a> summarizes the fraction of reads aligned into different genomic regions, such as exon and intron regions. \
 3. <a href="http://rseqc.sourceforge.net/#genebody-coverage-py">Gene body coverage</a> shows the RNA-seq read coverage over the gene body. \
+4. <a href="http://rseqc.sourceforge.net/#junction-saturation-py">Junction saturation</a> checks if known splicing junctions are adequately sampled.  The output from this module helps one determine if the sequencing depth is deep enough to perform alternative splicing analysis. \
 
-Low quality samples have low alignment fractions, low integrity (median TIN) and/or abnormal read distributions and should be removed in downstream analysis. 
+Low quality samples have low alignment fractions, low integrity (median TIN) and/or abnormal read distributions and should be removed in downstream analysis. Novel junction discovery should only be performed on samples that have reached junctional saturation for splice junctions already annotated in the reference genome.
 
 **Merge quality metrics**
 
@@ -173,7 +174,7 @@ ENST00000473358.1	712	529.382	0.000000	0.000
 ENST00000469289.1	535	353.431	0.000000	0.000
 ENST00000607096.1	138	16.202	0.000000	0.000
 ```
-RIMA then uses 'tximport' from the DESeq2 R package to combine a cohort's gene level TPMs into a summary file:
+RIMA then uses the 'tximport' R package to combine a cohort's gene level TPMs into a summary file:
 
 ```
 ## First 10 rows of merge TPMs ##
