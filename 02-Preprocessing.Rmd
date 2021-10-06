@@ -12,7 +12,7 @@ preprocess_cohort: true
 
 <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial for STAR is available <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. 
 
-When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.Let's use sample *SRR8281218* as an example.
+When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>. Let's use sample *SRR8281218* as an example.
 
 RIMA runs STAR using the following command structure:
 ```{r eval=FALSE}

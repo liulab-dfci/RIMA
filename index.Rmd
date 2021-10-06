@@ -100,7 +100,7 @@ mkdir RIMA
 Download the RIMA_pipeline folder to your working directory. 
 
 ```
-git clone  https://github.com/kateyliu/RIMA_pipeline.git
+git clone  https://github.com/liulab-dfci/RIMA_pipeline.git
 ```
 
 **Install miniconda**
