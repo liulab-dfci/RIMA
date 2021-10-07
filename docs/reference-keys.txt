@@ -1,5 +1,4 @@
-fig:unnamed-chunk-5
-fig:unnamed-chunk-6
+fig:unnamed-chunk-7
 intro
 install-rima-and-set-up-the-running-environment
 download-pre-built-references
@@ -10,7 +9,7 @@ running-rima
 output
 Preprocessing
 read-alignment
-quality-control
+alignment-quality-check
 gene-quantification
 batch-effect-removal
 video-demo-of-rima
@@ -82,6 +81,3 @@ gmt-file-for-gene-set-analysis
 star-fusion-genome-resource-lib
 centrifuge-index
 trust4-reference-files
-alignment-quality-check
-fig:unnamed-chunk-1
-how-to-run-rima
