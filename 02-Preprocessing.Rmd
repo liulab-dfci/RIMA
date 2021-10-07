@@ -12,7 +12,7 @@ preprocess_cohort: true
 
 <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial for STAR is available <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. 
 
-When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.Let's use sample *SRR8281218* as an example.
+When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>. Let's use sample *SRR8281218* as an example.
 
 RIMA runs STAR using the following command structure:
 ```{r eval=FALSE}
@@ -112,8 +112,9 @@ samtools index analysis/star/SRR8281218/SRR8281218_downsampling_housekeeping.bam
 1. <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-016-0922-z#Sec2">Transcript integrity number (TIN)</a> is the most widely used measure of RNA integrity, which is the percentage of transcripts that have uniform read coverage across the genome. RseQC calculates the TIN of each transcript and reports mean TIN, median TIN and standard deviation for all transcripts in a sample. The <a href="http://rseqc.sourceforge.net/#tin-py">median TIN score (medTIN) </a> across all transcripts is commonly used to indicate the RNA integrity of each sample. \
 2. <a href="http://rseqc.sourceforge.net/#read-distribution-py">Read distribution </a> summarizes the fraction of reads aligned into different genomic regions, such as exon and intron regions. \
 3. <a href="http://rseqc.sourceforge.net/#genebody-coverage-py">Gene body coverage</a> shows the RNA-seq read coverage over the gene body. \
+4. <a href="http://rseqc.sourceforge.net/#junction-saturation-py">Junction saturation</a> checks if known splicing junctions are adequately sampled.  The output from this module helps one determine if the sequencing depth is deep enough to perform alternative splicing analysis. \
 
-Low quality samples have low alignment fractions, low integrity (median TIN) and/or abnormal read distributions and should be removed in downstream analysis. 
+Low quality samples have low alignment fractions, low integrity (median TIN) and/or abnormal read distributions and should be removed in downstream analysis. Novel junction discovery should only be performed on samples that have reached junctional saturation for splice junctions already annotated in the reference genome.
 
 **Merge quality metrics**
 
@@ -155,7 +156,7 @@ knitr::include_graphics('images/geneBodyCoverage.curves.png', dpi = NA)
 
 ## Gene quantification
 
-After the alignment of sequencing reads and quality checks, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. RSEM generates transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  Salmon provides TPMs as a part of its output.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> quantifies gene expression according to mapped read counts. Both normalized gene expression and raw read counts can be used for differential expression analysis. \
+After the alignment of sequencing reads and quality checks, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a>, <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> and <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. RSEM generates transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  Salmon provides TPMs as a part of its output.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  HTSeq quantifies gene expression according to mapped read counts. Both normalized gene expression and raw read counts can be used for differential expression analysis. For an excellent overview of different methods used to normalize gene counts, please see Josh Starmer's <a href="https://www.youtube.com/watch?v=TTUrtCY2k-w&list=PLblh5JKOoLUJo2Q6xK4tZElbIvAACEykp&index=6&t=1s">StatQuest video</a>. \
 
 RIMA uses Salmon for gene quantification. The transcriptome alignment result from STAR is used as the Salmon input:
 ```
@@ -173,7 +174,7 @@ ENST00000473358.1	712	529.382	0.000000	0.000
 ENST00000469289.1	535	353.431	0.000000	0.000
 ENST00000607096.1	138	16.202	0.000000	0.000
 ```
-RIMA then uses 'tximport' from the DESeq2 R package to combine a cohort's gene level TPMs into a summary file:
+RIMA then uses the 'tximport' R package to combine a cohort's gene level TPMs into a summary file:
 
 ```
 ## First 10 rows of merge TPMs ##
