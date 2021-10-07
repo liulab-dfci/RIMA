@@ -81,3 +81,5 @@ gmt-file-for-gene-set-analysis
 star-fusion-genome-resource-lib
 centrifuge-index
 trust4-reference-files
+fig:unnamed-chunk-1
+how-to-run-rima
