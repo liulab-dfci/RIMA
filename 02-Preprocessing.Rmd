@@ -197,6 +197,8 @@ Principal components analysis (PCA) or unsupervised clustering before and after 
 
 To evaluate if your samples have a batch effect, RIMA will generate PCA plots of gene expression data before and after batch effect removal by limma.  To utilize this feature, modify the "batch" parameter in the config.yaml file for your run. 
 
+Currently, RIMA will check for batch effect with only one variable at at time.  In the future, we plan to allow more than one batch parameter in a single RIMA run.  For now, in order to check more than one batch parameter, please change the settings in the config.yaml and re-run the preprocessing modules.  Snakemake will only rerun the batch analysis -- it will not rerun star, rseqc and salmon once they have been run once.
+
 Example of PCA before and after batch correction using limma. (Note: No batch effect was found in the original data used for this tutorial.  To generate this diagram, we added a 'syn_batch' column to the metasheet for demonstration purposes.)
 ```{r fig.align='center', echo=FALSE, fig.cap='Before(left) and after(right) batch correction with Limma'}
 knitr::include_graphics('images/PCA_synbatch.png', dpi = NA)
