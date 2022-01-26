@@ -1,9 +1,0 @@
-analysis/trust4/SRR8281218/SRR8281218_TRUST4_BCR_heavy_cluster.Rdata	1
-analysis/trust4/SRR8281219/SRR8281219_TRUST4_BCR_heavy_cluster.Rdata	2
-analysis/trust4/SRR8281226/SRR8281226_TRUST4_BCR_heavy_cluster.Rdata	3
-analysis/trust4/SRR8281230/SRR8281230_TRUST4_BCR_heavy_cluster.Rdata	5
-analysis/trust4/SRR8281245/SRR8281245_TRUST4_BCR_heavy_cluster.Rdata	8
-analysis/trust4/SRR8281243/SRR8281243_TRUST4_BCR_heavy_cluster.Rdata	9
-analysis/trust4/SRR8281251/SRR8281251_TRUST4_BCR_heavy_cluster.Rdata	10
-analysis/trust4/SRR8281238/SRR8281238_TRUST4_BCR_heavy_cluster.Rdata	11
-analysis/trust4/SRR8281250/SRR8281250_TRUST4_BCR_heavy_cluster.Rdata	12

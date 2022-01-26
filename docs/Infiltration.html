@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis</title>
+  <title>Chapter 3 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:title" content="Chapter 3 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta name="twitter:title" content="Chapter 3 Immune Infiltration | Tutorial of RNA-seq tumor immunity analysis" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -24,15 +24,15 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2021-10-07" />
+<meta name="date" content="2022-01-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="Repertoire.html"/>
-<link rel="next" href="Response.html"/>
+<link rel="prev" href="Differential.html"/>
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -145,93 +145,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#running-rima"><i class="fa fa-check"></i><b>1.4</b> Running RIMA</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#output"><i class="fa fa-check"></i><b>1.5</b> Output</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>2</b> Pre-processing of bulk RNA-seq data</a><ul>
-<li class="chapter" data-level="2.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-alignment"><i class="fa fa-check"></i><b>2.1</b> Read Alignment</a></li>
-<li class="chapter" data-level="2.2" data-path="Preprocessing.html"><a href="Preprocessing.html#alignment-quality-check"><i class="fa fa-check"></i><b>2.2</b> Alignment quality check</a></li>
-<li class="chapter" data-level="2.3" data-path="Preprocessing.html"><a href="Preprocessing.html#gene-quantification"><i class="fa fa-check"></i><b>2.3</b> Gene quantification</a></li>
-<li class="chapter" data-level="2.4" data-path="Preprocessing.html"><a href="Preprocessing.html#batch-effect-removal"><i class="fa fa-check"></i><b>2.4</b> Batch effect removal</a></li>
-<li class="chapter" data-level="2.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>2.5</b> Video demo of RIMA</a></li>
+<li class="chapter" data-level="2" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>2</b> Differential gene analysis</a><ul>
+<li class="chapter" data-level="2.1" data-path="Differential.html"><a href="Differential.html#differential-gene-expression-using-deseq2"><i class="fa fa-check"></i><b>2.1</b> Differential gene expression using DESeq2</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>2.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>3</b> Differential gene analysis</a><ul>
-<li class="chapter" data-level="3.1" data-path="Differential.html"><a href="Differential.html#differential-gene-expression-using-deseq2"><i class="fa fa-check"></i><b>3.1</b> Differential gene expression using DESeq2</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>3.1.1</b> Inputs of DESeq2</a></li>
+<li class="chapter" data-level="2.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>2.2</b> Different gene expression analysis</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>2.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="2.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>2.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="2.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>2.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="2.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>2.2.4</b> Volcano Plot(s)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>3.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>3.2.1</b> Running DESeq2 without batch effect</a></li>
-<li class="chapter" data-level="3.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>3.2.2</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="3.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>3.2.3</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="3.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>3.2.4</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="2.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>2.3</b> Gene set enrichment analysis (GSEA)</a></li>
+<li class="chapter" data-level="2.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>2.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>3.3</b> Gene set enrichment analysis (GSEA)</a></li>
-<li class="chapter" data-level="3.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>3.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
+<li class="chapter" data-level="3" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>3</b> Immune Infiltration</a><ul>
+<li class="chapter" data-level="3.0.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>3.0.1</b> Cibersort</a></li>
+<li class="chapter" data-level="3.0.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>3.0.2</b> TIMER</a></li>
+<li class="chapter" data-level="3.0.3" data-path="Infiltration.html"><a href="Infiltration.html#quantiseq"><i class="fa fa-check"></i><b>3.0.3</b> quanTIseq</a></li>
+<li class="chapter" data-level="3.0.4" data-path="Infiltration.html"><a href="Infiltration.html#xcell"><i class="fa fa-check"></i><b>3.0.4</b> xCell</a></li>
+<li class="chapter" data-level="3.0.5" data-path="Infiltration.html"><a href="Infiltration.html#epic"><i class="fa fa-check"></i><b>3.0.5</b> EPIC</a></li>
+<li class="chapter" data-level="3.0.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>3.0.6</b> MCP-counter</a></li>
+<li class="chapter" data-level="3.1" data-path="Infiltration.html"><a href="Infiltration.html#running-the-immune_infiltration_cohort-module"><i class="fa fa-check"></i><b>3.1</b> Running the immune_infiltration_cohort module</a></li>
+<li class="chapter" data-level="3.2" data-path="Infiltration.html"><a href="Infiltration.html#immune_infiltration_cohort-output"><i class="fa fa-check"></i><b>3.2</b> immune_infiltration_cohort Output</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="Infiltration.html"><a href="Infiltration.html#correlation-plots"><i class="fa fa-check"></i><b>3.2.1</b> Correlation Plots</a></li>
+<li class="chapter" data-level="3.2.2" data-path="Infiltration.html"><a href="Infiltration.html#heatmaps-for-comparisons-across-cell-types"><i class="fa fa-check"></i><b>3.2.2</b> Heatmaps for comparisons across cell types</a></li>
+<li class="chapter" data-level="3.2.3" data-path="Infiltration.html"><a href="Infiltration.html#box-plots-for-comparison-across-samples"><i class="fa fa-check"></i><b>3.2.3</b> Box plots for comparison across samples</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="Repertoire.html"><a href="Repertoire.html"><i class="fa fa-check"></i><b>4</b> Immune repertoire</a><ul>
-<li class="chapter" data-level="4.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4"><i class="fa fa-check"></i><b>4.1</b> TRUST4</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4-output"><i class="fa fa-check"></i><b>4.1.1</b> TRUST4 output</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="Repertoire.html"><a href="Repertoire.html#bcr-cluster-calculation"><i class="fa fa-check"></i><b>4.2</b> BCR cluster calculation</a></li>
-<li class="chapter" data-level="4.3" data-path="Repertoire.html"><a href="Repertoire.html#clonotypes-per-kilo-reads-cpk"><i class="fa fa-check"></i><b>4.3</b> Clonotypes per kilo-reads (CPK)</a></li>
-<li class="chapter" data-level="4.4" data-path="Repertoire.html"><a href="Repertoire.html#tcr-and-bcr-entropy-and-clonality"><i class="fa fa-check"></i><b>4.4</b> TCR and BCR entropy and Clonality</a></li>
-<li class="chapter" data-level="4.5" data-path="Repertoire.html"><a href="Repertoire.html#fraction-of-reads-mapped-to-tcr-and-bcr"><i class="fa fa-check"></i><b>4.5</b> Fraction of reads mapped to TCR and BCR</a></li>
-<li class="chapter" data-level="4.6" data-path="Repertoire.html"><a href="Repertoire.html#somatic-hypermutation-rate-of-bcr"><i class="fa fa-check"></i><b>4.6</b> Somatic hypermutation rate of BCR</a></li>
-<li class="chapter" data-level="4.7" data-path="Repertoire.html"><a href="Repertoire.html#ig-isotype-frequency"><i class="fa fa-check"></i><b>4.7</b> Ig isotype frequency</a></li>
-<li class="chapter" data-level="4.8" data-path="Repertoire.html"><a href="Repertoire.html#cohort-analysis"><i class="fa fa-check"></i><b>4.8</b> Cohort analysis</a></li>
-<li class="chapter" data-level="4.9" data-path="Repertoire.html"><a href="Repertoire.html#video-demo"><i class="fa fa-check"></i><b>4.9</b> Video demo</a></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>5</b> Immune Infiltration</a><ul>
-<li class="chapter" data-level="5.0.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>5.0.1</b> Cibersort</a></li>
-<li class="chapter" data-level="5.0.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>5.0.2</b> TIMER</a></li>
-<li class="chapter" data-level="5.0.3" data-path="Infiltration.html"><a href="Infiltration.html#quantiseq"><i class="fa fa-check"></i><b>5.0.3</b> quanTIseq</a></li>
-<li class="chapter" data-level="5.0.4" data-path="Infiltration.html"><a href="Infiltration.html#xcell"><i class="fa fa-check"></i><b>5.0.4</b> xCell</a></li>
-<li class="chapter" data-level="5.0.5" data-path="Infiltration.html"><a href="Infiltration.html#epic"><i class="fa fa-check"></i><b>5.0.5</b> EPIC</a></li>
-<li class="chapter" data-level="5.0.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>5.0.6</b> MCP-counter</a></li>
-<li class="chapter" data-level="5.1" data-path="Infiltration.html"><a href="Infiltration.html#running-the-immune_infiltration_cohort-module"><i class="fa fa-check"></i><b>5.1</b> Running the immune_infiltration_cohort module</a></li>
-<li class="chapter" data-level="5.2" data-path="Infiltration.html"><a href="Infiltration.html#immune_infiltration_cohort-output"><i class="fa fa-check"></i><b>5.2</b> immune_infiltration_cohort Output</a></li>
-<li class="chapter" data-level="5.3" data-path="Infiltration.html"><a href="Infiltration.html#additonal-comparisons-across-cell-type-and-across-samples"><i class="fa fa-check"></i><b>5.3</b> Additonal comparisons across cell type and across samples</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-cell-type"><i class="fa fa-check"></i><b>5.3.1</b> Comparison across cell type</a></li>
-<li class="chapter" data-level="5.3.2" data-path="Infiltration.html"><a href="Infiltration.html#comparison-across-samples"><i class="fa fa-check"></i><b>5.3.2</b> Comparison across samples</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="Infiltration.html"><a href="Infiltration.html#video-demo-1"><i class="fa fa-check"></i><b>5.4</b> Video demo</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="Response.html"><a href="Response.html"><i class="fa fa-check"></i><b>6</b> Immune Response</a><ul>
-<li class="chapter" data-level="6.1" data-path="Response.html"><a href="Response.html#characterizing-the-tme-and-t-cell-functionality"><i class="fa fa-check"></i><b>6.1</b> Characterizing the TME and T cell functionality</a></li>
-<li class="chapter" data-level="6.2" data-path="Response.html"><a href="Response.html#tide"><i class="fa fa-check"></i><b>6.2</b> TIDE</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="Response.html"><a href="Response.html#config.yaml-sections-relevant-to-tide"><i class="fa fa-check"></i><b>6.2.1</b> Config.yaml sections relevant to TIDE</a></li>
-<li class="chapter" data-level="6.2.2" data-path="Response.html"><a href="Response.html#cold-and-hot-tumors"><i class="fa fa-check"></i><b>6.2.2</b> Cold and hot tumors</a></li>
-<li class="chapter" data-level="6.2.3" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>6.2.3</b> T cell dysfunction</a></li>
-<li class="chapter" data-level="6.2.4" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>6.2.4</b> T cell exclusion</a></li>
-<li class="chapter" data-level="6.2.5" data-path="Response.html"><a href="Response.html#normalization"><i class="fa fa-check"></i><b>6.2.5</b> Normalization</a></li>
-<li class="chapter" data-level="6.2.6" data-path="Response.html"><a href="Response.html#running-tide"><i class="fa fa-check"></i><b>6.2.6</b> Running TIDE</a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>6.3</b> Microsatelite instability (MSI)</a></li>
-<li class="chapter" data-level="6.4" data-path="Response.html"><a href="Response.html#response-comparison-analysis-of-biomarkers"><i class="fa fa-check"></i><b>6.4</b> Response comparison analysis of biomarkers</a></li>
-<li class="chapter" data-level="6.5" data-path="Response.html"><a href="Response.html#video-demo-2"><i class="fa fa-check"></i><b>6.5</b> Video demo</a></li>
-</ul></li>
-<li class="chapter" data-level="7" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>7</b> HLA Typing</a><ul>
-<li class="chapter" data-level="7.1" data-path="HLA.html"><a href="HLA.html#identify-hla-type"><i class="fa fa-check"></i><b>7.1</b> Identify HLA type</a></li>
-<li class="chapter" data-level="7.2" data-path="HLA.html"><a href="HLA.html#video-demo-3"><i class="fa fa-check"></i><b>7.2</b> Video demo</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>8</b> Fusion</a><ul>
-<li class="chapter" data-level="8.1" data-path="fusion.html"><a href="fusion.html#fusion-calling"><i class="fa fa-check"></i><b>8.1</b> Fusion calling</a></li>
-<li class="chapter" data-level="8.2" data-path="fusion.html"><a href="fusion.html#remove-fusion-homology"><i class="fa fa-check"></i><b>8.2</b> Remove fusion homology</a></li>
-<li class="chapter" data-level="8.3" data-path="fusion.html"><a href="fusion.html#comparison-within-phenotype"><i class="fa fa-check"></i><b>8.3</b> Comparison within phenotype</a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>9</b> Microbiome</a><ul>
-<li class="chapter" data-level="9.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>9.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="9.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>9.2</b> Microial classfication from RNA-seq data</a></li>
-<li class="chapter" data-level="9.3" data-path="microbiome.html"><a href="microbiome.html#video-demo-4"><i class="fa fa-check"></i><b>9.3</b> Video demo</a></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><i class="fa fa-check"></i><b>10</b> Steps to make your own custom reference files for RIMA pipeline</a><ul>
-<li class="chapter" data-level="10.0.1" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#we-have-prepared-the-rima-reference-folder-with-the-current-version-we-used.-you-can-directly-download-from-iris-server"><i class="fa fa-check"></i><b>10.0.1</b> We have prepared the RIMA reference folder with the current version we used. You can directly download from Iris server:</a></li>
-<li class="chapter" data-level="10.0.2" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#reference-fasta"><i class="fa fa-check"></i><b>10.0.2</b> Reference fasta</a></li>
-<li class="chapter" data-level="10.0.3" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#gene-annotation-file-gtf"><i class="fa fa-check"></i><b>10.0.3</b> Gene annotation file (gtf)</a></li>
-<li class="chapter" data-level="10.0.4" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#build-star-index"><i class="fa fa-check"></i><b>10.0.4</b> build STAR index</a></li>
-<li class="chapter" data-level="10.0.5" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#rseqc-reference-files"><i class="fa fa-check"></i><b>10.0.5</b> RSeQC reference files</a></li>
-<li class="chapter" data-level="10.0.6" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#build-salmon-index"><i class="fa fa-check"></i><b>10.0.6</b> build salmon index</a></li>
-<li class="chapter" data-level="10.0.7" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#gmt-file-for-gene-set-analysis"><i class="fa fa-check"></i><b>10.0.7</b> GMT file for gene set analysis</a></li>
-<li class="chapter" data-level="10.0.8" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#star-fusion-genome-resource-lib"><i class="fa fa-check"></i><b>10.0.8</b> STAR-Fusion genome resource lib</a></li>
-<li class="chapter" data-level="10.0.9" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#centrifuge-index"><i class="fa fa-check"></i><b>10.0.9</b> Centrifuge index</a></li>
-<li class="chapter" data-level="10.0.10" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#trust4-reference-files"><i class="fa fa-check"></i><b>10.0.10</b> TRUST4 reference files</a></li>
+<li class="chapter" data-level="3.3" data-path="Infiltration.html"><a href="Infiltration.html#video-demo"><i class="fa fa-check"></i><b>3.3</b> Video demo</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -254,14 +194,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="Infiltration" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Immune Infiltration</h1>
+<h1><span class="header-section-number">Chapter 3</span> Immune Infiltration</h1>
 <p><strong>Cell infiltration estimation in the tumor microenvironment</strong><br />
 The tumor microenviroment (<strong>TME</strong>) is a complicated system consisting of immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanisms of tumor progression and immune evasion, which is essential for providing a guideline for immunotherapy selection.</p>
-<p>There are two major approaches for estimating cell infiltration in the TME – 1) deconvolution-based and 2) marker-based approaches. Deconvolution-based methods use weighted mathematical models that infer cell type fractions from the bulk gene expression of a given list of signature genes. Algorithms such as TIMER, quanTIseq, EPIC, and CIBERSORT use deconvolution-based methods. Algorithms such as xCell and MCP-counter use marker-based approaches to quantify the enrichment score utilizing a list of cell-specific marker genes. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that integrates these six algorithms. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq also assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter support only inter-comparison between sample groups for one cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. When a gold standard is not available, is is best to focus on the observations consistently predicted by the various algorithms.<br />
+<p>There are two major approaches for estimating cell infiltration in the TME – 1) deconvolution-based and 2) marker-based approaches. There are two major approaches for estimating cell infiltration in the TME – deconvolution-based and marker-based approaches. Deconvolution-based methods, such as TIMER, quanTIseq, EPIC, and CIBERSORT, consider a given gene expression profile as a linear combination of pre-defined immune gene signatures present at different ratios. A linear regression model is often applied to estimate the coefficients of genes, which are later used to infer immune cell abundances or fractions. Marker-based approaches, such as xCell and MCP-counter, quantify the signature enrichment score of a list of cell-specific marker genes from gene expression profiles. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that integrates these six algorithms. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq also assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter only support inter-comparison between sample groups within the same cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. When a gold standard is not available, is is best to focus on the observations consistently predicted by the various algorithms.<br />
 </p>
-<p><em>Note: RIMA uses Cibersort in the immune_infiltration moduls. Use of Cibersort requires registration for use of their gene signature matrix. In order to run the immune_infiltration module of RIMA, you must register and download the LM22.txt matrix from the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>. Once you obtain this file, add it to the ~/RIMA/RIMA_pipeline/static/cibersort folder.</em></p>
+<p><em>Note: RIMA uses Cibersort in the immune_infiltration modules. Use of Cibersort requires registration for use of their gene signature matrix. In order to run the immune_infiltration module of RIMA, you must register and download the LM22.txt matrix from the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>. Once you obtain this file, add it to the ~/RIMA/RIMA_pipeline/static/cibersort folder.</em></p>
 <div id="cibersort" class="section level3">
-<h3><span class="header-section-number">5.0.1</span> Cibersort</h3>
+<h3><span class="header-section-number">3.0.1</span> Cibersort</h3>
 <p><a href="https://www.nature.com/articles/nmeth.3337">CIBERSORT</a> is a deconvolution-based method that uses the v-support vector regression method (v-SVR) to estimate each immune cell type’s relative proportion from a gene expression profile (GEP). It requires an input of reference gene expression signatures. CIBERSORT provides a gene signature matrix (LM22.txt) which contains 547 genes and distinguishes 7 T-cell types, naïve and memory B cells, plasma cells, and NK cells. The CIBERSORT absolute mode scales cellular fractions to a score that reflects each cell type’s absolute proportion, allowing comparison across both samples and cell types.
 The <strong>CIBERSORT source code</strong> and <strong>LM22 signature matrix</strong> are only freely available to academic users – register for access on the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>.<br />
 </p>
@@ -317,12 +257,12 @@ The <strong>CIBERSORT source code</strong> and <strong>LM22 signature matrix</st
 ## SRR8281219         0.24218289                    0 0.000000000  0.07942792
 ## SRR8281226         0.01289667                    0 0.002926060  0.12361329
 ##            P-value Correlation     RMSE Absolute score (sig.score)
-## SRR8281218    0.04  0.15699314 1.027475                   1.436950
-## SRR8281219    0.28  0.05195861 1.072383                   2.600503
-## SRR8281226    0.06  0.13503937 1.054532                   1.528892</code></pre>
+## SRR8281218    0.02  0.15699314 1.027475                   1.436950
+## SRR8281219    0.23  0.05195861 1.072383                   2.600503
+## SRR8281226    0.03  0.13503937 1.054532                   1.528892</code></pre>
 </div>
 <div id="timer" class="section level3">
-<h3><span class="header-section-number">5.0.2</span> TIMER</h3>
+<h3><span class="header-section-number">3.0.2</span> TIMER</h3>
 <p><a href="http://cistrome.org/TIMER/">TIMER</a> (Tumor IMmune Estimation Resource) uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, TIMER selects specific genes as immune signatures based on the correlation between gene expression and tumor purity. (see <a href="https://pubmed.ncbi.nlm.nih.gov/27549193/">Bo Li, et al.</a> for more information.<br />
 </p>
 <p>Tutorial of TIMER:<br />
@@ -345,54 +285,54 @@ The <strong>CIBERSORT source code</strong> and <strong>LM22 signature matrix</st
 <span id="cb3-8"><a href="Infiltration.html#cb3-8"></a>res_timer =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">deconvolute</span>(df, <span class="st">&quot;timer&quot;</span>,<span class="dt">indications=</span><span class="kw">rep</span>(<span class="kw">tolower</span>(cancertype),<span class="kw">ncol</span>(df))))</span></code></pre></div>
 </div>
 <div id="quantiseq" class="section level3">
-<h3><span class="header-section-number">5.0.3</span> quanTIseq</h3>
+<h3><span class="header-section-number">3.0.3</span> quanTIseq</h3>
 <p><a href="https://icbi.i-med.ac.at/software/quantiseq/doc/index.html">quanTIseq</a> uses constrained least square regression to estimate absolute proportions of the infiltration levels of 10 immune cell types from RNA seq data. Therefore, the score of quanTIseq allows inter- or intra-sample comparison. quanTIseq provides an entire pipeline that can either process the pre-computed gene expression matrix (TPM matrix) or directly analyze bulk RNA-Seq data. RIMA uses the TPM matrix generated in the proprocessing modules for all immune infiltration algorithms.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="Infiltration.html#cb4-1"></a><span class="co">#Run quanTIseq </span></span>
 <span id="cb4-2"><a href="Infiltration.html#cb4-2"></a>res_quant =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">deconvolute</span>(df, <span class="st">&quot;quantiseq&quot;</span>))</span></code></pre></div>
 </div>
 <div id="xcell" class="section level3">
-<h3><span class="header-section-number">5.0.4</span> xCell</h3>
+<h3><span class="header-section-number">3.0.4</span> xCell</h3>
 <p><a href="https://xcell.ucsf.edu">xCell</a> performs single-sample gene set enrichment analysis (ssGSEA) on expression data to evaluate the enrichment of immune marker genes. These marker genes were validated using cytometry immunophenotyping and in-silico simulations. Note that results of xCell depend on the number of samples. The power of estimation might be lower if your dataset has limited non-heterogeneous samples.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="Infiltration.html#cb5-1"></a><span class="co">#Run xCell</span></span>
 <span id="cb5-2"><a href="Infiltration.html#cb5-2"></a>res_xcell =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">deconvolute</span>(df, <span class="st">&quot;xcell&quot;</span>))</span></code></pre></div>
 </div>
 <div id="epic" class="section level3">
-<h3><span class="header-section-number">5.0.5</span> EPIC</h3>
+<h3><span class="header-section-number">3.0.5</span> EPIC</h3>
 <p><a href="https://gfellerlab.shinyapps.io/EPIC_1-1/">EPIC</a> uses constrained least square regression to estimate six immune cell types, fibroblasts, and endothelial cells. EPIC collects a unique gene expression reference from circulating and tumor-infiltrating cells. Further, it extended its algorithm to evaluate the uncharacterized cancer cells. The score that comes from the EPIC algorithm is an absolute value that can be compared within or across samples.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Infiltration.html#cb6-1"></a><span class="co">#Run EPIC</span></span>
 <span id="cb6-2"><a href="Infiltration.html#cb6-2"></a>res_epic =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">deconvolute</span>(df, <span class="st">&quot;epic&quot;</span>))</span></code></pre></div>
 </div>
 <div id="mcp-counter" class="section level3">
-<h3><span class="header-section-number">5.0.6</span> MCP-counter</h3>
+<h3><span class="header-section-number">3.0.6</span> MCP-counter</h3>
 <p><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-016-1070-5">MCP-counter</a> uses its transcriptomic markers (TM) curated from 81 public datasets to estimate fibroblasts, endothelial cells, and eight immune cell types.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="Infiltration.html#cb7-1"></a><span class="co">#Run EPIC</span></span>
 <span id="cb7-2"><a href="Infiltration.html#cb7-2"></a>res_mcp =<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">deconvolute</span>(df, <span class="st">&quot;mcp_counter&quot;</span>))</span></code></pre></div>
 </div>
 <div id="running-the-immune_infiltration_cohort-module" class="section level2">
-<h2><span class="header-section-number">5.1</span> Running the immune_infiltration_cohort module</h2>
+<h2><span class="header-section-number">3.1</span> Running the immune_infiltration_cohort module</h2>
 <p>To run the immune_infiltration module of RIMA, make sure you have downloaded the LM22.txt file for Cibersort. (Please see the introduction of this chapter for more information.)</p>
-<p>In the execution.yaml file, set immune_infiltration_cohort to true. (There is no immune_infiltration_individual module.) To facilitate phenotype comparisons, set up the Group column of the metasheet.csv and the “design”, “Treatment”, “Control” and “batch” parameters of config.yaml as described in Chapters 2.3 and 4.2, respectively.</p>
+<p>In the execution.yaml file, set immune_infiltration_cohort to true. (There is no immune_infiltration_individual module.) To facilitate phenotype comparisons, set up the Group column of the metasheet.csv and the “design” and “batch” parameters of config.yaml as described in Chapters 2.3 and 4.2, respectively.</p>
 </div>
 <div id="immune_infiltration_cohort-output" class="section level2">
-<h2><span class="header-section-number">5.2</span> immune_infiltration_cohort Output</h2>
+<h2><span class="header-section-number">3.2</span> immune_infiltration_cohort Output</h2>
 <p>The immune_infiltration_cohort module of RIMA will create output files in the analysis/immune_infiltration folder of RIMA_pipeline. Two types of files will be created:</p>
 <ol style="list-style-type: decimal">
-<li>txt files with the output from each immune deconvolution algorithm (e.g. quantiseq.txt, xcell.txt, etc.)</li>
-<li>png image files for 8 cell types. (B cells, CD4 T cells, CD8 Tcells, DCs, Macrophages, Treg cells, NK cells and Neutrophils) These image files display Spearman correlation values for all six algorithms, allowing you to compare cell estimations between algorithms.</li>
+<li>txt files with the output from each Immunedeconv algorithm (e.g. quantiseq.txt, xcell.txt, etc.)</li>
+<li>a set of image files: a) correlation plots, b) heatmaps and c) boxplots. (described below)</li>
 </ol>
+<p>Example code is provided below for heatmap and boxplots like those generated by RIMA, CIBERSORT abs results are used as an example. If you wish to use this code to generate new figures, set “phenotype” to the appropriate column in metasheet.csv in the hmap and boxfig calls.</p>
+<div id="correlation-plots" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Correlation Plots</h3>
+<p>RIMA generates correlation plots for 8 cell types. (B cells, CD4 T cells, CD8 Tcells, DCs, Macrophages, Treg cells, NK cells and Neutrophils) These image files display Spearman correlation values for all six algorithms, allowing you to compare cell estimations between algorithms.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="images/Group_syn_batch_CD8_T_cell_corr.png" alt="Volcano plot"  />
 <p class="caption">
-Figure 5.1: Volcano plot
+Figure 3.1: Volcano plot
 </p>
 </div>
 </div>
-<div id="additonal-comparisons-across-cell-type-and-across-samples" class="section level2">
-<h2><span class="header-section-number">5.3</span> Additonal comparisons across cell type and across samples</h2>
-<p>Once the immune_infiltration_cohort module of RIMA is completed, you can use the output files to execute additional comparisons. In the sections below, we provide additional code that you can copy and use to generate a heatmap for comparisons across cell types or a boxplot for comparisons across samples.</p>
-<p>In the code below, CIBERSORT abs results are used as an example. In the hmap and boxfig calls, set “phenotype” to the appropriate column in metasheet.csv.</p>
-<div id="comparison-across-cell-type" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> Comparison across cell type</h3>
+<div id="heatmaps-for-comparisons-across-cell-types" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Heatmaps for comparisons across cell types</h3>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="Infiltration.html#cb8-1"></a><span class="co">#extract the immune cell score from results of CIBERSORT</span></span>
 <span id="cb8-2"><a href="Infiltration.html#cb8-2"></a>res_ciber &lt;-<span class="st"> </span>res_ciber[,<span class="dv">1</span><span class="op">:</span><span class="dv">22</span>]</span>
 <span id="cb8-3"><a href="Infiltration.html#cb8-3"></a>res_ciber</span></code></pre></div>
@@ -497,14 +437,14 @@ Figure 5.1: Volcano plot
 <span id="cb10-8"><a href="Infiltration.html#cb10-8"></a><span class="kw">hmap</span>(<span class="dt">ta =</span> res_ciber, <span class="dt">meta =</span> metasheet, <span class="dt">methods =</span> <span class="st">&quot;CIBERSORT&quot;</span>, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
 <p><img src="RIMA-tutorial_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
-<div id="comparison-across-samples" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> Comparison across samples</h3>
+<div id="box-plots-for-comparison-across-samples" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> Box plots for comparison across samples</h3>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Infiltration.html#cb11-1"></a><span class="kw">boxfig</span>(<span class="dt">ta =</span> res_ciber, <span class="dt">meta =</span> metasheet, <span class="dt">methods =</span> <span class="st">&quot;CIBERSORT&quot;</span>, <span class="dt">phenotype =</span> <span class="st">&quot;Responder&quot;</span>)</span></code></pre></div>
 <p><img src="RIMA-tutorial_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 </div>
-<div id="video-demo-1" class="section level2">
-<h2><span class="header-section-number">5.4</span> Video demo</h2>
+<div id="video-demo" class="section level2">
+<h2><span class="header-section-number">3.3</span> Video demo</h2>
 
 </div>
 </div>
@@ -513,8 +453,8 @@ Figure 5.1: Volcano plot
           </div>
         </div>
       </div>
-<a href="Repertoire.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Response.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Differential.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
