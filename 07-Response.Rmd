@@ -1,0 +1,123 @@
+# Immune Response {#Response}
+
+RIMA's immune_response module will run two tools -- TIDE and MSISensor2.  Background and specific details about both of these tools is included below.  
+
+## Characterizing the TME and T cell functionality
+
+Cancer immunotherapy utilizing immune checkpoint blockade (**ICB**) has made excellent progress in treating advanced-stage patients. However, only a small fraction of patients achieve a response to immunotherapy due to the complexity and heterogeneity of the TME. An increasing number of biomarkers have widely been used to estimate the clinical effectiveness of immunotherapy, such as ICB-related gene signatures (PD1, PDL1, CTLA4), tumor-infiltrating lymphocytes, tumor mutation burden, neoantigens, microsatellite instability (**MSI**) and serum markers. Nevertheless, there is an urgent need to build a method integrating multiple dynamic factors to characterize the TME and predict immunotherapy response. Currently, two major approaches have been effectively utilized in immunotherapy response prediction. In one approach models are constructed using transcriptome expression profiles of immune checkpoint or T-cell activity.  In the other approach, artificial intelligence-based algorithms are developed using imaging characteristics of lesions. For tumor RNA-seq data, <a href="http://tide.dfci.harvard.edu/">TIDE</a> (**T**umor **I**mmune **D**ysfunction and **E**xclusion) models tumor immune evasion by combining gene signatures estimating T cell dysfunction and exclusion to predict ICB response, which may provide critical insights to guide clinical treatment. This computational framework computes the TIDE score for tumors and separates them into responders and non-responders. In detail, TIDE provides a T cell dysfunction score, a T cell exclusion score, a cytotoxic T lymphocyte score, and scores of cell types restricting T cell infiltration in TME, including cancer-associated fibroblasts (CAF), myeloid-derived suppressor cells (MDSC), and M2 macrophages. These metrics help the biologists understand the TME status or T cell functions of interest. In this case, tumor RNA-seq profiling leverages the power of gene signature expression for quantifying the dynamic TME status, providing guidance for immunotherapy response prediction for clinicians.
+
+## TIDE
+TIDE is both a transcriptome biomarker database of ICB response and a set of algorithms to model tumor immune dysfunction and exclusion and predict immunotherapy response. The statistical model of TIDE was trained on clinical tumor profiles without ICB treatments since the immune evasion mechanisms in treatment naïve tumors are also likely to influence patient response to immunotherapies. The TIDE model has been applied to evaluate T cell dysfunction and exclusion signatures across over 33K samples in 188 tumor cohorts from well-curated databases, including TCGA, METABRIC, and PRECOG, as well as our in-house data collections. More information about how TIDE's measures of immune cell dysfunction and exclusion were derived can be found below and at <a href="https://www.nature.com/articles/s41591-018-0136-1#MOESM1/">Peng Jiang, et al.</a> \
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WsBSi_sH-_g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+
+A command line TIDE is available at https://github.com/liulab-dfci/TIDEpy.
+
+### Config.yaml sections relevant to TIDE
+For running TIDE within RIMA, the config.yaml file contains a few parameters that affect the results.  The top half of a sample config.yaml file is included below for reference.  If "cancer_type" is NSCLC or Melanoma, TIDE will use the response prediction parameters that were developed specifically for these cancer types.  The parameter "pre_treated" is used to indicate whether samples are from participants who received immunotherapy prior to the current study.  For cohort reports from TIDE, the phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described in more detail in Chapter 4.2.1.  To exclude samples from the analysis, please see how to set up the Group column of the metasheet.csv file in Chapter 2.
+
+```
+---
+metasheet: metasheet.csv
+ref: ref.yaml
+assembly: hg38
+cancer_type: GBM  #TCGA cancer type abbreviations or, for TIDE only, NSCLC or Melanoma if applicable
+rseqc_ref: house_keeping  #option: 'house_keeping' or 'false'. By default, a subset of housekeeping genes is used by rseqc to assess alignment quality.  This reduces the amount of time needed to run rseqc.  
+mate: [1,2]               #paired-end fastq format
+
+#########Parameter used for cohort level analysis################
+design: Group #condition on which to do comparsion (as set up in metasheet.csv)
+Treatment: R
+Control: NR
+batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
+
+pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
+
+````
+
+### Cold and hot tumors
+TIDE estimates the cytotoxic T Lymphocyte (**CTL**) level in tumors from the average expression of CD8A, CD8B, GZM, GZMB and PRF1 from treatment naïve tumors. ‘Hot tumors’ have above-average CTL values among all samples, while ‘Cold tumors’ have CTL values below average. The TIDE score is a combination of the T cell dysfunction estimated from hot tumors and the T cell exclusion estimated from cold tumors. \
+
+### T cell dysfunction 
+TIDE's T cell dysfunction score was derived by systematically identifying genes that interact with CTL infiltration levels to influence patient survival.  The genes utilized for the T-cell dysfunction model were identified in the following manner.
+
+For hot tumors with high CTL values, the T cell dysfunction is modeled from Cox-PH regression:\
+$$
+Hazard = a*CTL+b*P+d*CTL*P
+$$
+Where the variable CTL represents the CTL level, P represents the expression level of a candidate gene and the coefficient d reflects the effect of the interaction between the CTL and candidate gene P on death hazard. 
+
+The T cell dysfunction score of each gene is calculated as:
+$$
+Dysfunction = \frac{d}{StdErr(d)}
+$$
+Dysfunction scores of each gene were then compared to identify genes with statistically significant influences on CTL and death hazard.  
+
+
+### T cell exclusion
+TIDE calculates a T cell exclusion score to estimate immune escape. The T cell exclusion score is derived from the expression profiles of three cell types which have been reported to restrict T cell infiltration in tumors -- cancer-associated fibroblasts (CAFs), myeloid-derived suppressor cells (MDSCs) and tumor-associated macrophages (TAMs). \
+
+### Normalization
+The input for TIDE is a normalized TPM matrix, the steps for normalization are:\
+
+1) Log transform the data -- log2(TPM+1).\
+2) For each gene, subtract the average of the log transformed expression levels across all of your samples.\
+
+### Running TIDE
+TIDE supports cancer type specific analysis of melanoma and non-small cell lung cancer (NSCLC).  In our example, the data is from glioblastoma multiforme (GBM), so RIMA will set -c as other cancer type and force TIDE to normalize the TPM matrix.\
+
+TIDE is run from a command line interface with a command like the following:
+```
+tidepy -o TIDE_score.txt -c Other --force_normalization tpm_convertID.txt
+
+```
+Example outputs of TIDE:\
+
+``` {R}
+tide_res <- read.table("TIDE_score.txt",header=TRUE,sep='\t')
+print(tide_res)
+
+```
+
+## Microsatelite instability (MSI)
+
+Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous studies show that the MSI is highly associated with tumor mutation burden and closly related to immunotherapy response. Many tools such as MANTIS, MSIsensor, mSINGS and MSIsensor-pro are available to calculate MSI scores from RNA-seq data. In our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI scores, which allows for tumor-only BAM input. 
+
+```{r,eval=FALSE}
+#Run MSIsensor2 
+msisensor2 msi -M models_hg38 -t tumor.bam -o tumor
+
+## Output of MSIsensor2
+Total_Number_of_Sites	Number_of_Somatic_Sites	%
+156	                    26	                   16.67
+```
+
+
+Example of combined MSI outputs:
+``` {R}
+msi_res <- read.table("msi_score.txt",header=FALSE,sep='\t')
+print(msi_res)
+```
+
+## Response comparison analysis of biomarkers
+
+RIMA combines the output from TIDE and MSIsensor2 in a report that compares cohorts.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.
+
+```{r,eval=FALSE, fig.height = 4}
+#read the metasheet
+metafile <- "metasheet.csv"
+tide_res <- "TIDE_score.txt"
+msi_res <- "msi_score.txt"
+#load ploting function
+source("Tideploting.R")
+
+cmpr_biomk(msi_path = msi_res, tide_path = tide_res, meta_path = metafile, phenotype = "Responder")
+
+```
+```{r fig.align='center', echo=FALSE, fig.cap='Comparision of biomarkers between R and NR'}
+knitr::include_graphics('images/response.png', dpi = NA)
+```
+
+
+## Video demo
+

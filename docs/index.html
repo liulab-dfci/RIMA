@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-01-25" />
+<meta name="date" content="2022-01-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -146,33 +146,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#running-rima"><i class="fa fa-check"></i><b>2.4</b> Running RIMA</a></li>
 <li class="chapter" data-level="2.5" data-path="how-to-run-rima.html"><a href="how-to-run-rima.html#output"><i class="fa fa-check"></i><b>2.5</b> Output</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>3</b> Differential gene analysis</a><ul>
-<li class="chapter" data-level="3.1" data-path="Differential.html"><a href="Differential.html#differential-gene-expression-using-deseq2"><i class="fa fa-check"></i><b>3.1</b> Differential gene expression using DESeq2</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>3.1.1</b> Inputs of DESeq2</a></li>
+<li class="chapter" data-level="3" data-path="Preprocessing.html"><a href="Preprocessing.html"><i class="fa fa-check"></i><b>3</b> Pre-processing of bulk RNA-seq data</a><ul>
+<li class="chapter" data-level="3.1" data-path="Preprocessing.html"><a href="Preprocessing.html#read-alignment"><i class="fa fa-check"></i><b>3.1</b> Read Alignment</a></li>
+<li class="chapter" data-level="3.2" data-path="Preprocessing.html"><a href="Preprocessing.html#quality-control"><i class="fa fa-check"></i><b>3.2</b> Quality Control</a></li>
+<li class="chapter" data-level="3.3" data-path="Preprocessing.html"><a href="Preprocessing.html#gene-quantification"><i class="fa fa-check"></i><b>3.3</b> Gene quantification</a></li>
+<li class="chapter" data-level="3.4" data-path="Preprocessing.html"><a href="Preprocessing.html#batch-effect-removal"><i class="fa fa-check"></i><b>3.4</b> Batch effect removal</a></li>
+<li class="chapter" data-level="3.5" data-path="Preprocessing.html"><a href="Preprocessing.html#video-demo-of-rima"><i class="fa fa-check"></i><b>3.5</b> Video demo of RIMA</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>3.2</b> Different gene expression analysis</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>3.2.1</b> Running DESeq2 without batch effect</a></li>
-<li class="chapter" data-level="3.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>3.2.2</b> Running DESeq2 with batch effect</a></li>
-<li class="chapter" data-level="3.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>3.2.3</b> Output from DESeq2</a></li>
-<li class="chapter" data-level="3.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>3.2.4</b> Volcano Plot(s)</a></li>
+<li class="chapter" data-level="4" data-path="Differential.html"><a href="Differential.html"><i class="fa fa-check"></i><b>4</b> Differential gene analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="Differential.html"><a href="Differential.html#differential-gene-expression-using-deseq2"><i class="fa fa-check"></i><b>4.1</b> Differential gene expression using DESeq2</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="Differential.html"><a href="Differential.html#inputs-of-deseq2"><i class="fa fa-check"></i><b>4.1.1</b> Inputs of DESeq2</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>3.3</b> Gene set enrichment analysis (GSEA)</a></li>
-<li class="chapter" data-level="3.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>3.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
+<li class="chapter" data-level="4.2" data-path="Differential.html"><a href="Differential.html#different-gene-expression-analysis"><i class="fa fa-check"></i><b>4.2</b> Different gene expression analysis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="Differential.html"><a href="Differential.html#running-deseq2-without-batch-effect"><i class="fa fa-check"></i><b>4.2.1</b> Running DESeq2 without batch effect</a></li>
+<li class="chapter" data-level="4.2.2" data-path="Differential.html"><a href="Differential.html#running-deseq2-with-batch-effect"><i class="fa fa-check"></i><b>4.2.2</b> Running DESeq2 with batch effect</a></li>
+<li class="chapter" data-level="4.2.3" data-path="Differential.html"><a href="Differential.html#output-from-deseq2"><i class="fa fa-check"></i><b>4.2.3</b> Output from DESeq2</a></li>
+<li class="chapter" data-level="4.2.4" data-path="Differential.html"><a href="Differential.html#volcano-plots"><i class="fa fa-check"></i><b>4.2.4</b> Volcano Plot(s)</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>4</b> Immune Infiltration</a><ul>
-<li class="chapter" data-level="4.0.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>4.0.1</b> Cibersort</a></li>
-<li class="chapter" data-level="4.0.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>4.0.2</b> TIMER</a></li>
-<li class="chapter" data-level="4.0.3" data-path="Infiltration.html"><a href="Infiltration.html#quantiseq"><i class="fa fa-check"></i><b>4.0.3</b> quanTIseq</a></li>
-<li class="chapter" data-level="4.0.4" data-path="Infiltration.html"><a href="Infiltration.html#xcell"><i class="fa fa-check"></i><b>4.0.4</b> xCell</a></li>
-<li class="chapter" data-level="4.0.5" data-path="Infiltration.html"><a href="Infiltration.html#epic"><i class="fa fa-check"></i><b>4.0.5</b> EPIC</a></li>
-<li class="chapter" data-level="4.0.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>4.0.6</b> MCP-counter</a></li>
-<li class="chapter" data-level="4.1" data-path="Infiltration.html"><a href="Infiltration.html#running-the-immune_infiltration_cohort-module"><i class="fa fa-check"></i><b>4.1</b> Running the immune_infiltration_cohort module</a></li>
-<li class="chapter" data-level="4.2" data-path="Infiltration.html"><a href="Infiltration.html#immune_infiltration_cohort-output"><i class="fa fa-check"></i><b>4.2</b> immune_infiltration_cohort Output</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="Infiltration.html"><a href="Infiltration.html#correlation-plots"><i class="fa fa-check"></i><b>4.2.1</b> Correlation Plots</a></li>
-<li class="chapter" data-level="4.2.2" data-path="Infiltration.html"><a href="Infiltration.html#heatmaps-for-comparisons-across-cell-types"><i class="fa fa-check"></i><b>4.2.2</b> Heatmaps for comparisons across cell types</a></li>
-<li class="chapter" data-level="4.2.3" data-path="Infiltration.html"><a href="Infiltration.html#box-plots-for-comparison-across-samples"><i class="fa fa-check"></i><b>4.2.3</b> Box plots for comparison across samples</a></li>
+<li class="chapter" data-level="4.3" data-path="Differential.html"><a href="Differential.html#gene-set-enrichment-analysis-gsea"><i class="fa fa-check"></i><b>4.3</b> Gene set enrichment analysis (GSEA)</a></li>
+<li class="chapter" data-level="4.4" data-path="Differential.html"><a href="Differential.html#single-sample-gene-set-enrichment-analysis-ssgsea"><i class="fa fa-check"></i><b>4.4</b> Single sample gene set enrichment analysis (ssGSEA)</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="Infiltration.html"><a href="Infiltration.html#video-demo"><i class="fa fa-check"></i><b>4.3</b> Video demo</a></li>
+<li class="chapter" data-level="5" data-path="Repertoire.html"><a href="Repertoire.html"><i class="fa fa-check"></i><b>5</b> Immune repertoire</a><ul>
+<li class="chapter" data-level="5.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4"><i class="fa fa-check"></i><b>5.1</b> TRUST4</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="Repertoire.html"><a href="Repertoire.html#trust4-output"><i class="fa fa-check"></i><b>5.1.1</b> TRUST4 output</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="Repertoire.html"><a href="Repertoire.html#bcr-cluster-calculation"><i class="fa fa-check"></i><b>5.2</b> BCR cluster calculation</a></li>
+<li class="chapter" data-level="5.3" data-path="Repertoire.html"><a href="Repertoire.html#clonotypes-per-kilo-reads-cpk"><i class="fa fa-check"></i><b>5.3</b> Clonotypes per kilo-reads (CPK)</a></li>
+<li class="chapter" data-level="5.4" data-path="Repertoire.html"><a href="Repertoire.html#tcr-and-bcr-entropy-and-clonality"><i class="fa fa-check"></i><b>5.4</b> TCR and BCR entropy and Clonality</a></li>
+<li class="chapter" data-level="5.5" data-path="Repertoire.html"><a href="Repertoire.html#fraction-of-reads-mapped-to-tcr-and-bcr"><i class="fa fa-check"></i><b>5.5</b> Fraction of reads mapped to TCR and BCR</a></li>
+<li class="chapter" data-level="5.6" data-path="Repertoire.html"><a href="Repertoire.html#somatic-hypermutation-rate-of-bcr"><i class="fa fa-check"></i><b>5.6</b> Somatic hypermutation rate of BCR</a></li>
+<li class="chapter" data-level="5.7" data-path="Repertoire.html"><a href="Repertoire.html#ig-isotype-frequency"><i class="fa fa-check"></i><b>5.7</b> Ig isotype frequency</a></li>
+<li class="chapter" data-level="5.8" data-path="Repertoire.html"><a href="Repertoire.html#cohort-analysis"><i class="fa fa-check"></i><b>5.8</b> Cohort analysis</a></li>
+<li class="chapter" data-level="5.9" data-path="Repertoire.html"><a href="Repertoire.html#video-demo"><i class="fa fa-check"></i><b>5.9</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Infiltration.html"><a href="Infiltration.html"><i class="fa fa-check"></i><b>6</b> Immune Infiltration</a><ul>
+<li class="chapter" data-level="6.0.1" data-path="Infiltration.html"><a href="Infiltration.html#cibersort"><i class="fa fa-check"></i><b>6.0.1</b> Cibersort</a></li>
+<li class="chapter" data-level="6.0.2" data-path="Infiltration.html"><a href="Infiltration.html#timer"><i class="fa fa-check"></i><b>6.0.2</b> TIMER</a></li>
+<li class="chapter" data-level="6.0.3" data-path="Infiltration.html"><a href="Infiltration.html#quantiseq"><i class="fa fa-check"></i><b>6.0.3</b> quanTIseq</a></li>
+<li class="chapter" data-level="6.0.4" data-path="Infiltration.html"><a href="Infiltration.html#xcell"><i class="fa fa-check"></i><b>6.0.4</b> xCell</a></li>
+<li class="chapter" data-level="6.0.5" data-path="Infiltration.html"><a href="Infiltration.html#epic"><i class="fa fa-check"></i><b>6.0.5</b> EPIC</a></li>
+<li class="chapter" data-level="6.0.6" data-path="Infiltration.html"><a href="Infiltration.html#mcp-counter"><i class="fa fa-check"></i><b>6.0.6</b> MCP-counter</a></li>
+<li class="chapter" data-level="6.1" data-path="Infiltration.html"><a href="Infiltration.html#running-the-immune_infiltration_cohort-module"><i class="fa fa-check"></i><b>6.1</b> Running the immune_infiltration_cohort module</a></li>
+<li class="chapter" data-level="6.2" data-path="Infiltration.html"><a href="Infiltration.html#immune_infiltration_cohort-output"><i class="fa fa-check"></i><b>6.2</b> immune_infiltration_cohort Output</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="Infiltration.html"><a href="Infiltration.html#correlation-plots"><i class="fa fa-check"></i><b>6.2.1</b> Correlation Plots</a></li>
+<li class="chapter" data-level="6.2.2" data-path="Infiltration.html"><a href="Infiltration.html#heatmaps-for-comparisons-across-cell-types"><i class="fa fa-check"></i><b>6.2.2</b> Heatmaps for comparisons across cell types</a></li>
+<li class="chapter" data-level="6.2.3" data-path="Infiltration.html"><a href="Infiltration.html#box-plots-for-comparison-across-samples"><i class="fa fa-check"></i><b>6.2.3</b> Box plots for comparison across samples</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="Infiltration.html"><a href="Infiltration.html#video-demo-1"><i class="fa fa-check"></i><b>6.3</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="Response.html"><a href="Response.html"><i class="fa fa-check"></i><b>7</b> Immune Response</a><ul>
+<li class="chapter" data-level="7.1" data-path="Response.html"><a href="Response.html#characterizing-the-tme-and-t-cell-functionality"><i class="fa fa-check"></i><b>7.1</b> Characterizing the TME and T cell functionality</a></li>
+<li class="chapter" data-level="7.2" data-path="Response.html"><a href="Response.html#tide"><i class="fa fa-check"></i><b>7.2</b> TIDE</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="Response.html"><a href="Response.html#config.yaml-sections-relevant-to-tide"><i class="fa fa-check"></i><b>7.2.1</b> Config.yaml sections relevant to TIDE</a></li>
+<li class="chapter" data-level="7.2.2" data-path="Response.html"><a href="Response.html#cold-and-hot-tumors"><i class="fa fa-check"></i><b>7.2.2</b> Cold and hot tumors</a></li>
+<li class="chapter" data-level="7.2.3" data-path="Response.html"><a href="Response.html#t-cell-dysfunction"><i class="fa fa-check"></i><b>7.2.3</b> T cell dysfunction</a></li>
+<li class="chapter" data-level="7.2.4" data-path="Response.html"><a href="Response.html#t-cell-exclusion"><i class="fa fa-check"></i><b>7.2.4</b> T cell exclusion</a></li>
+<li class="chapter" data-level="7.2.5" data-path="Response.html"><a href="Response.html#normalization"><i class="fa fa-check"></i><b>7.2.5</b> Normalization</a></li>
+<li class="chapter" data-level="7.2.6" data-path="Response.html"><a href="Response.html#running-tide"><i class="fa fa-check"></i><b>7.2.6</b> Running TIDE</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.3</b> Microsatelite instability (MSI)</a></li>
+<li class="chapter" data-level="7.4" data-path="Response.html"><a href="Response.html#response-comparison-analysis-of-biomarkers"><i class="fa fa-check"></i><b>7.4</b> Response comparison analysis of biomarkers</a></li>
+<li class="chapter" data-level="7.5" data-path="Response.html"><a href="Response.html#video-demo-2"><i class="fa fa-check"></i><b>7.5</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Typing</a><ul>
+<li class="chapter" data-level="8.1" data-path="HLA.html"><a href="HLA.html#identify-hla-type"><i class="fa fa-check"></i><b>8.1</b> Identify HLA type</a></li>
+<li class="chapter" data-level="8.2" data-path="HLA.html"><a href="HLA.html#video-demo-3"><i class="fa fa-check"></i><b>8.2</b> Video demo</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>9</b> Fusion</a><ul>
+<li class="chapter" data-level="9.1" data-path="fusion.html"><a href="fusion.html#fusion-calling"><i class="fa fa-check"></i><b>9.1</b> Fusion calling</a></li>
+<li class="chapter" data-level="9.2" data-path="fusion.html"><a href="fusion.html#remove-fusion-homology"><i class="fa fa-check"></i><b>9.2</b> Remove fusion homology</a></li>
+<li class="chapter" data-level="9.3" data-path="fusion.html"><a href="fusion.html#comparison-within-phenotype"><i class="fa fa-check"></i><b>9.3</b> Comparison within phenotype</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
+<li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.3" data-path="microbiome.html"><a href="microbiome.html#video-demo-4"><i class="fa fa-check"></i><b>10.3</b> Video demo</a><ul>
+<li class="chapter" data-level="10.3.1" data-path="microbiome.html"><a href="microbiome.html#we-have-prepared-the-rima-reference-folder-with-the-current-version-we-used.-you-can-directly-download-from-iris-server"><i class="fa fa-check"></i><b>10.3.1</b> We have prepared the RIMA reference folder with the current version we used. You can directly download from Iris server:</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><i class="fa fa-check"></i><b>11</b> Steps to make your own custom reference files for RIMA pipeline</a><ul>
+<li class="chapter" data-level="11.0.1" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#reference-fasta"><i class="fa fa-check"></i><b>11.0.1</b> Reference fasta</a></li>
+<li class="chapter" data-level="11.0.2" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#gene-annotation-file-gtf"><i class="fa fa-check"></i><b>11.0.2</b> Gene annotation file (gtf)</a></li>
+<li class="chapter" data-level="11.0.3" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#build-star-index"><i class="fa fa-check"></i><b>11.0.3</b> build STAR index</a></li>
+<li class="chapter" data-level="11.0.4" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#rseqc-reference-files"><i class="fa fa-check"></i><b>11.0.4</b> RSeQC reference files</a></li>
+<li class="chapter" data-level="11.0.5" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#build-salmon-index"><i class="fa fa-check"></i><b>11.0.5</b> build salmon index</a></li>
+<li class="chapter" data-level="11.0.6" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#gmt-file-for-gene-set-analysis"><i class="fa fa-check"></i><b>11.0.6</b> GMT file for gene set analysis</a></li>
+<li class="chapter" data-level="11.0.7" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#star-fusion-genome-resource-lib"><i class="fa fa-check"></i><b>11.0.7</b> STAR-Fusion genome resource lib</a></li>
+<li class="chapter" data-level="11.0.8" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#centrifuge-index"><i class="fa fa-check"></i><b>11.0.8</b> Centrifuge index</a></li>
+<li class="chapter" data-level="11.0.9" data-path="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html"><a href="steps-to-make-your-own-custom-reference-files-for-rima-pipeline.html#trust4-reference-files"><i class="fa fa-check"></i><b>11.0.9</b> TRUST4 reference files</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -197,7 +258,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Tutorial of RNA-seq tumor immunity analysis</h1>
 <p class="author"><em>Yang Liu, Jennifer Altreuter, Yang Lin</em></p>
-<p class="date"><em>2022-01-25</em></p>
+<p class="date"><em>2022-01-27</em></p>
 </div>
 <div id="intro" class="section level1">
 <h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
@@ -434,6 +495,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
