@@ -1,5 +1,5 @@
 # HLA Typing {#HLA}
-Tumor mutations can result in altered proteins, which might act as antigens and potentially elicit an immune response. Algorithms, including <a href="http://www.cbs.dtu.dk/services/NetMHCpan/">NetMHCpan</a>, <a href= "https://github.com/openvax/mhcflurry">MHCflurry</a>, and <href="https://pubmed.ncbi.nlm.nih.gov/17608956/">SMMalign</a>, are commonly used to predict neo-antigen peptides. Knowing the HLA type is necessary to identify potential neo-antigens for targeted immunotherapy. Current alignment-based HLA typing methods require DNA or RNA sequencing inputs and predict HLA-I class only or both of HLA-I and HLA-II classes.  For example, <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a>, <a href="https://github.com/ExpressionAnalysis/HLAProfiler">HLAProfiler</a>, and <a href="https://github.com/TRON-Bioinformatics/seq2HLA">seq2HLA</a> have been developed to perform high-solution HLA typing from RNA-seq data. <a href="https://github.com/FRED-2/OptiType">OptiType</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/29858810/">PHLAT</a> are other HLA identification tools for RNA, whole-exome, and whole-genome sequencing data.  HLA reference sequences can be obtained from the <a href="http://www.imgt.org/">ImMunoGeneTics (IMGT) database</a>. 
+Tumor mutations can result in altered proteins, which might act as antigens and potentially elicit an immune response. Algorithms, including <a href="http://www.cbs.dtu.dk/services/NetMHCpan/">NetMHCpan</a>, <a href= "https://github.com/openvax/mhcflurry">MHCflurry</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/17608956/">SMMalign</a>, are commonly used to predict neo-antigen peptides. Knowing the HLA type is necessary to identify potential neo-antigens for targeted immunotherapy. Current alignment-based HLA typing methods require DNA or RNA sequencing inputs and predict HLA-I class only or both of HLA-I and HLA-II classes.  For example, <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a>, <a href="https://github.com/ExpressionAnalysis/HLAProfiler">HLAProfiler</a>, and <a href="https://github.com/TRON-Bioinformatics/seq2HLA">seq2HLA</a> have been developed to perform high-solution HLA typing from RNA-seq data. <a href="https://github.com/FRED-2/OptiType">OptiType</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/29858810/">PHLAT</a> are other HLA identification tools for RNA, whole-exome, and whole-genome sequencing data.  HLA reference sequences can be obtained from the <a href="http://www.imgt.org/">ImMunoGeneTics (IMGT) database</a>. 
 
 ## Identify HLA type
 HLA Typing is a part of the neoantigen prediction module of RIMA.  
@@ -20,8 +20,6 @@ arcasHLA genotype analysis/neoantigen/SRR8281218/SRR8281218.extracted.1.fq.gz an
 
 ###Output from extraction
 analysis/neoantigen/SRR8281218/SRR8281218.genotype.json
- 
- 
 cat analysis/neoantigen/SRR8281218/SRR8281218.genotype.json
 
 ###
@@ -30,7 +28,7 @@ cat analysis/neoantigen/SRR8281218/SRR8281218.genotype.json
 ```
 
 **Merge individual HLAs**
-RIMA also merges the individual HLA results from arcasHLA into a summary file:  
+RIMA also merges the individual HLA results from arcasHLA into a summary file named 'genotypes.tsv':  
 
 ```
 subject	A1	A2	B1	B2	C1	C2	DQA11	DQA12	DQB11	DQB12	DRB11	DRB12
@@ -44,8 +42,48 @@ SRR8281250	A*01:01:01	A*02:01:01	B*35:01:01	B*08:01:01	C*07:01:01	C*04:01:01	DQA
 SRR8281244	A*25:01:01	A*02:01:01	B*18:01:01	B*08:01:01	C*07:02:01	C*12:03:01	DQA1*01:02:01	DQA1*01:02:01	DQB1*06:02:01	DQB1*06:02:01	DRB1*15:01:01	DRB1*15:01:01
 SRR8281218	A*26:01:01	A*03:01:01	B*35:01:01	B*07:02:01	C*07:02:01	C*04:01:01	DQA1*02:01:01	DQA1*03:01:01	DQB1*03:02:01	DQB1*03:02:01	DRB1*04:02:01	DRB1*07:01:01
 ```
+## HLA Oncoplot
+Since each HLA usually has its synonymous changes in the coding region. To better visualize and compare the HLA distribution in different samples, we use arcasHLA to convert HLA results to P-group format, which shows the alleles share the same amino acid sequence in the antigen-binding region. (eg. A*01:01P, 'P' indicates p-group nomenclature)
 
-## Video demo
+```
+###
+#HLA summary file: genotypes.tsv
+arcasHLA convert -r p-group genotypes.tsv -o genotypes.p-group.tsv
+###
+```
+```
+subject A1      A2      B1      B2      C1      C2      DQA11   DQA12   DQB11   DQB12   DRB11   DRB12
+SRR8281233      A*01:01P        A*02:01P        B*57:01P        B*44:02P        C*05:01P        C*06:02P        DQA1*01:02P     DQA1*03:01P     DQB1*06:02P     DQB1*03:02P     DRB1*04:01P     DRB1*15:01P
+SRR8281236      A*33:01P        A*24:02P        B*14:02P        B*15:01P        C*06:02P        C*08:02P        DQA1*01:02P     DQA1*03:01P     DQB1*03:02P     DQB1*05:02P     DRB1*04:03P     DRB1*16:02P
+SRR8281243      A*01:01P        A*24:02P        B*35:02P        B*41:01P        C*04:01P        C*17:01P        DQA1*01:02P     DQA1*01:01P     DQB1*05:01P     DQB1*06:09P     DRB1*10:01P     DRB1*13:02P
+SRR8281244      A*25:01P        A*02:01P        B*18:01P        B*08:01P        C*07:02P        C*12:03P        DQA1*01:02P     DQA1*01:02P     DQB1*06:02P     DQB1*06:02P     DRB1*15:01P     DRB1*15:01P
+SRR8281250      A*01:01P        A*02:01P        B*35:01P        B*08:01P        C*07:01P        C*04:01P        DQA1*05:01P     DQA1*01:01P     DQB1*02:01P     DQB1*05:01P     DRB1*01:01P     DRB1*03:01P
+SRR8281219      A*03:01P        A*26:01P        B*35:01P        B*07:02P        C*07:02P        C*04:01P        DQA1*02:01P     DQA1*03:01P     DQB1*03:02P     DQB1*03:03P     DRB1*04:02P     DRB1*07:01P
+SRR8281245      A*25:01P        A*02:01P        B*18:01P        B*08:01P        C*07:02P        C*12:03P        DQA1*01:02P     DQA1*01:02P     DQB1*06:02P     DQB1*06:02P     DRB1*15:01P     DRB1*15:01P
+SRR8281230      A*01:01P        A*02:01P        B*57:01P        B*44:02P        C*05:01P        C*06:02P        DQA1*03:01P     DQA1*01:02P     DQB1*06:02P     DQB1*03:02P     DRB1*04:01P     DRB1*15:01P
+SRR8281251      A*24:02P        A*01:01P        B*35:02P        B*41:01P        C*04:01P        C*17:01P        DQA1*01:02P     DQA1*01:01P     DQB1*05:01P     DQB1*06:09P     DRB1*10:01P     DRB1*13:02P
+SRR8281218      A*26:01P        A*03:01P        B*35:01P        B*07:02P        C*07:02P        C*04:01P        DQA1*02:01P     DQA1*03:01P     DQB1*03:02P     DQB1*03:02P     DRB1*04:02P     DRB1*07:01P
+SRR8281238      A*01:01P        A*02:01P        B*35:01P        B*08:01P        C*07:01P        C*04:01P        DQA1*05:01P     DQA1*01:01P     DQB1*02:01P     DQB1*05:01P     DRB1*01:01P     DRB1*03:01P
+SRR8281226      A*33:01P        A*24:02P        B*14:02P        B*15:01P        C*06:02P        C*08:02P        DQA1*03:01P     DQA1*01:02P     DQB1*05:02P     DQB1*03:02P     DRB1*04:03P     DRB1*16:02P
+```
+RIMA generate the HLA oncoplot that shows the most frequent HLA alleles across patient cohorts and the expression level of HLA genes (HLA-A, HLA-B, HLA-C, HLA-DQA1, HLA-DQB1, and HLA-DRB1). The values in the heatmap represent the frequency of the allele among samples.The x axis represents patients samples are sorted expression of HLA genes within the group. The HLA expression shown on the top represents the mean TPM of HLA genes in each sample.
+
+```{r}
+#load HLA p-group summary file
+hla <- read.table("genotypes.p-group.tsv", header = TRUE, sep = "\t")
+#load metasheet 
+meta <- read.table("metasheet.csv", sep = ",", header = TRUE, row.names = 1)
+#load gene expression matrix 
+exprn <- read.table("tpm_convertID.txt", header = TRUE, row.names = 1, sep = ",", check.names = FALSE)
+
+source("hla_oncoplot.R")
+#group indicates which columns are used for hla comparison
+index <- c("Responder", "Gender")
+p <- hla_oncoplot(hla, exprn, meta, groups = index)
+
+print(p)
+```
+
 
 
 

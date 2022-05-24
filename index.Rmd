@@ -14,7 +14,7 @@ description: "This is a minimal example of using the bookdown package to write a
 #  Introduction {#intro}
 
 This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-sequencing (RNA-seq) data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
-We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA/.
+We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA_pipeline.
 
 Tumor RNA-seq has become an important technique for molecular profiling and
 immune characterization of tumors. RNA-seq Immune Analysis (RIMA) performs
