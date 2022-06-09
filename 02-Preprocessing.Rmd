@@ -12,7 +12,13 @@ preprocess_cohort: true
 
 <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">STAR</a> is one of the most common tools used for bulk RNA-seq data alignment to generate transcriptome BAM or genomic BAM output, which can be downloaded at <a href="https://github.com/alexdobin/STAR"> here</a>. A tutorial for STAR is available <a href="https://hbctraining.github.io/Intro-to-rnaseq-hpc-O2/lessons/03_alignment.html">here</a>. 
 
-When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.Let's use sample *SRR8281218* as an example.
+When using STAR, the first step is to create a genome index. In our RIMA pipeline, we download the human genome (hg38) STAR index from <a href="https://gdc.cancer.gov/">Genomic Data Commons (GDC) </a>.Let's use sample *SRR8281251* as an example.
+
+
+**Example outputs folder structure**
+```{r fig.align='left', echo=FALSE, out.width="50%"}
+knitr::include_graphics('images/Output_star.png', dpi = NA)
+```
 
 RIMA runs STAR using the following command structure:
 ```{r eval=FALSE}
@@ -43,15 +49,15 @@ RIMA runs STAR using the following command structure:
 RIMA renames the read aligment outputs according to sample id.
 
 ```{r eval=FALSE}
-analysis/star/SRR8281218/SRR8281218.sorted.bam             
-analysis/star/SRR8281218/SRR8281218.transcriptome.bam      
-analysis/star/SRR8281218/SRR8281218.Chimeric.out.junction 
-analysis/star/SRR8281218/SRR8281218.Log.final.out
+analysis/star/SRR8281251/SRR8281251.sorted.bam             
+analysis/star/SRR8281251/SRR8281251.transcriptome.bam      
+analysis/star/SRR8281251/SRR8281251.Chimeric.out.junction 
+analysis/star/SRR8281251/SRR8281251.Log.final.out
 ```
 
 RIMA also uses samtools to generate statistics from the alignment BAM file:
 ```{r eval=FALSE}
-samtools stats analysis/star/SRR828121/SRR8281218.sorted.bam | grep ^SN | cut -f 2- > analysis/star/SRR8281218/SRR8281218.sorted.bam.stat.txt
+samtools stats analysis/star/SRR828151/SRR8281251.sorted.bam | grep ^SN | cut -f 2- > analysis/star/SRR8281251/SRR8281251.sorted.bam.stat.txt
 ```
 
 **Merging the STAR alignment reports**
@@ -156,6 +162,12 @@ knitr::include_graphics('images/geneBodyCoverage.curves.png', dpi = NA)
 
 After the alignment of sequencing reads and quality checks, we quantify the gene or transcript expression from the BAM files.Both <a href="https://combine-lab.github.io/salmon/getting_started/">Salmon</a> and <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-12-323">RSEM</a> are widely used for gene quantification. Salmon conducts fast transcript-level quantification, and RSEM performs both gene-level and transcript-level quantification. Salmon is usually faster and less memory-consuming than RSEM. RSEM generates transcripts per million (TPM), reads per kilobase of exon model (transcript) per million mapped reads (RPKM) and fragments per kilobase of exon model (transcript) per million mapped reads (FPKM) expression.  Salmon provides TPMs as a part of its output.  All three measures (TPM, RPKM, FPKM) are normalization methods that account for both sequencing depth and gene lengths. (Longer transcripts will have more reads.) TPM is currently thought to be the best method to normalize gene counts.  <a href="https://htseq.readthedocs.io/en/master/tour.html#counting-reads-by-genes">HTSeq </a> quantifies gene expression according to mapped read counts. Both normalized gene expression and raw read counts can be used for differential expression analysis. \
 
+
+**Example outputs folder structure**
+```{r fig.align='left', echo=FALSE, out.width="50%"}
+knitr::include_graphics('images/Output_salmon.png', dpi = NA)
+```
+
 RIMA uses Salmon for gene quantification. The transcriptome alignment result from STAR is used as the Salmon input:
 ```
 salmon quant -t ./ref_files/salmon_gdc_index/gencode.v22.ts.fa -l A -a analysis/star/SRR8281218/SRR8281218.transcriptome.bam  -o analysis/salmon/SRR8281218
@@ -196,9 +208,49 @@ Principal components analysis (PCA) or unsupervised clustering before and after 
 To evaluate if your samples have a batch effect, RIMA will generate PCA plots of gene expression data before and after batch effect removal by limma.  To utilize this feature, modify the "batch" parameter in the config.yaml file for your run. 
 
 Example of PCA before and after batch correction using limma. (Note: No batch effect was found in the original data used for this tutorial.  To generate this diagram, we added a 'syn_batch' column to the metasheet for demonstration purposes.)
+
+**Example outputs folder structure**
+```{r fig.align='left', echo=FALSE, out.width="50%"}
+knitr::include_graphics('images/Output_batchremoval.png', dpi = NA)
+```
+
+**Example outputs PCA figure**
 ```{r fig.align='center', echo=FALSE, fig.cap='Before(left) and after(right) batch correction with Limma'}
 knitr::include_graphics('images/PCA_synbatch.png', dpi = NA)
 ```
+### Start with TPM matrix
+We provided the source [batch_removal.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/preprocess/batch_removal.R) R scripts of batch effect removal using TPM matrix and metasheet as inputs.
+
+```{R, eval=FALSE}
+Rscript src/preprocess/batch_removal.R -e {exprsn} -c {covariates} 
+        -d {sample_column} -m {meta} -b {before} -a {after} 
+
+Usage:
+  -e input expression matrix without log transformation [Required]
+  -c batch covariates
+  -d column name from metasheet that indicated included samples
+  -m metasheet
+  -b Output file name before batch effect removal
+  -a Output file name after batch effect removal
+  
+```
+
+Users will receive the log transformed TPM matrix with batch effect removed after runing above scripts. RIMA also provided the [pca.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/preprocess/pca.R) to generate the PCA plots before and after batch effects.
+
+```{R,eval=FALSE}
+Rscript src/preprocess/pca.R -b {before} -a {after} -m {meta}  -c {covariates}
+                -g {design} -i {output_before} -j {output_after}
+
+Usage:
+  -b expression matrix before batch removal
+  -a expression matrix after batch removal
+  -m metasheet
+  -c batch covariates
+  -g column name from metasheet that indicated included samples
+  -i Output plot name before batch removal
+  -j Output plot name before after removal
+```
+
 
 ## Video demo of RIMA
-<iframe width="560" height="315" src="https://www.ynutube.com/embed/NEbi-pYNhak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
+<iframe width="560" height="315" src="https://www.youtube.com/embed/NEbi-pYNhak" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \

@@ -1,6 +1,6 @@
 # Immune Response {#Response}
 
-RIMA's immune_response module will run two tools -- TIDE and MSISensor2.  Background and specific details about both of these tools is included below.  
+The immune_response module will run two tools -- TIDE and MSISensor2.  Background and specific details about both of these tools is included below.  
 
 ## Characterizing the TME and T cell functionality
 
@@ -119,5 +119,4 @@ knitr::include_graphics('images/response.png', dpi = NA)
 ```
 
 
-## Video demo
 

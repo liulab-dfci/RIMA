@@ -75,6 +75,8 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 
 # How to run RIMA
 
+<h2>***“Please make sure you adhere to NIH and HIPAA security standards when uploading controlled access data to a cloud or high computing environment.”***</h2>
+
 ## Install RIMA and Set Up the Running Environment ##
 
 To run RIMA, you will create a working directory. In the working directory, you will install the pipeline code and other required software.
@@ -163,7 +165,7 @@ A pre-prepared RIMA reference folder can be downloaded using the code below.
 
 If you want to prepare a customized reference, you can follow [this tutorial](https://github.com/kateyliu/RIMA/build-rima-reference/) to build your own reference.
 
-Currently, RIMA supports the **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a>.
+Currently, RIMA supports the **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a> v22.
  
 ```
 cd RIMA
@@ -175,6 +177,7 @@ tar -zxvf ref.tar.gz
 # remove the reference zip file to save some space (optional)
 rm ref.tar.gz 
 ```
+
 
 
 **Optional step** 
@@ -344,21 +347,29 @@ neoantigen_cohort: false
 The ref.yaml file provides the paths for all reference files.  If you downloaded the pre-built reference files, you should not need to change the ref.yaml file.
 
 ```
+#REF.yaml - File to contain paths to static reference files that RNA-Seq requires
+#           for its analysis.
+# NOTE: these are already pre-filled for hg38 
+# NOTE: organized by assemblies
+# 
+# !VERY IMPORTANT: you can OVERRIDE any of these values in config.yaml!
+
 hg38:
 ###annotation path
   fasta_path: ./ref_files/GRCh38.d1.vd1.fa 
-  gtf_path: ./ref_files/gencode.v22.annotation.gtf
-  housekeeping_bed_path: ./ref_files/housekeeping_refseqGenes.bed
+  gtf_path: ./ref_files/gencode.annotation.gtf
+  bed_path: ./ref_files/RSeQC_bed/refseqGenes.bed
+  housekeeping_bed_path: ./ref_files/RSeQC_bed/housekeeping_refseqGenes.bed
   trust4_reper_path: ./ref_files/TRUST4/hg38_bcrtcr.fa
   trust4_IMGT_path: ./ref_files/TRUST4/human_IMGT+C.fa
-  gmt_path: ./static/ssgsea/c2.cp.kegg.v6.1.symbols.gmt
 
 ###index path
-  star_index: ./ref_files/star_gdc_index/hg38/v22
-  star_fusion_index: ./ref_files/fusion_gdc_index/GRCh38_v22_CTAT_lib_GDC_Mar162019/ctat_genome_lib_build_dir
-  salmon_index:  ./ref_files/salmon_index/gencode.v22.ts.fa
-  msisensor_index: ./ref_files/msisensor_gdc_index/hg38/microsatellite.list
+  star_index: ./ref_files/star_index
+  star_fusion_index: ./ref_files/fusion_index/ctat_genome_lib_build_dir
+  salmon_index:  ./ref_files/salmon_index/transcripts.fa
+  msisensor_index: ./ref_files/msisensor_index/hg38/microsatellite.list
   centrifuge_index: ./ref_files/centrifuge_index/p_compressed+h+v
+  annotation_pyprada: ./ref_files/pyPRADA/gencode.canonical.gene.exons.tab.txt
 
 ###tool path
   msisensor2_path: ./ref_files/msisensor2

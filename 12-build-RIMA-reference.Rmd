@@ -1,5 +1,5 @@
 ---
-title: "build-rima-reference"
+title: "Build-rima-reference"
 author: "altreuter"
 date: "8/4/2021"
 output: html_document
@@ -21,16 +21,16 @@ wget http://cistrome.org/~lyang/ref.tar.gz
 
 # Steps to make your own custom reference files for RIMA pipeline
 
-### Reference fasta
+## Reference fasta
 
 The human GDC hg38 fasta file is downloaded from [GDC website](https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files). 
 
-### Gene annotation file (gtf)
+## Gene annotation file (gtf)
 
 The human gtf annotation file is downloaded from [GENCODE website](https://www.gencodegenes.org/human/). The current annotation file we used is V27.
 
 
-### build STAR index
+## build STAR index
 
 ```bash
 conda activate rna
@@ -53,7 +53,7 @@ STAR --runThreadN 16 --runMode genomeGenerate --genomeDir ./ref_files/v27_index 
 00:28:53 ... writing SAindex to disk
 00:29:05 ..... finished successfully
 ```
-### RSeQC reference files
+## RSeQC reference files
 
 We download the human annotation bed file including the whole genome bed file, and house keeping bed file from RSeQC page from [sourcforge website](https://sourceforge.net/projects/rseqc/files/BED/Human_Homo_sapiens/).
 
@@ -62,7 +62,7 @@ We download the human annotation bed file including the whole genome bed file, a
 ./ref_files/housekeeping_refseqGenes.bed
 ```
 
-### build salmon index
+## build salmon index
 
 ```bash
 conda activate rna
@@ -95,7 +95,7 @@ Elapsed time: 703.843s
 The GMT file is downloaded from [BROAD release page](https://data.broadinstitute.org/gsea-msigdb/msigdb/release/6.1/). The current GMT file we used is "c2.cp.kegg.v6.1.symbols.gmt"
 
 
-### STAR-Fusion genome resource lib
+## STAR-Fusion genome resource lib
 
 The genome resource lib is downloaded from [BROAD release page](https://www.gencodegenes.org/human/). The current lib we used is GRCh38_v22_CTAT_lib.
 
@@ -105,7 +105,7 @@ More details, read:
 *  https://github.com/STAR-Fusion/STAR-Fusion/wiki/installing-star-fusion
 
 
-### Centrifuge index
+## Centrifuge index
 
 The human Centrifuge index is downloaded from [Centrifuge website](http://www.ccb.jhu.edu/software/centrifuge/). The current index we used is p_compressed+h+v that includes human genome, prokaryotic genomes, and viral genomes.
 
@@ -114,7 +114,7 @@ More details, read:
 
 *  https://github.com/DaehwanKimLab/centrifuge
 
-### TRUST4 reference files
+## TRUST4 reference files
 
 TRUST4 reference files includes 1. TCR, BCR genomic sequence fasta file; 2. Reference database sequence containing annotation information.
 

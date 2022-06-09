@@ -21,9 +21,14 @@ The above command utilizes hg3_bcrtcr.fa (a fasta file containing the coordinate
 
 ### TRUST4 output
 
-In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis.  In the last section, we describe the cohort level report.
+In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis. We provided the customized [trust4_metric_functions.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_repertoire/trust4_metric_functions.R) in our pipeline repo to calculte the immune repertoire individuual clonal types , clonality, diversity, and BCR somatic hypermutation rate. You will receive below invidual outputs using 'SRR8281233' as an example.
 
-## BCR cluster calculation
+**Example outputs folder structure**
+```{r fig.align='left', echo=FALSE, out.width="50%"}
+knitr::include_graphics('images/Output_trust4.png', dpi = NA)
+```
+
+## Cluster calculation
 
 Activation of B cells leads to somatic hypermutation (**SHM**).  As B cells proliferate, random mutations are generated at a high rate in the V-region sequence.  Favorable mutations lead to better antigen binding and are selected for survival as the B cells continue to proliferate.  BCR clustering is used to identify BCRs from the same lineage. The clusters can then be used to estimate somatic hypermutation rate (described later in this chapter).
 
@@ -193,6 +198,4 @@ p
 
 ``` 
 
-
-## Video demo
 
