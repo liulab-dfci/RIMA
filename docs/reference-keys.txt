@@ -76,9 +76,7 @@ comparison-within-phenotype
 microbiome
 centrifuge
 microial-classfication-from-rna-seq-data
-video-demo
-we-have-prepared-the-rima-reference-folder-with-the-current-version-we-used.-you-can-directly-download-from-iris-server
-steps-to-make-your-own-custom-reference-files-for-rima-pipeline
+customize-your-own-reference
 reference-fasta
 gene-annotation-file-gtf
 build-star-index
