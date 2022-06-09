@@ -38,5 +38,3 @@ From the results, RIMA selects the top 15 most enriched microbiota according to 
 knitr::include_graphics('images/Group_microbes_abundance.png', dpi = NA)
 ```
 
-## Video demo
-

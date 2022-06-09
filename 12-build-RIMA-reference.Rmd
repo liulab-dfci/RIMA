@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### We have prepared the RIMA reference folder with the current version we used. You can directly download from Iris server:
+We have prepared the RIMA reference folder with the current version we used. You can directly download from Iris server:
 
 ```
 # We have nearly 69G reference files
