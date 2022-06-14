@@ -13,8 +13,9 @@ description: "This is a minimal example of using the bookdown package to write a
 
 #  Introduction {#intro}
 
-This is a tutorial about integrative computing analysis of **tumor immunity** using bulk RNA-sequencing (RNA-seq) data. We will focus on inferring immune infiltration, immune repertoire, immune response and neoantigen prediction from a gene expression profile.\
-We developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA_pipeline.
+This tutorial describes how to perform integrative computational analysis of **tumor immunity** using bulk RNA-sequencing (RNA-seq) data. We will focus on inferring immune infiltration levels, immune repertoire features, immune response and HLA type from a gene expression profile.\
+
+To support the uniform analysis of bulk RNA-sequencing data, we developed a RNA-seq immune analysis pipeline named **RIMA** that is available at https://github.com/liulab-dfci/RIMA_pipeline. \
 
 Tumor RNA-seq has become an important technique for molecular profiling and
 immune characterization of tumors. RNA-seq Immune Analysis (RIMA) performs
@@ -62,7 +63,7 @@ knitr::include_graphics('images/RIMA.png', dpi = NA)
 | TRUST4 | TCR and BCR Sequence Analysis | 
 |  | **---IMMUNE INFILTRATION---** |  
 | ImmuneDeconv | Cell Components Estimation | 
-|  | **---IMMNUE RESPONSE---** |  
+|  | **---IMMUNE RESPONSE---** |  
 | MSIsensor2 | Microsatellite Instability (MSI) Detection | 
 | TIDEpy | T cell dysfunction and exclusion prediction | 
 |  | **---FUSION---** |  
@@ -107,9 +108,11 @@ git clone  https://github.com/liulab-dfci/RIMA_pipeline.git
 
 **Install miniconda**
 
-Download and configure your conda environment. Follow the prompts on the installer screens.  
-#Note: You will need to install miniconda3 into the RIMA directory.  This means you need to override the default directory when miniconda3 is installed.
-#If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)
+Download and configure your conda environment. Follow the prompts on the installer screens.\  
+
+#Note: You will need to install miniconda3 into the RIMA directory.  This means you need to override the default directory when miniconda3 is installed.\
+
+#If you have conda installed elsewhere, you will still need a local copy in your RIMA directory in order for the environment installation shell program to work.  (see below)\
 
 ```
 #go to your RIMA directory if you are not there already
@@ -163,9 +166,9 @@ source activate RIMA
 
 A pre-prepared RIMA reference folder can be downloaded using the code below. 
 
-If you want to prepare a customized reference, you can follow [this tutorial](https://github.com/kateyliu/RIMA/build-rima-reference/) to build your own reference.
+If you want to prepare a customized reference, you can follow [this tutorial](https://liulab-dfci.github.io/RIMA/customize-your-own-reference.html) to build your own reference.
 
-Currently, RIMA supports the **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons </a> v22.
+The following link contains the **hg38** reference downloaded from <a href = 'https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files'>Genomic Data Commons</a> using version 22 index and annotation files.  
  
 ```
 cd RIMA
@@ -184,7 +187,7 @@ rm ref.tar.gz
 
 
 If you download your RIMA reference folder into a directory other than RIMA, you have to change the symbolic link for the ref_files under the rnaseq_pipeline folder:
-For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link. Please refer to <a href = 'https://crazyhottommy.github.io/computation_wiki/RIMA/build-RIMA-reference/'>here</a> if you are building your own reference.
+For example: if you downloaded the RIMA reference folder into /mnt/tutorial/ref_files, use the ln command to change the symbolic link. 
 
 
 ```
@@ -205,7 +208,9 @@ ln -s /mnt/tutorial/ref_files
 
 **Metasheet.csv**
 
-Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. The Metasheet.csv should contain phenotypic information about your samples that can be used for downstream analysis. Ensure your metasheet contains **Two Required Columns** (SampleName, Group) in comma-delimited format. RIMA uses demo data from <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
+Metasheet.csv is a comma-delimited file that resides in the RIMA_pipeline folder. The Metasheet.csv should contain phenotypic information about your samples that can be used for downstream analysis. Your metasheet should contain **Two Required Columns** (SampleName, Group) in comma-delimited format. 
+
+For this tutorial, RIMA uses demo data from Zhao, J., Chen, A.X., Gartrell, R.D. et al. Immune and genomic correlates of response to anti-PD-1 immunotherapy in glioblastoma. Nat Med 25, 462–469 (2019). <a href= 'https://www.nature.com/articles/s41591-019-0349-y'>*https://doi.org/10.1038/s41591-019-0349-y* </a>. We selected 12 samples from this trial and included 6 treatment naive samples (3 responder and 3 non-responders) for cohort level comparison. 
 
 <ul>
  <li>**SampleName:** Sequencing sample id.</li>
