@@ -7,16 +7,23 @@ output: html_document
 
 # Customize your own reference
 
+RIMA provides a pre-built set of references using GDC hg38 and v22 GENCODE annotation.   This set of references can be downloaded as described in chapter 2.2.
+
+We have also pre-built a set of reference files using v27 GENCODE annotation.  This set of pre-built references can be downloaded from http://cistrome.org/~lyang/ref_v27.tar.gz using the same instructions provided in chapter 2.
+
+If you wish to build a different set of references, please follow the instructions which follow.  
+
 ## Reference fasta
 
-The human GDC hg38 fasta file is downloaded from [GDC website](https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files). 
+Download the human GDC hg38 fasta file from [GDC website](https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files). 
 
 ## Gene annotation file (gtf)
 
-The human gtf annotation file is downloaded from [GENCODE website](https://www.gencodegenes.org/human/). The current annotation file we used is V27.
-
+Dowload the human gtf annotation file from [GENCODE website](https://www.gencodegenes.org/human/). 
 
 ## build STAR index
+
+Build the STAR index using the following code.  Make sure to change the file names to indicate which gencode version you are using.
 
 ```bash
 conda activate rna
@@ -96,17 +103,19 @@ More details, read:
 The human Centrifuge index is downloaded from [Centrifuge website](http://www.ccb.jhu.edu/software/centrifuge/). The current index we used is p_compressed+h+v that includes human genome, prokaryotic genomes, and viral genomes.
 
 You can also build your own custom Centrifuge index. 
-More details, read:
+For more details, read:
 
 *  https://github.com/DaehwanKimLab/centrifuge
 
 ## TRUST4 reference files
 
-TRUST4 reference files includes 1. TCR, BCR genomic sequence fasta file; 2. Reference database sequence containing annotation information.
+TRUST4 reference files includes 
+1. a TCR, BCR genomic sequence fasta file; and
+2. A reference database sequence containing annotation information.
 
 ```
 hg38_bcrtcr.fa
 human_IMGT+C.fa
 ```
-These reference files can directlt be downloaded from [TRUST4 github](https://github.com/liulab-dfci/TRUST4).
+These reference files can directly be downloaded from [TRUST4 github](https://github.com/liulab-dfci/TRUST4).
 
