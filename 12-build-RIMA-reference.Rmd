@@ -90,7 +90,7 @@ The GMT file is downloaded from [BROAD release page](https://data.broadinstitute
 
 ## STAR-Fusion genome resource lib
 
-The genome resource lib is downloaded from [BROAD release page](https://www.gencodegenes.org/human/). The current lib we used is GRCh38_v22_CTAT_lib.
+The genome resource lib is downloaded from [BROAD release page](https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/). The current lib we used is GRCh38_v22_CTAT_lib.
 
 You can also prep it for use with STAR-fusion.
 More details, read:
