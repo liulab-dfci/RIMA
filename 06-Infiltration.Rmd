@@ -1,14 +1,15 @@
 # Immune Infiltration {#Infiltration}
 
 **Cell infiltration estimation in the tumor microenvironment**\
-The tumor microenviroment (**TME**) is a complicated system consisting of immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanisms of tumor progression and immune evasion, which is essential for providing a guideline for immunotherapy selection. 
+The tumor microenviroment (**TME**) is a complicated system consisting of immune cells, stromal cells, and extracellular factors. Estimating cell components is essential for classifying the distinct tumor immune microenvironment (TIME) phenotype. Furthermore, dissecting the TIME by evaluating cell components plays a significant role in untangling the mechanisms of tumor progression and immune evasion.
 
-There are two major approaches for estimating cell infiltration in the TME --  1) deconvolution-based and 2) marker-based approaches. There are two major approaches for estimating cell infiltration in the TME -- deconvolution-based and marker-based approaches. Deconvolution-based methods, such as TIMER, quanTIseq, EPIC, and CIBERSORT, consider a given gene expression profile as a linear combination of pre-defined immune gene signatures present at different ratios. A linear regression model is often applied to estimate the coefficients of genes, which are later used to infer immune cell abundances or fractions. Marker-based approaches, such as xCell and MCP-counter, quantify the signature enrichment score of a list of cell-specific marker genes from gene expression profiles. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that integrates these six algorithms. All six algorithms estimate cell infiltration of immune cells and stromal cells, while EPIC and quanTIseq also assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. And TIMER, xCell, and MCP-counter only support inter-comparison between sample groups within the same cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. Each algorithm estimates one general cell type or specific cell subtype. When a gold standard is not available, is is best to focus on the observations consistently predicted by the various algorithms. \
+Traditionally, there have been two major approaches for estimating cell infiltration in the TME --  1) deconvolution-based and 2) marker-based approaches. Deconvolution-based methods, such as TIMER, quanTIseq, EPIC, and CIBERSORT, consider a given gene expression profile as a linear combination of pre-defined immune gene signatures present at different ratios. A linear regression model is often applied to estimate the coefficients of genes, which are later used to infer immune cell abundances or fractions. Marker-based approaches, such as xCell and MCP-counter, quantify the signature enrichment score of a list of cell-specific marker genes from gene expression profiles. <a href="https://github.com/icbi-lab/immunedeconv">ImmuneDeconv</a> is an R package that implements these six algorithms. All six algorithms estimate cell infiltration of immune cells, while three of the algorithms also estimate stromal cells. EPIC and quanTIseq also assess uncharacterized cells defined as cancer cells. Of note, CIBERSORT absolute mode, EPIC, and quanTIseq support inter-comparison between sample groups and intra-comparison between cell types. TIMER, xCell, and MCP-counter only support inter-comparison between sample groups within the same cell type. Immune cell deconvolution is still an open question in the field, and different algorithms could give slightly different results. A user may wish to evaluate the consistency of predictions stemming from different algorithms, the agreement of results with estimations from other modalities, and/or the derivation of the marker genes used for the tool.  Newer algorithms are being developed which can utilize single-cell RNA-seq data as reference and which attempt to impute cell type-specific gene expression.  These tools may improve predictions, especially if a well-annotated and compatible reference is available. \
 
+
+## Cibersort
 
 *Note: RIMA uses Cibersort in the immune_infiltration modules.  Use of Cibersort requires registration for use of their gene signature matrix.  In order to run the immune_infiltration module of RIMA, you must register and download the LM22.txt matrix from the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>.  Once you obtain this file, add it to the ~/RIMA/RIMA_pipeline/static/cibersort folder.*
 
-## Cibersort
 <a href="https://www.nature.com/articles/nmeth.3337">CIBERSORT</a> is a deconvolution-based method that uses the v-support vector regression method (v-SVR) to estimate each immune cell type's relative proportion from a gene expression profile (GEP). It requires an input of reference gene expression signatures. CIBERSORT provides a gene signature matrix (LM22.txt) which contains 547 genes and distinguishes 7 T-cell types, naïve and memory B cells, plasma cells, and NK cells. The CIBERSORT absolute mode scales cellular fractions to a score that reflects each cell type's absolute proportion, allowing comparison across both samples and cell types.
 The **CIBERSORT source code** and **LM22 signature matrix** are only freely available to academic users -- register for access on the <a href="https://cibersort.stanford.edu/">CIBERSORT website </a>. \
 
@@ -41,7 +42,7 @@ head(res_ciber,3)
 ## TIMER
 <a href="http://cistrome.org/TIMER/">TIMER</a> (Tumor IMmune Estimation Resource) uses linear least square regression to estimate six tumor-infiltrating immune cell types (B, CD4T, CD8T, neutrophils, macrophages, and dendritic cells). Since the tumor purity is very different across different cancer cell types, TIMER selects specific genes as immune signatures based on the correlation between gene expression and tumor purity. (see <a href="https://pubmed.ncbi.nlm.nih.gov/27549193/">Bo Li, et al.</a> for more information.\
 
-Tutorial of TIMER:\
+Tutorial of TIMER's web interface:\
 <iframe width="560" height="315" src="https://www.youtube.com/embed/94v8XboCrXU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> \
 
 Tutorial of TIMER2:\
@@ -100,7 +101,7 @@ res_mcp = as.data.frame(deconvolute(df, "mcp_counter"))
 
 ## Starting with TPM matrix
 
-RIMA offers source [immune_infiltration.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_infiltration/immune_infiltration.R) R scripts for immune infiltration comparison analysis using TPM matrix as inputs when raw fastq reads is not available. Below is the example of running the scripts: 
+[immune_infiltration.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_infiltration/immune_infiltration.R) contains R scripts for immune infiltration comparison analysis using a TPM matrix as input. Below is an example of running the scripts to obtain CIBERSORT absolute results: 
 
 ```{r, eval=FALSE}
 
@@ -116,7 +117,7 @@ Usage:
   -t cancer type for timer
 ```
 
-Immune infiltration results of the siz algorithms will be generated and can be use as the comparion analysis. RIMA will create text output files in the analysis/immune_infiltration folder of RIMA_pipeline. Example code is provided below for heatmap and boxplots like those generated by RIMA, CIBERSORT abs results are used as an example.  If you wish to use this code to generate new figures, set "phenotype" to the appropriate column in metasheet.csv in the hmap and boxfig calls.
+RIMA will generate immune infiltration results for all six algorithms which can be used to compare immune cell levels between phenotypes. After RIMA's immune_infiltration module is run, text output files as well as boxplot, correlation and heatmap plots are stored in the analysis/immune_infiltration folder of the RIMA_pipeline. Example code is provided below for heatmap and boxplots like those generated by RIMA. CIBERSORT abs results are used as an example.  If you wish to use this code to generate new figures, set "phenotype" in the hmap and boxfig calls to the appropriate column in metasheet.csv.
 
 ### Correlation Plots
 RIMA generates correlation plots for 8 cell types.  (B cells, CD4 T cells, CD8 Tcells, DCs, Macrophages, Treg cells, NK cells and Neutrophils)  These image files display Spearman correlation values for all six algorithms, allowing you to compare cell estimations between algorithms.

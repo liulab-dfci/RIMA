@@ -29,7 +29,7 @@ mate: [1,2]               #paired-end fastq format
 design: Group #condition on which to do comparsion (as set up in metasheet.csv)
 Treatment: R
 Control: NR
-batch: syb_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
+batch: syn_batch          #option: false or a column name from the metasheet.csv.  If set to a column name in the metasheet.csv, the column name will be used for batch effect analysis (limma).  It will also be used as a covariate for differential analysis (DeSeq2) to account for batch effect.  
 
 pre_treated: false          #option: true or false. If set to false, patients are treatment naive.  If set to true, patients have received some form of therapy prior to the current study.
 
@@ -60,7 +60,7 @@ TIDE calculates a T cell exclusion score to estimate immune escape. The T cell e
 ### Normalization
 The input for TIDE is a normalized TPM matrix, the steps for normalization are:\
 
-1) Log transform the data -- log2(TPM+1).\
+1) Log transform the data: log2(TPM+1).\
 2) For each gene, subtract the average of the log transformed expression levels across all of your samples.\
 
 ### Running TIDE
@@ -81,7 +81,7 @@ print(tide_res)
 
 ## Microsatelite instability (MSI)
 
-Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous studies show that the MSI is highly associated with tumor mutation burden and closly related to immunotherapy response. Many tools such as MANTIS, MSIsensor, mSINGS and MSIsensor-pro are available to calculate MSI scores from RNA-seq data. In our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI scores, which allows for tumor-only BAM input. 
+Microsatelite instability (MSI) is the condition of genetic hypermutability (predisposition to mutation) that results from impaired DNA mismatch repair (MMR). Previous studies have shown that the MSI is highly associated with tumor mutation burden and closly related to immunotherapy response. Many tools such as MANTIS, MSIsensor, mSINGS and MSIsensor-pro are available to calculate MSI scores from RNA-seq data. In our RIMA pipeline, we applied <a href="https://github.com/niu-lab/msisensor2">MSIsensor2</a> to estimate MSI scores, which allows for tumor-only BAM input. 
 
 ```{r,eval=FALSE}
 #Run MSIsensor2 
@@ -101,7 +101,7 @@ print(msi_res)
 
 ## Response comparison analysis of biomarkers
 
-RIMA combines the output from TIDE and MSIsensor2 in a report that compares cohorts.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.
+RIMA combines the output from TIDE and MSIsensor2 in a report that compares cohorts.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described more in Chapter 4.2.1.  The report figure can be found in the TIDE subfolder within RIMA_pipeline/analysis.
 
 ```{r,eval=FALSE, fig.height = 4}
 #read the metasheet

@@ -17,7 +17,7 @@ STAR-Fusion --chimeric_junction analysis/star/sample/sampleChimeric.out.junction
 
 ## Remove fusion homology
 
-RIMA uses pyPRADA to calculate the homology score between the two genes in the fusion calling result. RIMA first removes the duplicated fusion genes from the fusion calling result and then runs homology between the genes. This part requires a configuration file containing information about the gene annotation and the output feature file.  These are pre-compiled and can be found in RIMA's static directory.
+RIMA uses pyPRADA to calculate the homology score between pair of fusion genes in the fusion calling result. RIMA first removes the duplicated fusion genes from the fusion calling result and then runs homology between the genes. This part requires a configuration file containing information about the gene annotation and the output feature file.  These are pre-compiled and can be found in RIMA's static directory.
 
 ```
 prada-homology  -i analysis/fusion/sample_pyprada_fusion_table.txt 
@@ -25,8 +25,11 @@ prada-homology  -i analysis/fusion/sample_pyprada_fusion_table.txt
                 -tmpdir analysis/fusion/tmp/ 
                 -conf static/fusion/prada_config.txt
 ``` 
-The output of the homology is generally a text file which contains information on Identity, Alignment length, Evalue and BitScore for each pair of fusion genes. Fusion gene pairs with BitScore < 100 will be filtered out. Below is an example of the homology scores from pyPRADA:
+The output of the homology analysis is a text file which contains information on Identity, Alignment length, Evalue and BitScore for each pair of fusion genes. Fusion gene pairs with BitScore < 100 will be filtered out. Below is an example of the homology scores from pyPRADA:
 
+```{r fig.align='center', echo=FALSE, fig.cap='pyPRADA Homology Scores'}
+knitr::include_graphics('images/homology.png', dpi = NA)
+```
 
 ## Comparison within phenotype
 

@@ -21,9 +21,9 @@ The above command utilizes hg3_bcrtcr.fa (a fasta file containing the coordinate
 
 ### TRUST4 output
 
-In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis. We provided the customized [trust4_metric_functions.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_repertoire/trust4_metric_functions.R) in our pipeline repo to calculte the immune repertoire individuual clonal types , clonality, diversity, and BCR somatic hypermutation rate. You will receive below invidual outputs using 'SRR8281233' as an example.
+In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis. We provided the customized [trust4_metric_functions.R](https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_repertoire/trust4_metric_functions.R) in our pipeline repo to illustrate how BCR clusters, TCR and BCR clonality, BCR somatic hypermutation rate and BCR isotype class switching are calculated. Example individual outputs for sample 'SRR8281233' are included in each section below.
 
-**Example outputs folder structure**
+**Example output folder structure**
 ```{r fig.align='left', echo=FALSE, out.width="50%"}
 knitr::include_graphics('images/Output_trust4.png', dpi = NA)
 ```
@@ -146,7 +146,7 @@ combined
 ``` 
 
 ## Somatic hypermutation rate of BCR
-As described in BCR clustering section of this chapter, somatic hypermutation (**SHM**) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate.  For each BCR cluster identified by TRUST4, TRUST4 calculates the number of point mutations in the nucleotide sequences in order to estimate SHM.  SHM can be used as an approximation of B cell activity within a sample.  
+As described in the BCR clustering section of this chapter, somatic hypermutation (**SHM**) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate.  For each BCR cluster identified by TRUST4, TRUST4 calculates the number of point mutations in the nucleotide sequences in order to estimate SHM.  SHM can be used as an approximation of B cell activity within a sample.  
 
 ``` {R}
 SHM.ratio <- getSHMratio(sample_bcr_cluster)
@@ -170,11 +170,11 @@ st.Ig
 ``` 
 
 ## Cohort analysis 
-The examples above demonstrated the basic immune repertoire-related metrics using a single sample. In the cohort anlysis, all of samples are combined in order to facilitate comparisons within a particular phenotype.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described in more detail in Chapter 4.2.1.
+The examples above demonstrate the basic immune repertoire-related metrics using a single sample. In the cohort analysis, all of samples are combined in order to facilitate comparisons within a particular phenotype.  The phenotype used for comparison is the one identified in the config.yaml cohort parameter section.  This section is described in more detail in Chapter 4.2.1.
 .
 ``` {R warning = FALSE, fig.height = 3, fig.width = 6}
 #load the pre-processed results that contain all samples 
-#These results would be automatically generated after running RIMA immune repertoire module
+#These results would be automatically generated after running the RIMA immune repertoire module
 
 inputdir <- "TRUST4/Cohort/"
 load(paste(inputdir,"TRUST4_BCR_heavy_cluster.Rdata", sep = ""))
