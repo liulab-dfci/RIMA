@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-06-09" />
+<meta name="date" content="2022-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
 <li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microbial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microbial classfication from RNA-seq data</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html"><i class="fa fa-check"></i><b>11</b> Customize your own reference</a><ul>
 <li class="chapter" data-level="11.1" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html#reference-fasta"><i class="fa fa-check"></i><b>11.1</b> Reference fasta</a></li>
@@ -253,16 +253,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="customize-your-own-reference" class="section level1">
 <h1><span class="header-section-number">Chapter 11</span> Customize your own reference</h1>
+<p>RIMA provides a pre-built set of references using GDC hg38 and v22 GENCODE annotation. This set of references can be downloaded as described in chapter 2.2.</p>
+<p>We have also pre-built a set of reference files using v27 GENCODE annotation. This set of pre-built references can be downloaded from <a href="http://cistrome.org/~lyang/ref_v27.tar.gz" class="uri">http://cistrome.org/~lyang/ref_v27.tar.gz</a> using the same instructions provided in chapter 2.</p>
+<p>If you wish to build a different set of references, please follow the instructions which follow.</p>
 <div id="reference-fasta" class="section level2">
 <h2><span class="header-section-number">11.1</span> Reference fasta</h2>
-<p>The human GDC hg38 fasta file is downloaded from <a href="https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files">GDC website</a>.</p>
+<p>Download the human GDC hg38 fasta file from <a href="https://gdc.cancer.gov/about-data/gdc-data-processing/gdc-reference-files">GDC website</a>.</p>
 </div>
 <div id="gene-annotation-file-gtf" class="section level2">
 <h2><span class="header-section-number">11.2</span> Gene annotation file (gtf)</h2>
-<p>The human gtf annotation file is downloaded from <a href="https://www.gencodegenes.org/human/">GENCODE website</a>. The current annotation file we used is V27.</p>
+<p>Dowload the human gtf annotation file from <a href="https://www.gencodegenes.org/human/">GENCODE website</a>.</p>
 </div>
 <div id="build-star-index" class="section level2">
 <h2><span class="header-section-number">11.3</span> build STAR index</h2>
+<p>Build the STAR index using the following code. Make sure to change the file names to indicate which gencode version you are using.</p>
 <div class="sourceCode" id="cb94"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb94-1"><a href="customize-your-own-reference.html#cb94-1"></a><span class="ex">conda</span> activate rna</span>
 <span id="cb94-2"><a href="customize-your-own-reference.html#cb94-2"></a></span>
 <span id="cb94-3"><a href="customize-your-own-reference.html#cb94-3"></a><span class="co">## STAR Version: STAR_2.6.1d</span></span>
@@ -322,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="star-fusion-genome-resource-lib" class="section level2">
 <h2><span class="header-section-number">11.6</span> STAR-Fusion genome resource lib</h2>
-<p>The genome resource lib is downloaded from <a href="https://www.gencodegenes.org/human/">BROAD release page</a>. The current lib we used is GRCh38_v22_CTAT_lib.</p>
+<p>The genome resource lib is downloaded from <a href="https://data.broadinstitute.org/Trinity/CTAT_RESOURCE_LIB/">BROAD release page</a>. The current lib we used is GRCh38_v22_CTAT_lib.</p>
 <p>You can also prep it for use with STAR-fusion.
 More details, read:</p>
 <ul>
@@ -333,17 +337,19 @@ More details, read:</p>
 <h2><span class="header-section-number">11.7</span> Centrifuge index</h2>
 <p>The human Centrifuge index is downloaded from <a href="http://www.ccb.jhu.edu/software/centrifuge/">Centrifuge website</a>. The current index we used is p_compressed+h+v that includes human genome, prokaryotic genomes, and viral genomes.</p>
 <p>You can also build your own custom Centrifuge index.
-More details, read:</p>
+For more details, read:</p>
 <ul>
 <li><a href="https://github.com/DaehwanKimLab/centrifuge" class="uri">https://github.com/DaehwanKimLab/centrifuge</a></li>
 </ul>
 </div>
 <div id="trust4-reference-files" class="section level2">
 <h2><span class="header-section-number">11.8</span> TRUST4 reference files</h2>
-<p>TRUST4 reference files includes 1. TCR, BCR genomic sequence fasta file; 2. Reference database sequence containing annotation information.</p>
+<p>TRUST4 reference files includes
+1. a TCR, BCR genomic sequence fasta file; and
+2. A reference database sequence containing annotation information.</p>
 <pre><code>hg38_bcrtcr.fa
 human_IMGT+C.fa</code></pre>
-<p>These reference files can directlt be downloaded from <a href="https://github.com/liulab-dfci/TRUST4">TRUST4 github</a>.</p>
+<p>These reference files can directly be downloaded from <a href="https://github.com/liulab-dfci/TRUST4">TRUST4 github</a>.</p>
 
 </div>
 </div>

@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-06-09" />
+<meta name="date" content="2022-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
 <li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microbial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microbial classfication from RNA-seq data</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html"><i class="fa fa-check"></i><b>11</b> Customize your own reference</a><ul>
 <li class="chapter" data-level="11.1" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html#reference-fasta"><i class="fa fa-check"></i><b>11.1</b> Reference fasta</a></li>
@@ -266,8 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The above command utilizes hg3_bcrtcr.fa (a fasta file containing the coordinates and sequences of V/D/J/C genes) and human_IMGT+C.fa (a V/D/J/C gene reference file from the IMGT database), and produces a simple report (example_report.tsv). This report contains a list of assembled clonotypes from example.bam with the following fields: “read_count, frequency(proportion of read_count), CDR3_dna, CDR3_amino_acids, V, D, J, C, consensus_id, consensus_id_full_length”. These fields contain the abundance, CDR3 sequence (nucleotides and amino acids), gene segment usage and identifier for each clonotype.</p>
 <div id="trust4-output" class="section level3">
 <h3><span class="header-section-number">5.1.1</span> TRUST4 output</h3>
-<p>In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis. We provided the customized <a href="https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_repertoire/trust4_metric_functions.R">trust4_metric_functions.R</a> in our pipeline repo to calculte the immune repertoire individuual clonal types , clonality, diversity, and BCR somatic hypermutation rate. You will receive below invidual outputs using ‘SRR8281233’ as an example.</p>
-<p><strong>Example outputs folder structure</strong>
+<p>In the example codes below, we use one sample to illustrate how RIMA processes the results from TRUST4. RIMA directly adds the sample ID to the TRUST4 output file. This step makes it easier to combine all of individual sample results in the subsequent analysis. We provided the customized <a href="https://github.com/liulab-dfci/RIMA_pipeline/blob/master/src/immune_repertoire/trust4_metric_functions.R">trust4_metric_functions.R</a> in our pipeline repo to illustrate how BCR clusters, TCR and BCR clonality, BCR somatic hypermutation rate and BCR isotype class switching are calculated. Example individual outputs for sample ‘SRR8281233’ are included in each section below.</p>
+<p><strong>Example output folder structure</strong>
 <img src="images/Output_trust4.png" width="50%" style="display: block; margin: auto auto auto 0;" /></p>
 </div>
 </div>
@@ -443,7 +443,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="somatic-hypermutation-rate-of-bcr" class="section level2">
 <h2><span class="header-section-number">5.6</span> Somatic hypermutation rate of BCR</h2>
-<p>As described in BCR clustering section of this chapter, somatic hypermutation (<strong>SHM</strong>) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate. For each BCR cluster identified by TRUST4, TRUST4 calculates the number of point mutations in the nucleotide sequences in order to estimate SHM. SHM can be used as an approximation of B cell activity within a sample.</p>
+<p>As described in the BCR clustering section of this chapter, somatic hypermutation (<strong>SHM</strong>) introduces more variation in a particular BCR and occurs when mature B cells are activated and proliferate. For each BCR cluster identified by TRUST4, TRUST4 calculates the number of point mutations in the nucleotide sequences in order to estimate SHM. SHM can be used as an approximation of B cell activity within a sample.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="Repertoire.html#cb53-1"></a>SHM.ratio &lt;-<span class="st"> </span><span class="kw">getSHMratio</span>(sample_bcr_cluster)</span></code></pre></div>
 <pre><code>## [1] 54
 ## [1] 2
@@ -481,10 +481,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="cohort-analysis" class="section level2">
 <h2><span class="header-section-number">5.8</span> Cohort analysis</h2>
-<p>The examples above demonstrated the basic immune repertoire-related metrics using a single sample. In the cohort anlysis, all of samples are combined in order to facilitate comparisons within a particular phenotype. The phenotype used for comparison is the one identified in the config.yaml cohort parameter section. This section is described in more detail in Chapter 4.2.1.
+<p>The examples above demonstrate the basic immune repertoire-related metrics using a single sample. In the cohort analysis, all of samples are combined in order to facilitate comparisons within a particular phenotype. The phenotype used for comparison is the one identified in the config.yaml cohort parameter section. This section is described in more detail in Chapter 4.2.1.
 .</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="Repertoire.html#cb59-1"></a><span class="co">#load the pre-processed results that contain all samples </span></span>
-<span id="cb59-2"><a href="Repertoire.html#cb59-2"></a><span class="co">#These results would be automatically generated after running RIMA immune repertoire module</span></span>
+<span id="cb59-2"><a href="Repertoire.html#cb59-2"></a><span class="co">#These results would be automatically generated after running the RIMA immune repertoire module</span></span>
 <span id="cb59-3"><a href="Repertoire.html#cb59-3"></a></span>
 <span id="cb59-4"><a href="Repertoire.html#cb59-4"></a>inputdir &lt;-<span class="st"> &quot;TRUST4/Cohort/&quot;</span></span>
 <span id="cb59-5"><a href="Repertoire.html#cb59-5"></a><span class="kw">load</span>(<span class="kw">paste</span>(inputdir,<span class="st">&quot;TRUST4_BCR_heavy_cluster.Rdata&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>))</span>

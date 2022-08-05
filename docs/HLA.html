@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-06-09" />
+<meta name="date" content="2022-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
 <li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microbial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microbial classfication from RNA-seq data</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html"><i class="fa fa-check"></i><b>11</b> Customize your own reference</a><ul>
 <li class="chapter" data-level="11.1" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html#reference-fasta"><i class="fa fa-check"></i><b>11.1</b> Reference fasta</a></li>
@@ -253,11 +253,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="HLA" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> HLA Typing</h1>
-<p>Tumor mutations can result in altered proteins, which might act as antigens and potentially elicit an immune response. Algorithms, including <a href="http://www.cbs.dtu.dk/services/NetMHCpan/">NetMHCpan</a>, <a href= "https://github.com/openvax/mhcflurry">MHCflurry</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/17608956/">SMMalign</a>, are commonly used to predict neo-antigen peptides. Knowing the HLA type is necessary to identify potential neo-antigens for targeted immunotherapy. Current alignment-based HLA typing methods require DNA or RNA sequencing inputs and predict HLA-I class only or both of HLA-I and HLA-II classes. For example, <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a>, <a href="https://github.com/ExpressionAnalysis/HLAProfiler">HLAProfiler</a>, and <a href="https://github.com/TRON-Bioinformatics/seq2HLA">seq2HLA</a> have been developed to perform high-solution HLA typing from RNA-seq data. <a href="https://github.com/FRED-2/OptiType">OptiType</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/29858810/">PHLAT</a> are other HLA identification tools for RNA, whole-exome, and whole-genome sequencing data. HLA reference sequences can be obtained from the <a href="http://www.imgt.org/">ImMunoGeneTics (IMGT) database</a>.</p>
+<p>Tumor mutations can result in altered proteins, which might act as neoantigens and potentially elicit an immune response. Algorithms, such as those available in <a href="https://github.com/griffithlab/pVACtools">pVAC-Tools</a> can be used to predict neoantigen peptides.</p>
+<p>In order to elicit an adaptive immune response, a peptide must be presented on a cell’s surface bound to major histocompatibility (MHC) protein complexes. The human leukocyte antigen (HLA) complex on chromosome 6 encodes most of the proteins that make up the human MHCs. The HLA complex is highly polymorphic and encodes MHCs that have different propensities to present different peptides. Two major classes of human MHC, class I and class II, (encoded by HLA-I and HLA-II alleles, respectively) are involved in antigen presentation. MHC class I protein complexes are expressed on all normal cells and present internally degraded proteins, while MHC class II protein complexes are normally expressed on professional antigen-presenting cells and present processed external antigens. The antigen binding portions of the MHC class I protein complexes are encoded by the HLA-I genes HLA-A, HLA-B and HLA-C. The antigen binding portions of the MHC class II proteins are encoded by alpha (A) and beta (B) genes in the DP, DQ and DR regions of the HLA complexes. These HLA-II genes include HLA-DQA1, HLA-DQB1 and HLA-DRB1.</p>
+<p>Neoantigen prediction algorithms usually integrate peptide/MHC binding predictions using tools such as <a href="https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.1">NetMHCpan</a>, <a href= "https://github.com/openvax/mhcflurry">MHCflurry</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/17608956/">SMMalign</a>. Knowing the HLA type is necessary to identify potential neoantigens for targeted immunotherapy. Current alignment-based HLA typing methods require DNA or RNA sequencing inputs and predict HLA-I class only or both of HLA-I and HLA-II classes. For example, <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a>, <a href="https://github.com/ExpressionAnalysis/HLAProfiler">HLAProfiler</a>, and <a href="https://github.com/TRON-Bioinformatics/seq2HLA">seq2HLA</a> have been developed to perform high-solution HLA typing from RNA-seq data. <a href="https://github.com/FRED-2/OptiType">OptiType</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/29858810/">PHLAT</a> are other HLA identification tools for RNA, whole-exome, and whole-genome sequencing data. HLA reference sequences can be obtained from the <a href="http://www.imgt.org/">ImMunoGeneTics (IMGT) database</a>.</p>
 <div id="identify-hla-type" class="section level2">
 <h2><span class="header-section-number">8.1</span> Identify HLA type</h2>
 <p>HLA Typing is a part of the neoantigen prediction module of RIMA.</p>
-<p>RIMA uses <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a> to predict HLA types of both MHC Class I &amp; Class II from the bulk RNA-seq data. The sorted alignment BAM files generated by STAR are used for input to arcasHLA. Here we use one sample from the Zhao trial as an example. We first extract the HLA reads from the alignment file:</p>
+<p>RIMA uses <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a> to predict HLA types for both MHC Class I &amp; Class II from the bulk RNA-seq data. The sorted alignment BAM files generated by STAR are used for input to arcasHLA. Here we use one sample from the Zhao trial as an example. We first extract the HLA reads from the alignment file:</p>
 <pre><code>### Extract fastq reads
 arcasHLA extract analysis/STAR/SRR8281218/SRR8281218.sorted.bam -t 16 -v --sample SRR8281218 -o analysis/neoantigen/SRR8281218
 
@@ -274,8 +276,8 @@ cat analysis/neoantigen/SRR8281218/SRR8281218.genotype.json
 ###
 {&quot;A&quot;: [&quot;A*26:01:01&quot;, &quot;A*03:01:01&quot;], &quot;B&quot;: [&quot;B*35:01:01&quot;, &quot;B*07:02:01&quot;], &quot;C&quot;: [&quot;C*07:02:01&quot;, &quot;C*04:01:01&quot;], &quot;DQA1&quot;: [&quot;DQA1*02:01:01&quot;, &quot;DQA1*03:01:01&quot;], &quot;DQB1&quot;: [&quot;DQB1*03:02:01&quot;], &quot;DRB1&quot;: [&quot;DRB1*04:02:01&quot;, &quot;DRB1*07:01:01&quot;]}
 ###</code></pre>
-<p><strong>Merge individual HLAs</strong>
-RIMA also merges the individual HLA results from arcasHLA into a summary file named ‘genotypes.tsv’:</p>
+<p><strong>Merge individual HLAs</strong></p>
+<p>RIMA also merges the individual HLA results from arcasHLA into a summary file named ‘genotypes.tsv’:</p>
 <pre><code>subject A1  A2  B1  B2  C1  C2  DQA11   DQA12   DQB11   DQB12   DRB11   DRB12
 SRR8281238  A*01:01:01  A*02:01:01  B*35:01:01  B*08:01:01  C*07:01:01  C*04:01:01  DQA1*05:01:01   DQA1*01:01:01   DQB1*02:01:01   DQB1*05:01:01   DRB1*01:01:01   DRB1*03:01:01
 SRR8281233  A*01:01:01  A*02:01:01  B*57:01:01  B*44:02:01  C*05:01:01  C*06:02:01  DQA1*01:02:01   DQA1*03:01:01   DQB1*06:02:01   DQB1*03:02:01   DRB1*04:01:01   DRB1*15:01:01
@@ -289,7 +291,7 @@ SRR8281218  A*26:01:01  A*03:01:01  B*35:01:01  B*07:02:01  C*07:02:01  C*04:01:
 </div>
 <div id="hla-oncoplot" class="section level2">
 <h2><span class="header-section-number">8.2</span> HLA Oncoplot</h2>
-<p>Since each HLA usually has its synonymous changes in the coding region. To better visualize and compare the HLA distribution in different samples, we use arcasHLA to convert HLA results to P-group format, which shows the alleles share the same amino acid sequence in the antigen-binding region. (eg. A*01:01P, ‘P’ indicates p-group nomenclature)</p>
+<p>To better visualize and compare the HLA distribution in different samples, we use arcasHLA to convert HLA results to P-group format. The P-group format shows the alleles which share the same amino acid sequence in the antigen-binding region. (eg. A*01:01P, ‘P’ indicates p-group nomenclature)</p>
 <pre><code>###
 #HLA summary file: genotypes.tsv
 arcasHLA convert -r p-group genotypes.tsv -o genotypes.p-group.tsv
@@ -307,7 +309,7 @@ SRR8281251      A*24:02P        A*01:01P        B*35:02P        B*41:01P        
 SRR8281218      A*26:01P        A*03:01P        B*35:01P        B*07:02P        C*07:02P        C*04:01P        DQA1*02:01P     DQA1*03:01P     DQB1*03:02P     DQB1*03:02P     DRB1*04:02P     DRB1*07:01P
 SRR8281238      A*01:01P        A*02:01P        B*35:01P        B*08:01P        C*07:01P        C*04:01P        DQA1*05:01P     DQA1*01:01P     DQB1*02:01P     DQB1*05:01P     DRB1*01:01P     DRB1*03:01P
 SRR8281226      A*33:01P        A*24:02P        B*14:02P        B*15:01P        C*06:02P        C*08:02P        DQA1*03:01P     DQA1*01:02P     DQB1*05:02P     DQB1*03:02P     DRB1*04:03P     DRB1*16:02P</code></pre>
-<p>RIMA generate the HLA oncoplot that shows the most frequent HLA alleles across patient cohorts and the expression level of HLA genes (HLA-A, HLA-B, HLA-C, HLA-DQA1, HLA-DQB1, and HLA-DRB1). The values in the heatmap represent the frequency of the allele among samples.The x axis represents patients samples are sorted expression of HLA genes within the group. The HLA expression shown on the top represents the mean TPM of HLA genes in each sample.</p>
+<p>RIMA generates an HLA oncoplot which shows the most frequent HLA alleles across patient cohorts and the expression level of HLA genes (HLA-A, HLA-B, HLA-C, HLA-DQA1, HLA-DQB1, and HLA-DRB1). The percentages on the left of the heatmap represent the frequency of the allele among samples. The colors in the heatmap indicate which allele (e.g. A = HLA-A) and whether the allele was found in the first (A1), the second (A2) or both copies of the patient’s gene. The colored bars to the right indicate the absolute number of alleles found. The x axis represents patient samples. The samples are sorted by group and then by the expression of HLA genes within the group. The HLA expression shown on the top represents the mean TPM of HLA genes in each sample.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="HLA.html#cb85-1"></a><span class="co">#load HLA p-group summary file</span></span>
 <span id="cb85-2"><a href="HLA.html#cb85-2"></a>hla &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;genotypes.p-group.tsv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>)</span>
 <span id="cb85-3"><a href="HLA.html#cb85-3"></a><span class="co">#load metasheet </span></span>

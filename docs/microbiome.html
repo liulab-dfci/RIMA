@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-06-09" />
+<meta name="date" content="2022-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
 <li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microbial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microbial classfication from RNA-seq data</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html"><i class="fa fa-check"></i><b>11</b> Customize your own reference</a><ul>
 <li class="chapter" data-level="11.1" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html#reference-fasta"><i class="fa fa-check"></i><b>11.1</b> Reference fasta</a></li>
@@ -254,13 +254,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="microbiome" class="section level1">
 <h1><span class="header-section-number">Chapter 10</span> Microbiome</h1>
 <p>With the advantage of high-throughput sequencing, we are able to explore the genomes of the tumor-bearing host and the various microbes that reside in the host. It has been reported that the dynamics between microbiota and hosts may influence tumor growth and affect treatment approaches. Notably, gastrointestinal microbiota has been widely recognized for its role in cancer development and its association with cancer therapy response and toxicity. Previous studies have investigated the multiple ways in which gut microbiota influence anti-tumor immunity. For example, the modulation of microbial components helps to enhance T cell response and improve anti-PDL1 efficacy in melanoma patients. In addition, microbial metabolites can provide an energy source for neoplastic progression in colon cancer. Thus, it is essential to decipher microbiota components from the following perspectives: 1) the interactions between disease phenotypes and microbiota; 2) the relationship between treatment efficacy and microbiota enrichment; 3) the involvement of microbiota in condition-specific metabolism pathways; and 4) the application value of microbiota as a diagnostic biomarker. As a whole, the aim of microbiota classification analysis is to help elucidate novel mechanisms of disease development, potentially providing new insights into therapeutic target discovery.</p>
-<p>For decades, microbial phylogeny and taxonomy have relied on 16S rRNA sequencing and shot gun sequencing, which contains hypervariable regions as species-specific signatures for microbial identification. To perform computationally robust and effective microbiota classification, researchers have developed reference-genome-based methods from high-throughput DNA or RNA sequencing, such as PathSeq and Centrifuge. PathSeq aligns non-host reads to pre-defined microbial organisms using BWA-MEM alignment, while Centrifuge builds a compressed index merged with unique genome sequences in advance. Although both methods achieve microbiota classification and abundance estimation based on a users’ reference, Centrifuge outperforms PathSeq in meaasures of both memory usage and speed.</p>
+<p>For decades, microbial phylogeny and taxonomy have relied on 16S rRNA sequencing and shot gun sequencing, which contains hypervariable regions as species-specific signatures for microbial identification. To perform computationally robust and effective microbiota classification, researchers have developed reference-genome-based methods from high-throughput DNA or RNA sequencing, such as PathSeq and Centrifuge. PathSeq aligns non-host reads to pre-defined microbial organisms using BWA-MEM alignment, while Centrifuge builds a compressed index merged with unique genome sequences in advance. Although both methods achieve microbiota classification and abundance estimation based on a users’ reference, Centrifuge outperforms PathSeq in measures of both memory usage and speed.</p>
 <div id="centrifuge" class="section level2">
 <h2><span class="header-section-number">10.1</span> Centrifuge</h2>
 <p>Centrifuge is a rapid and memory-efficient microbial classification engine that enables fast and sensitive labeling of reads and quantification of species. Centrifuge utilizes FM-index, a compact data structure widely used for short read alignment, to store all the sequence information in the database. For read classification, Centrifuge looks for stretches of long matches greedily between a read and the reference database and scores the taxonomy classification based on the match size. The species or genus with the highest score will be the taxonomy classification result for a read. Reads can be assigned to multiple species, so Centrifuge utilizes the Expectation-Maximization algorithm to quantify the abundance for the identified species. Due to the increasing size of the microbiome reference database, Centrifuge takes advantage of the high sequence similarity between species under the same genus and can compress the reference database.</p>
 </div>
-<div id="microial-classfication-from-rna-seq-data" class="section level2">
-<h2><span class="header-section-number">10.2</span> Microial classfication from RNA-seq data</h2>
+<div id="microbial-classfication-from-rna-seq-data" class="section level2">
+<h2><span class="header-section-number">10.2</span> Microbial classfication from RNA-seq data</h2>
 <p>The reference index for Centrifuge (bacteria, archaea, viruses and human) can be downloaded from <a href= "https://ccb.jhu.edu/software/centrifuge/manual.shtml#nt-database"> here </a>. The microbiome module of RIMA uses raw fastq reads as input for Centrifuge and a classification report will be generated</p>
 <pre><code>centrifuge -x ref_files/centrifuge_index/p_compressed+h+v -p 16  --host-taxids 9606 \
 -1 data/SRR8281218_1.fastq.gz -2 data/SRR8281218_2.fastq.gz \
@@ -279,10 +279,10 @@ SRR8281218  Isosphaera pallida  128 species 5529304 1   0   0.0
 SRR8281218  Spirochaeta thermophila 154 species 2516433 3   3   0.0
 </code></pre>
 <p>From the results, RIMA selects the top 15 most enriched microbiota according to the Inverse Simpson Index and plots their relative abundance ratio at the cohort level.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
-<img src="images/Group_microbes_abundance.png" alt="Fuison violine plot"  />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-47"></span>
+<img src="images/Group_microbes_abundance.png" alt="Microbiome Abundance plot"  />
 <p class="caption">
-Figure 10.1: Fuison violine plot
+Figure 10.1: Microbiome Abundance plot
 </p>
 </div>
 

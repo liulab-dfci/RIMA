@@ -8,6 +8,7 @@ fig:unnamed-chunk-42
 fig:unnamed-chunk-44
 fig:unnamed-chunk-45
 fig:unnamed-chunk-46
+fig:unnamed-chunk-47
 intro
 how-to-run-rima
 install-rima-and-set-up-the-running-environment
@@ -75,7 +76,7 @@ remove-fusion-homology
 comparison-within-phenotype
 microbiome
 centrifuge
-microial-classfication-from-rna-seq-data
+microbial-classfication-from-rna-seq-data
 customize-your-own-reference
 reference-fasta
 gene-annotation-file-gtf

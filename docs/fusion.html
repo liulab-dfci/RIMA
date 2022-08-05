@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-06-09" />
+<meta name="date" content="2022-08-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,7 +217,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="10" data-path="microbiome.html"><a href="microbiome.html"><i class="fa fa-check"></i><b>10</b> Microbiome</a><ul>
 <li class="chapter" data-level="10.1" data-path="microbiome.html"><a href="microbiome.html#centrifuge"><i class="fa fa-check"></i><b>10.1</b> Centrifuge</a></li>
-<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microial classfication from RNA-seq data</a></li>
+<li class="chapter" data-level="10.2" data-path="microbiome.html"><a href="microbiome.html#microbial-classfication-from-rna-seq-data"><i class="fa fa-check"></i><b>10.2</b> Microbial classfication from RNA-seq data</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html"><i class="fa fa-check"></i><b>11</b> Customize your own reference</a><ul>
 <li class="chapter" data-level="11.1" data-path="customize-your-own-reference.html"><a href="customize-your-own-reference.html#reference-fasta"><i class="fa fa-check"></i><b>11.1</b> Reference fasta</a></li>
@@ -264,27 +264,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="remove-fusion-homology" class="section level2">
 <h2><span class="header-section-number">9.2</span> Remove fusion homology</h2>
-<p>RIMA uses pyPRADA to calculate the homology score between the two genes in the fusion calling result. RIMA first removes the duplicated fusion genes from the fusion calling result and then runs homology between the genes. This part requires a configuration file containing information about the gene annotation and the output feature file. These are pre-compiled and can be found in RIMA’s static directory.</p>
+<p>RIMA uses pyPRADA to calculate the homology score between pair of fusion genes in the fusion calling result. RIMA first removes the duplicated fusion genes from the fusion calling result and then runs homology between the genes. This part requires a configuration file containing information about the gene annotation and the output feature file. These are pre-compiled and can be found in RIMA’s static directory.</p>
 <pre><code>prada-homology  -i analysis/fusion/sample_pyprada_fusion_table.txt 
                 -o analysis/fusion/sample_pyprada_output.txt  
                 -tmpdir analysis/fusion/tmp/ 
                 -conf static/fusion/prada_config.txt</code></pre>
-<p>The output of the homology is generally a text file which contains information on Identity, Alignment length, Evalue and BitScore for each pair of fusion genes. Fusion gene pairs with BitScore &lt; 100 will be filtered out. Below is an example of the homology scores from pyPRADA:</p>
+<p>The output of the homology analysis is a text file which contains information on Identity, Alignment length, Evalue and BitScore for each pair of fusion genes. Fusion gene pairs with BitScore &lt; 100 will be filtered out. Below is an example of the homology scores from pyPRADA:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
+<img src="images/homology.png" alt="pyPRADA Homology Scores"  />
+<p class="caption">
+Figure 9.1: pyPRADA Homology Scores
+</p>
+</div>
 </div>
 <div id="comparison-within-phenotype" class="section level2">
 <h2><span class="header-section-number">9.3</span> Comparison within phenotype</h2>
 <p>RIMA has a customized script that annotates genes as cancer drivers, oncogenes or tumor suppressors. RIMA also plots gene fusion expression between treatment (responders) and control (non-responders).</p>
 <pre><code>Rscript src/mutation/fusion_plot.R  --pradafusion analysis/fusion/Group_pyprada_output.txt  --meta metasheet.csv  --expression analysis/batchremoval/tpm.genesymbol.batchremoved.csv        --annot  static/fusion/cancerGeneList.tsv  --outdir  analysis/fusion/  --phenotype Group  --input analysis/fusion/merged_Group_predictions.abridged_addSample.tsv</code></pre>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
 <img src="images/Group_fusion_gene_plot.png" alt="Fuison violine plot"  />
 <p class="caption">
-Figure 9.1: Fuison violine plot
+Figure 9.2: Fuison violine plot
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
 <img src="images/fusion_boxplot.png" alt="Fusion box plot"  />
 <p class="caption">
-Figure 9.2: Fusion box plot
+Figure 9.3: Fusion box plot
 </p>
 </div>
 
