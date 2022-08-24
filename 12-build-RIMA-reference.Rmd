@@ -26,7 +26,7 @@ Dowload the human gtf annotation file from [GENCODE website](https://www.gencode
 Build the STAR index using the following code.  Make sure to change the file names to indicate which gencode version you are using.
 
 ```bash
-conda activate rna
+conda activate RIMA
 
 ## STAR Version: STAR_2.6.1d
 STAR --runThreadN 16 --runMode genomeGenerate --genomeDir ./ref_files/v27_index --genomeFastaFiles GRCh38.d1.vd1.CIDC.fa --sjdbGTFfile gencode.v27.annotation.gtf
@@ -58,7 +58,7 @@ We download the human annotation bed file including the whole genome bed file, a
 ## build salmon index
 
 ```bash
-conda activate rna
+conda activate RIMA
 
 ## salmon Version: salmon 1.1.0
 salmon index -t GRCh38.d1.vd1.CIDC.fa -i salmon_index
