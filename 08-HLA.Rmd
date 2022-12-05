@@ -1,4 +1,4 @@
-# HLA Typing {#HLA}
+# HLA Typing & Neoantigens {#HLA}
 Tumor mutations can result in altered proteins, which might act as neoantigens and potentially elicit an immune response. Algorithms, such as those available in <a href="https://github.com/griffithlab/pVACtools">pVAC-Tools</a> can be used to predict neoantigen peptides.  
 
 In order to elicit an adaptive immune response, a peptide must be presented on a cell's surface bound to major histocompatibility (MHC) protein complexes. The human leukocyte antigen (HLA) complex on chromosome 6 encodes most of the proteins that make up the human MHCs. The HLA complex is highly polymorphic and encodes MHCs that have different propensities to present different peptides. Two major classes of human MHC, class I and class II, (encoded by HLA-I and HLA-II alleles, respectively) are involved in antigen presentation.  MHC class I protein complexes are expressed on all normal cells and present internally degraded proteins, while MHC class II protein complexes are normally expressed on professional antigen-presenting cells and present processed external antigens. The antigen binding portions of the MHC class I protein complexes are encoded by the HLA-I genes HLA-A, HLA-B and HLA-C.  The antigen binding portions of the MHC class II proteins are encoded by alpha (A) and beta (B) genes in the DP, DQ and DR regions of the HLA complexes.  These HLA-II genes include HLA-DQA1, HLA-DQB1 and HLA-DRB1.
@@ -88,6 +88,21 @@ p <- hla_oncoplot(hla, exprn, meta, groups = index)
 
 print(p)
 ```
+
+## Neoantigen Identification
+To identify neoantigens, we will need the somatic mutation and HLA allele information introduced in previous sub-chapters. The standard approach for somatic mutation detection is the analysis of whole-exome (WES) or whole-genome sequencing data from tumor-normal matched pairs. Computational algorithms are used to call mutations from the resulting data. For example, MuTect is based on a Bayesian classifier, MuSE is based on a Bayesian Markov model, SomaticSniper is based on a Bayesian comparison of genotype likelihoods, and Varscan2 is based on a heuristic algorithm classifying somatic status. Among these approaches, Varscan2 can be applied to RNA-seq data with good coverage, although the mutation calls are still expected to be noisier than those from DNA sequencing. After somatic mutation detection, VEP can be used to annotate mutations on genes, transcripts, and regulatory regions. Sinee it's not common to have deep-sequenced tumor-normal paired samples, current RIMA is not supporting the function of calling somatic mutation from RNA-seq data. In this chapter, we are showing the example of identifying expressed neoantigens integrating both RNA-seq and WES data.
+
+Here we use one matched tumor-normal sample for both RNA and WES of the same patient from the Zhao trial as an example. We use RIMA preprocessing module to get the Salmon gene quantification [SRR7588416.format.quant.sf](./neoantigen/SRR7588416/SRR7588416.format.quant.sf). We use the WES pipeline to process the tumor fastq reads (SRR7588416) and matched normal fastqs (SRR7588421): Somatic Mutation is being called using <a href = 'https://support.sentieon.com/manual/TNscope_usage/tnscope/'>Sentieon Somatic Caller </a> to output a VCF file. Next, we annotate the VCF file with <a href='https://useast.ensembl.org/info/docs/tools/vep/index.html'>Ensembl Variant Effect Predictor (VEP) </a>. [SRR7588416_tnscope.neoantigen.vep.vcf](./neoantigen/SRR7588416_tnscope.neoantigen.vep.vcf) is the example of VEP annotated VCF output. The <a href='https://vatools.readthedocs.io/en/latest/vcf_expression_annotator.html'>'vcf-expression-annotator'</a> tool from <a href="https://github.com/griffithlab/pVACtools">pVAC-Tools</a> can be used to add the expression information from the outputs obtained from Salmon. This will add "TX" (i.e Transcript Expression) tag to the 'FORMAT' column of the VCF output [SRR7588416_tnscope.neoantigen.vep.rna.vcf](./neoantigen/SRR7588416_tnscope.neoantigen.vep.rna.vcf).
+<a href="https://github.com/FRED-2/OptiType">Optitype</a> and <a href="https://github.com/humanlongevity/HLA">xHLA</a> are used to get the MHC Class I&II allels results. [SRR7588416_result_optitype.tsv](./neoantigen/SRR7588416_result_optitype.tsv) and [SRR7588416_result_xHLA.json](./neoantigen/report-SRR7588416-hla.json) stores HLA alleles results respectively.
+
+After generating the somatic hypermutation with expression information, and MHC class I&II alleles, we used <a href='https://pvactools.readthedocs.io/en/latest/pvacseq/getting_started.html#running-pvacseq-using-docker'>'pvacseq run'</a> command to estimate the peptide binding affinity to predicted HLAs. [SRR7588416.all_epitopes.tsv](./neoantigen/SRR7588416/combined/SRR7588416.all_epitopes.tsv) is th example results of MCH Class I&II peptides with length ranges from 8 to 18 predicted by NetMHCpan and NetMHCIIpan. [SRR7588416.all_epitopes.aggregated.tsv](./neoantigen/SRR7588416/combined/SRR7588416.all_epitopes.aggregated.tsv) is the aggreagated results of the best-scoring (lowest binding affinity) epitope. Detailed information of columns in each output file can be found [here](https://pvactools.readthedocs.io/en/latest/pvacseq/output_files.html).
+
+
+
+
+
+
+
 
 
 
