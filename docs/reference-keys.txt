@@ -70,6 +70,7 @@ response-comparison-analysis-of-biomarkers
 HLA
 identify-hla-type
 hla-oncoplot
+neoantigen-identification
 fusion
 fusion-calling
 remove-fusion-homology

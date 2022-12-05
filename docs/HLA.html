@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 HLA Typing | Tutorial of RNA-seq tumor immunity analysis</title>
+  <title>Chapter 8 HLA Typing &amp; Neoantigens | Tutorial of RNA-seq tumor immunity analysis</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 HLA Typing | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta property="og:title" content="Chapter 8 HLA Typing &amp; Neoantigens | Tutorial of RNA-seq tumor immunity analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 HLA Typing | Tutorial of RNA-seq tumor immunity analysis" />
+  <meta name="twitter:title" content="Chapter 8 HLA Typing &amp; Neoantigens | Tutorial of RNA-seq tumor immunity analysis" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="Yang Liu, Jennifer Altreuter, Yang Lin" />
 
 
-<meta name="date" content="2022-08-05" />
+<meta name="date" content="2022-12-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -206,9 +206,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3" data-path="Response.html"><a href="Response.html#microsatelite-instability-msi"><i class="fa fa-check"></i><b>7.3</b> Microsatelite instability (MSI)</a></li>
 <li class="chapter" data-level="7.4" data-path="Response.html"><a href="Response.html#response-comparison-analysis-of-biomarkers"><i class="fa fa-check"></i><b>7.4</b> Response comparison analysis of biomarkers</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Typing</a><ul>
+<li class="chapter" data-level="8" data-path="HLA.html"><a href="HLA.html"><i class="fa fa-check"></i><b>8</b> HLA Typing &amp; Neoantigens</a><ul>
 <li class="chapter" data-level="8.1" data-path="HLA.html"><a href="HLA.html#identify-hla-type"><i class="fa fa-check"></i><b>8.1</b> Identify HLA type</a></li>
 <li class="chapter" data-level="8.2" data-path="HLA.html"><a href="HLA.html#hla-oncoplot"><i class="fa fa-check"></i><b>8.2</b> HLA Oncoplot</a></li>
+<li class="chapter" data-level="8.3" data-path="HLA.html"><a href="HLA.html#neoantigen-identification"><i class="fa fa-check"></i><b>8.3</b> Neoantigen Identification</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="fusion.html"><a href="fusion.html"><i class="fa fa-check"></i><b>9</b> Fusion</a><ul>
 <li class="chapter" data-level="9.1" data-path="fusion.html"><a href="fusion.html#fusion-calling"><i class="fa fa-check"></i><b>9.1</b> Fusion calling</a></li>
@@ -252,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="HLA" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> HLA Typing</h1>
+<h1><span class="header-section-number">Chapter 8</span> HLA Typing &amp; Neoantigens</h1>
 <p>Tumor mutations can result in altered proteins, which might act as neoantigens and potentially elicit an immune response. Algorithms, such as those available in <a href="https://github.com/griffithlab/pVACtools">pVAC-Tools</a> can be used to predict neoantigen peptides.</p>
 <p>In order to elicit an adaptive immune response, a peptide must be presented on a cell’s surface bound to major histocompatibility (MHC) protein complexes. The human leukocyte antigen (HLA) complex on chromosome 6 encodes most of the proteins that make up the human MHCs. The HLA complex is highly polymorphic and encodes MHCs that have different propensities to present different peptides. Two major classes of human MHC, class I and class II, (encoded by HLA-I and HLA-II alleles, respectively) are involved in antigen presentation. MHC class I protein complexes are expressed on all normal cells and present internally degraded proteins, while MHC class II protein complexes are normally expressed on professional antigen-presenting cells and present processed external antigens. The antigen binding portions of the MHC class I protein complexes are encoded by the HLA-I genes HLA-A, HLA-B and HLA-C. The antigen binding portions of the MHC class II proteins are encoded by alpha (A) and beta (B) genes in the DP, DQ and DR regions of the HLA complexes. These HLA-II genes include HLA-DQA1, HLA-DQB1 and HLA-DRB1.</p>
 <p>Neoantigen prediction algorithms usually integrate peptide/MHC binding predictions using tools such as <a href="https://services.healthtech.dtu.dk/service.php?NetMHCpan-4.1">NetMHCpan</a>, <a href= "https://github.com/openvax/mhcflurry">MHCflurry</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/17608956/">SMMalign</a>. Knowing the HLA type is necessary to identify potential neoantigens for targeted immunotherapy. Current alignment-based HLA typing methods require DNA or RNA sequencing inputs and predict HLA-I class only or both of HLA-I and HLA-II classes. For example, <a href="https://github.com/RabadanLab/arcasHLA">arcasHLA</a>, <a href="https://github.com/ExpressionAnalysis/HLAProfiler">HLAProfiler</a>, and <a href="https://github.com/TRON-Bioinformatics/seq2HLA">seq2HLA</a> have been developed to perform high-solution HLA typing from RNA-seq data. <a href="https://github.com/FRED-2/OptiType">OptiType</a> and <a href="https://pubmed.ncbi.nlm.nih.gov/29858810/">PHLAT</a> are other HLA identification tools for RNA, whole-exome, and whole-genome sequencing data. HLA reference sequences can be obtained from the <a href="http://www.imgt.org/">ImMunoGeneTics (IMGT) database</a>.</p>
@@ -327,6 +328,13 @@ SRR8281226      A*33:01P        A*24:02P        B*14:02P        B*15:01P        
 ## plot, please set `alter_fun_is_vectorized = FALSE` in `oncoPrint()`.</code></pre>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="HLA.html#cb88-1"></a><span class="kw">print</span>(p)</span></code></pre></div>
 <p><img src="RIMA-tutorial_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
+</div>
+<div id="neoantigen-identification" class="section level2">
+<h2><span class="header-section-number">8.3</span> Neoantigen Identification</h2>
+<p>To identify neoantigens, we will need the somatic mutation and HLA allele information introduced in previous sub-chapters. The standard approach for somatic mutation detection is the analysis of whole-exome (WES) or whole-genome sequencing data from tumor-normal matched pairs. Computational algorithms are used to call mutations from the resulting data. For example, MuTect is based on a Bayesian classifier, MuSE is based on a Bayesian Markov model, SomaticSniper is based on a Bayesian comparison of genotype likelihoods, and Varscan2 is based on a heuristic algorithm classifying somatic status. Among these approaches, Varscan2 can be applied to RNA-seq data with good coverage, although the mutation calls are still expected to be noisier than those from DNA sequencing. After somatic mutation detection, VEP can be used to annotate mutations on genes, transcripts, and regulatory regions. Sinee it’s not common to have deep-sequenced tumor-normal paired samples, current RIMA is not supporting the function of calling somatic mutation from RNA-seq data. In this chapter, we are showing the example of identifying expressed neoantigens integrating both RNA-seq and WES data.</p>
+<p>Here we use one matched tumor-normal sample for both RNA and WES of the same patient from the Zhao trial as an example. We use RIMA preprocessing module to get the Salmon gene quantification <a href="./neoantigen/SRR7588416/SRR7588416.format.quant.sf">SRR7588416.format.quant.sf</a>. We use the WES pipeline to process the tumor fastq reads (SRR7588416) and matched normal fastqs (SRR7588421): Somatic Mutation is being called using <a href = 'https://support.sentieon.com/manual/TNscope_usage/tnscope/'>Sentieon Somatic Caller </a> to output a VCF file. Next, we annotate the VCF file with <a href='https://useast.ensembl.org/info/docs/tools/vep/index.html'>Ensembl Variant Effect Predictor (VEP) </a>. <a href="./neoantigen/SRR7588416_tnscope.neoantigen.vep.vcf">SRR7588416_tnscope.neoantigen.vep.vcf</a> is the example of VEP annotated VCF output. The <a href='https://vatools.readthedocs.io/en/latest/vcf_expression_annotator.html'>‘vcf-expression-annotator’</a> tool from <a href="https://github.com/griffithlab/pVACtools">pVAC-Tools</a> can be used to add the expression information from the outputs obtained from Salmon. This will add “TX” (i.e Transcript Expression) tag to the ‘FORMAT’ column of the VCF output <a href="./neoantigen/SRR7588416_tnscope.neoantigen.vep.rna.vcf">SRR7588416_tnscope.neoantigen.vep.rna.vcf</a>.
+<a href="https://github.com/FRED-2/OptiType">Optitype</a> and <a href="https://github.com/humanlongevity/HLA">xHLA</a> are used to get the MHC Class I&amp;II allels results. <a href="./neoantigen/SRR7588416_result_optitype.tsv">SRR7588416_result_optitype.tsv</a> and <a href="./neoantigen/report-SRR7588416-hla.json">SRR7588416_result_xHLA.json</a> stores HLA alleles results respectively.</p>
+<p>After generating the somatic hypermutation with expression information, and MHC class I&amp;II alleles, we used <a href='https://pvactools.readthedocs.io/en/latest/pvacseq/getting_started.html#running-pvacseq-using-docker'>‘pvacseq run’</a> command to estimate the peptide binding affinity to predicted HLAs. <a href="./neoantigen/SRR7588416/combined/SRR7588416.all_epitopes.tsv">SRR7588416.all_epitopes.tsv</a> is th example results of MCH Class I&amp;II peptides with length ranges from 8 to 18 predicted by NetMHCpan and NetMHCIIpan. <a href="./neoantigen/SRR7588416/combined/SRR7588416.all_epitopes.aggregated.tsv">SRR7588416.all_epitopes.aggregated.tsv</a> is the aggreagated results of the best-scoring (lowest binding affinity) epitope. Detailed information of columns in each output file can be found <a href="https://pvactools.readthedocs.io/en/latest/pvacseq/output_files.html">here</a>.</p>
 
 </div>
 </div>
