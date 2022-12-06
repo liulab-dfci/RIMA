@@ -181,6 +181,7 @@ tar -zxvf ref.tar.gz
 rm ref.tar.gz 
 ```
 
+**We have also pre-built a set of reference files using v27 GENCODE annotation**.  This set of pre-built references can be downloaded from http://cistrome.org/~lyang/ref_v27.tar.gz
 
 
 **Optional step** 
